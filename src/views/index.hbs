@@ -1,0 +1,90 @@
+<div class="row">
+	<div class="azul col-xs-0 col-sm-4 col-md-3 col-lg-3">
+	</div>
+	<div class="opaco col-xs-12 col-sm-8 col-md-9 col-lg-9 p-3">
+		<div class="container">
+			<a href="/update/basico/{{persona.id}}" title="" class="btn btn-secondary" style="float: right;">Modificar</a>
+		</div>
+	</div>
+	<!--INFORMACION SUPERIOR-->
+	<div class="row p-1">
+		<div class="mainhead col-xs-12 col-sm-4 col-md-3 col-lg-3">
+			<div class="card-body" align="center">
+				<img src="/img/perfil.jpg" alt="Angel Guerrero" class="img-thumbnail border w-50">
+			</div>
+		</div>
+		<div class="mainhead col-xs-12 col-sm-8 col-md-9 col-lg-9 text-justify">
+			<div class="container">
+				<div class="row p-3 text-left" align="center">
+					<div class="col-md-6 p-3 "><i class="fab fa-twitter-square"></i>&nbsp;&nbsp;{{persona.twitter}}</div>
+					<div class="col-md-6 p-3"><i class="fas fa-phone-alt"></i>&nbsp;&nbsp;{{persona.telefono}}</div>
+					<div class="col-md-6 p-3"><i class="fas fa-envelope"></i>&nbsp;&nbsp;{{persona.correo}}</div>
+					<div class="col-md-6 p-3"><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;{{persona.direccion}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--INFORMACION LATERAL-->
+	<div class="azul sidebar col-xs-12 col-sm-4 col-md-3 col-lg-3 p-5 text-center">
+		<h3>{{persona.fullname}}</h3>
+		
+		<h4>Ingeniero de Sistemas</h4>
+		<br><br>
+		<div class="container">
+			<h5>Habilidades</h5>
+			<hr size="80%">
+			<br>
+			{{#each habilidades}}
+				<h6>{{descripcion}}</h6>
+				<div class="progress">
+					<div class="progress-bar bg-info" role="progressbar" style="width: {{calificacion}}%" aria-valuenow="{{calificacion}}" aria-valuemin="0" aria-valuemax="100">{{calificacion}}%</div>
+				</div>
+				<br>
+			{{/each}}
+
+		</div>
+	</div>
+	<!--INFORMACION CENTRAL-->
+	<div class="opaco content col-xs-12 col-sm-8 col-md-9 col-lg-9 p-3 text-justify">
+		<div class="container">
+			<h3 style="display:inline-block">Acerca de mi</h3>
+			<i class="fas fa-user-tie" style="float: right;"></i>
+			<hr size="80%">
+			<p>
+				{{persona.about}}
+			</p>
+
+			<h3 style="display:inline-block">Experiencia Laboral</h3>
+			<i class="fas fa-briefcase" style="float: right;"></i>
+			<hr size="80%">
+			<ul>
+				{{#each experiencia}}
+					<li><strong>{{titulo}} - {{nombre}}:</strong> {{descripcion}}.</li>
+				{{/each}}
+			</ul>
+
+			<h3 style="display:inline-block">Formación Académica</h3>
+			<i class="fas fa-graduation-cap" style="float: right;"></i>
+			<hr size="80%">
+			<UL>
+				{{#each persona_titulos}}
+					<li><strong>{{descripcion}}</strong> -> {{nombre}}.</li>
+				{{else}}
+					<H1>NO SE ENCONTRARON REGISTROS</H1>
+				{{/each}}
+			</UL>
+			<h3 style="display:inline-block">Cursos y Seminarios</h3>
+			<i class="fas fa-chalkboard-teacher" style="float: right;"></i>
+			<hr size="80%">
+			<ul>
+				{{#each persona_cursos}}
+					<li><strong>{{descripcion}}</strong> -> {{nombre}}.</li>
+				{{else}}
+					<H3>NO SE ENCONTRARON REGISTROS</H3>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+
+</div>
+

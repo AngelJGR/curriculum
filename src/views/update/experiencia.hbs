@@ -1,0 +1,76 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 mx-auto">
+			<div class="card text-center">
+				<div class="card-header">
+					<h2>Experiencia Laboral</h2>
+				</div>
+				<div class="card-body">
+					<form action="/update/experiencia/{{id}}" method="post" accept-charset="utf-8">
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="titulo" class="form-text form-check-label">Unidad Administrativa</label>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="descripcion" class="form-text form-check-label">Cargo</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="nombre" class="form-text form-check-label">Empresa</label>
+								</div>
+							</div>
+						</div>
+						{{#each persona}}
+							<input type="hidden" name="id_exp" value="{{id}}">
+							<input type="hidden" name="id_persona" value="{{id_persona}}">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="form-group">
+										<input type="text" name="titulo" class="form-control" value="{{titulo}}">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<input type="text" name="descripcion" class="form-control" value="{{descripcion}}">
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<select name="id_instituto" class="form-control">
+											{{#each ../instituto}}
+												{{#if_eq id ../id_instituto }}
+													<option value="{{id}}" selected>{{nombre}}</option>
+												{{else}}
+													<option value="{{id}}">{{nombre}}</option>
+												{{/if_eq}}
+											{{/each}}
+										</select>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<a href="/delete/experiencia/{{id}}" class="btn btn-danger form-control">Eliminar</a>
+									</div>
+								</div>
+							</div>
+						{{/each}}
+						<div class="row p-4">
+							<div class="col-md-4 mx-auto" align="center">
+								<div class="form-group">
+									<button class="btn btn-success btn-block mx.auto">Enviar</button>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="container">
+						<a href="/add/experiencia/{{id}}" title="" class="btn btn-secondary" style="float: right;">Agregar Nuevo Registro</a>
+					</div>
+				</div><!--CARD BODY PRINCIPAL-->
+			</div>
+		</div>
+	</div>
+</div>

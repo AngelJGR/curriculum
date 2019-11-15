@@ -1,0 +1,58 @@
+body {
+	font-family: 'Comfortaa', cursive;
+	margin: 0px;
+	padding: 0px;
+	background: #f5f6f5;
+}
+
+.principal{
+	/*position: absolute;	*/
+}
+
+.azul {
+	background: rgb(37, 64, 97);
+	color: #fff;
+}
+
+.opaco {
+	background: #f5f6f5;
+	color: #333;
+}
+
+.mainhead {
+	font-size: 1.5em;	
+	background: rgb(37, 64, 97);
+	color: #fff;
+	width: 100vw;
+}
+
+.sidebar {
+	height: auto;
+}
+
+.content {
+	height: auto;
+}
+
+.fas::before, .fab::before, .far::before {
+	font-size: 25px;
+	display: inline-block;
+	width: 15px;
+	
+	margin-right: 10px;
+	
+
+
+}
+
+hr 
+{
+	border: 2px solid #3377FF;
+	height: 2px;
+	background-color: #4633FF;
+	border-radius: 10px;
+}
+
+.sidebar i {
+	color: #FFFF1C;
+}
