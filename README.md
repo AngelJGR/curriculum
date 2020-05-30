@@ -1,5 +1,5 @@
 # curriculum
 
-Curriculum personal hecho en NodeJS
+CV personal hecho en NodeJS
 
-Personal Curriculum make in NodeJS. 
+Personal CV make in NodeJS. 
