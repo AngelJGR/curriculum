@@ -1,0 +1,69 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 mx-auto">
+			<div class="card text-center">
+				<div class="card-header">
+					<h2>Actualizar Datos</h2>
+				</div>
+				<div class="card-body">
+					<form action="/update/basico/{{persona.id}}" method="POST" accept-charset="utf-8">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="card text-center">
+									<div class="card-header">
+										<h4>Datos Básicos</h4>
+									</div>
+									<div class="card-body">
+										{{!-- <div class="row"> --}}
+											<div class="form-group">
+												<label for="fullname" class="form-text form-check-label">Nombre</label>
+												<input type="text" name="fullname" value="{{persona.fullname}}" class="form-control">
+											</div>
+											<div class="form-group">
+												<label for="correo" class="form-text form-check-label">Correo</label>
+												<input type="text" name="correo" value="{{persona.correo}}" class="form-control">
+											</div>
+											<div class="form-group">
+												<label for="twitter" class="form-text form-check-label">Twitter</label>
+												<input type="text" name="twitter" value="{{persona.twitter}}" class="form-control">
+											</div>
+											<div class="form-group">
+												<label for="direccion" class="form-text form-check-label">Direccion</label>
+												<textarea name="direccion" class="form-control">{{persona.direccion}}</textarea>
+											</div>
+											<div class="form-group">
+												<label for="telefono" class="form-text form-check-label">Teléfono</label>
+												<input type="text" name="telefono" value="{{persona.telefono}}" class="form-control">
+											</div>
+											
+										{{!-- </div> --}}
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="card text-center">
+									<div class="card-header">
+										<h4>Acerca de mi</h4>
+									</div>
+									<div class="card-body">
+										<div class="form-group">
+											<textarea name="about" class="form-control text-justify" rows="15">{{persona.about}}</textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row p-4">
+							<div class="col-md-4 mx-auto" align="center">
+								<div class="form-group">
+									<button class="btn btn-success btn-block mx.auto">Enviar</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div><!--CARD BODY PRINCIPAL-->
+			</div>
+		</div>
+	</div>
+</div>
