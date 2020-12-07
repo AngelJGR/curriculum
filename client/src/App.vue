@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <!-- <v-app>
     <v-app-bar
       app
       color="primary"
@@ -40,19 +40,20 @@
     <v-main>
       <HelloWorld/>
     </v-main>
-  </v-app>
+  </v-app> -->
+  <router-view/>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+// import HelloWorld from './components/HelloWorld.vue';
 
 export default Vue.extend({
   name: 'App',
 
-  components: {
+  /* components: {
     HelloWorld,
-  },
+  }, */
 
   data: () => ({
     //
