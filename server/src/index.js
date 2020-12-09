@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const morgan = require("morgan");
 const exphbs = require("express-handlebars");
 const path = require("path");
@@ -25,8 +26,8 @@ app.engine(".hbs", exphbs({
 }));
 app.set("view engine", ".hbs");
 
-
 //Middlewares
+app.use(cors())
 app.use(session({
 	secret: "Curriculum",
 	resave: false,
