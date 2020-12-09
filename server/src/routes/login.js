@@ -31,4 +31,10 @@ router.get("/logout", isLoggedIn, (req, res) => {
 	res.redirect("/login");
 });
 
+router.get("/validateUser", async (req, res) => {
+	const { user } = req.query;
+	const result = await pool.query("SELECT * FROM usuarios WHERE usuario = ?", [user])
+	res.send(result.length > 0 ? true : false)
+})
+
 module.exports = router;
