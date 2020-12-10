@@ -8,7 +8,7 @@
       </v-row>
       <v-row justify="center">
         <v-col cols="12" md="6">
-          <v-form lazy-validation>
+          <v-form lazy-validation ref="form" @submit.prevent="submit">
             <v-card class="px-5 py-4">
               <v-card-title>
                 <h3>Registrar</h3>
@@ -48,7 +48,7 @@
                 @click:append="showPassword = !showPassword"
               ></v-text-field>
               <v-card-actions>
-                <v-btn>Aceptar</v-btn>
+                <v-btn type="submit">Aceptar</v-btn>
               </v-card-actions>
             </v-card>
           </v-form>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import services from '../../services/index'
+import login from '../../services/login'
 export default {
   data () {
     return {
@@ -68,6 +68,7 @@ export default {
       fullName: '',
       showPassword: false,
       loading: false,
+      // saveLoading: false,
       isFinded: false,
       rules: {
         isUserExist: () => !this.isFinded || 'Este usuario ya existe.',
@@ -86,12 +87,21 @@ export default {
       if (user !== "") {
         this.loading = true
         setTimeout(() => {
-          services.validateUser(user)
+          login.validateUser(user)
             .then((res) => {
               this.isFinded = res.data
               this.loading = false
             })
         }, 500)
+      }
+    },
+    submit(){
+      if (this.$refs.form.validate()){
+        login.registerUser(this.fullName, this.user, this.password)
+          .then(() => {
+            console.log('Exitoso')
+          })
+          .catch((err) => console.log('Ocurrio un error'))
       }
     }
   }
