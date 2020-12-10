@@ -70,14 +70,14 @@ export default {
       loading: false,
       isFinded: false,
       rules: {
-        isUserExist: val => !this.isFinded || 'Este usuario ya existe.',
+        isUserExist: () => !this.isFinded || 'Este usuario ya existe.',
         required: value => !!value || 'Requerido.',
         min: v => v.length >= 8 || 'Minimo 8 caracteres.'
       }
     }
   },
   watch: {
-    isFinded (value) {
+    isFinded () {
       this.$refs.user.validate();
     }
   },
