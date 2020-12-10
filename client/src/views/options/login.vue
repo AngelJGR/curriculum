@@ -15,7 +15,7 @@
               </v-card-title>
               <v-text-field 
                 v-model="email"
-                :rules="[rules.required, rules.email]"
+                :rules="[rules.required]"
                 label="Usuario"
                 outlined
               ></v-text-field>
@@ -30,6 +30,7 @@
               ></v-text-field>
               <v-card-actions>
                 <v-btn>Aceptar</v-btn>
+                <v-btn to="/register">Registrar</v-btn>
               </v-card-actions>
             </v-card>
           </v-form>
@@ -48,11 +49,7 @@ export default {
       show: false,
       rules: {
         required: value => !!value || 'Requerido.',
-        min: v => v.length >= 8 || 'Minimo 8 caracteres.',
-        email: value => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'Ingrese un E-mail válido.'
-        }
+        min: v => v.length >= 8 || 'Minimo 8 caracteres.'
       }
     }
   }

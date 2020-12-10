@@ -3,13 +3,13 @@
     <v-container fluid>
       <v-row>
         <v-col cols="4">
-          <v-btn>Login</v-btn>
+          <v-btn to="/login">Login</v-btn>
         </v-col>
       </v-row>
       <v-row justify="center">
         <v-col cols="12" md="6">
           <v-form lazy-validation>
-            <v-card>
+            <v-card class="px-5 py-4">
               <v-card-title>
                 <h3>Registrar</h3>
               </v-card-title>
@@ -20,19 +20,32 @@
                 outlined
               ></v-text-field>
               <v-text-field 
-                v-model="email"
-                :rules="[rules.required, rules.email]"
+                v-model="user"
+                :rules="[rules.required, rules.isUserExist]"
                 label="Usuario"
                 outlined
-              ></v-text-field>
+                @keyup="validateUser($event.target.value)"
+                :loading="loading"
+                ref="user"
+              >
+                <template v-slot:append v-if="user !== ''">
+                  <v-progress-circular 
+                    v-if="loading"
+                    indeterminate
+                    size="25"
+                  ></v-progress-circular>
+                  <v-icon v-show="!loading && !isFinded" color="success">mdi-check-circle</v-icon>
+                  <v-icon v-show="!loading && isFinded" color="error">mdi-alert-circle</v-icon>
+                </template>
+              </v-text-field>
               <v-text-field 
                 v-model="password"
-                :type="!show ? 'password' : 'text'"
-                :append-icon="!show ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="!showPassword ? 'password' : 'text'"
+                :append-icon="!showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :rules="[rules.required, rules.min]"
                 label="Contraseña"
                 outlined
-                @click:append="show = !show"
+                @click:append="showPassword = !showPassword"
               ></v-text-field>
               <v-card-actions>
                 <v-btn>Aceptar</v-btn>
@@ -46,19 +59,39 @@
 </template>
 
 <script>
+import services from '../../services/index'
 export default {
   data () {
     return {
-      email: '',
+      user: '',
       password: '',
-      show: false,
+      fullName: '',
+      showPassword: false,
+      loading: false,
+      isFinded: false,
       rules: {
+        isUserExist: val => !this.isFinded || 'Este usuario ya existe.',
         required: value => !!value || 'Requerido.',
-        min: v => v.length >= 8 || 'Minimo 8 caracteres.',
-        email: value => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'Ingrese un E-mail válido.'
-        }
+        min: v => v.length >= 8 || 'Minimo 8 caracteres.'
+      }
+    }
+  },
+  watch: {
+    isFinded (value) {
+      this.$refs.user.validate();
+    }
+  },
+  methods: {
+    validateUser(user){
+      if (user !== "") {
+        this.loading = true
+        setTimeout(() => {
+          services.validateUser(user)
+            .then((res) => {
+              this.isFinded = res.data
+              this.loading = false
+            })
+        }, 500)
       }
     }
   }
