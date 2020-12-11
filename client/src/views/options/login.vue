@@ -8,13 +8,13 @@
       </v-row>
       <v-row justify="center">
         <v-col cols="12" md="6">
-          <v-form lazy-validation>
+          <v-form lazy-validation @submit.prevent="submit">
             <v-card>
               <v-card-title>
                 <h3>Login</h3>
               </v-card-title>
               <v-text-field 
-                v-model="email"
+                v-model="user"
                 :rules="[rules.required]"
                 label="Usuario"
                 outlined
@@ -29,7 +29,7 @@
                 @click:append="show = !show"
               ></v-text-field>
               <v-card-actions>
-                <v-btn>Aceptar</v-btn>
+                <v-btn type="submit">Aceptar</v-btn>
                 <v-btn to="/register">Registrar</v-btn>
               </v-card-actions>
             </v-card>
@@ -41,16 +41,27 @@
 </template>
 
 <script>
+import login from '../../services/login'
 export default {
   data () {
     return {
-      email: '',
+      user: '',
       password: '',
       show: false,
       rules: {
         required: value => !!value || 'Requerido.',
         min: v => v.length >= 8 || 'Minimo 8 caracteres.'
       }
+    }
+  },
+  methods: {
+    submit() {
+      console.log('CLick')
+      login.login(this.user, this.password)
+        .then((res) => {
+          console.log('Aqui', res)
+        })
+        .catch((e) => console.log(e))
     }
   }
 }

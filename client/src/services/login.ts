@@ -7,5 +7,8 @@ export default {
     },
     registerUser: (fullname: string, user: string, password: string) => {
         return Axios.post(`${baseUrl}/registerUser`, {fullname, user, password})
+    },
+    login: (user: string, password: string) => {
+        return Axios.post(`${baseUrl}/login`, {user, password})
     }
 }
