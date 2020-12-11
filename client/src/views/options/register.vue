@@ -14,19 +14,20 @@
                 <h3>Registrar</h3>
               </v-card-title>
               <v-text-field 
-                v-model="fullName"
+                v-model="fullname"
                 :rules="[rules.required]"
                 label="Nombre completo"
                 outlined
               ></v-text-field>
               <v-text-field 
                 v-model="user"
-                :rules="[rules.required, rules.isUserExist]"
+                :rules="[rules.required, rules.isUserExist, rules.max]"
                 label="Usuario"
                 outlined
                 @keyup="validateUser($event.target.value)"
                 :loading="loading"
                 ref="user"
+                counter
               >
                 <template v-slot:append v-if="user !== ''">
                   <v-progress-circular 
@@ -65,7 +66,7 @@ export default {
     return {
       user: '',
       password: '',
-      fullName: '',
+      fullname: '',
       showPassword: false,
       loading: false,
       // saveLoading: false,
@@ -73,7 +74,8 @@ export default {
       rules: {
         isUserExist: () => !this.isFinded || 'Este usuario ya existe.',
         required: value => !!value || 'Requerido.',
-        min: v => v.length >= 8 || 'Minimo 8 caracteres.'
+        min: v => v.length >= 8 || 'Minimo 8 caracteres.',
+        max: v => v.length <= 11 || 'Máximo 11 caracteres.'
       }
     }
   },
@@ -97,9 +99,10 @@ export default {
     },
     submit(){
       if (this.$refs.form.validate()){
-        login.registerUser(this.fullName, this.user, this.password)
-          .then(() => {
-            console.log('Exitoso')
+        login.registerUser(this.fullname, this.user, this.password)
+          .then((res) => {
+            console.log('Exitoso', res)
+            this.$refs.form.reset();
           })
           .catch((err) => console.log('Ocurrio un error'))
       }
