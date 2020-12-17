@@ -50,6 +50,7 @@
               ></v-text-field>
               <v-card-actions>
                 <v-btn type="submit">Aceptar</v-btn>
+                <v-btn to="/login">Cancelar</v-btn>
               </v-card-actions>
             </v-card>
           </v-form>

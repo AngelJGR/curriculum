@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-row>
         <v-col cols="4">
-          <v-btn>Principal</v-btn>
+          <v-btn to="/">Principal</v-btn>
         </v-col>
       </v-row>
       <v-row justify="center">
@@ -59,7 +59,8 @@ export default {
       console.log('CLick')
       login.login(this.user, this.password)
         .then((res) => {
-          console.log('Aqui', res)
+          this.$router.push('/')
+          // localStorage.setItem('token', res.data.token)
         })
         .catch((e) => console.log(e))
     }
