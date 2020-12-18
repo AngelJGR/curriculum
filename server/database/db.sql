@@ -1,82 +1,82 @@
-CREATE DATABASE cv;
+CREATE DATABASE resume;
 
-use cv;
+use resume;
 
-CREATE TABLE usuarios (
+CREATE TABLE users (
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	usuario VARCHAR(11) NOT NULL,
+	username VARCHAR(11) NOT NULL UNIQUE,
 	password VARCHAR(60) NOT NULL,
-	nombre_completo VARCHAR(100) NOT NULL
+	fullname VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE persona (
+CREATE TABLE person (
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	ci INT(11) NOT NULL,
 	fullname VARCHAR(100) NOT NULL,
-	direccion VARCHAR(255) NOT NULL,
-	telefono VARCHAR(20) NOT NULL,
+	address VARCHAR(255) NOT NULL,
+	phone VARCHAR(20) NOT NULL,
 	twitter VARCHAR(11),
-	correo VARCHAR(60) NOT NULL,
+	email VARCHAR(60) NOT NULL,
 	about TEXT NOT NULL
 );
 
-CREATE TABLE casa_de_estudio(
+CREATE TABLE college(
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	nombre VARCHAR (100) NOT NULL,
-	direccion VARCHAR(255) NOT NULL
+	name VARCHAR (100) NOT NULL,
+	address VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE tipo_titulo(
+CREATE TABLE college_degree_type(
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	descripcion VARCHAR(11) NOT NULL
+	description VARCHAR(11) NOT NULL
 );
 
-CREATE TABLE titulos(
+CREATE TABLE college_degree(
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	descripcion VARCHAR(255) NOT NULL,
-	id_tipo_titulo INT(11),
+	description VARCHAR(255) NOT NULL,
+	id_college_degree_type INT(11),
 
-	CONSTRAINT fk_tipo_titulo FOREIGN KEY (id_tipo_titulo) REFERENCES tipo_titulo(id)
+	CONSTRAINT fk_college_degree_type FOREIGN KEY (id_college_degree_type) REFERENCES college_degree_type(id)
 );
 
-CREATE TABLE habilidades(
+CREATE TABLE skills(
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	descripcion VARCHAR(50) NOT NULL
+	description VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE habilidades_personas (
+CREATE TABLE person_skills (
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	id_persona INT(11),
-	id_habilidad INT(11),
-	calificacion TINYINT NOT NULL,
+	id_person INT(11),
+	id_skill INT(11),
+	score TINYINT NOT NULL,
 
-	CONSTRAINT fk_persona FOREIGN KEY (id_persona) REFERENCES persona(id),
-	CONSTRAINT fk_habilidad FOREIGN KEY (id_habilidad) REFERENCES habilidades(id)
+	CONSTRAINT fk_person FOREIGN KEY (id_person) REFERENCES person(id),
+	CONSTRAINT fk_skill FOREIGN KEY (id_skill) REFERENCES skills(id)
 );
 
-CREATE TABLE persona_titulo (
+CREATE TABLE college_degree_person (
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	id_persona INT(11),
-	id_titulo INT(11),
-	id_casa_de_estudio INT(11),
+	id_person INT(11),
+	id_college_degree INT(11),
+	id_college INT(11),
 
-	CONSTRAINT fk_persona_2 FOREIGN KEY (id_persona) REFERENCES persona(id),
-	CONSTRAINT fk_titulo FOREIGN KEY (id_titulo) REFERENCES titulos(id),
-	CONSTRAINT fk_casa_de_estudio FOREIGN KEY (id_casa_de_estudio) REFERENCES casa_de_estudio(id)
+	CONSTRAINT fk_person_2 FOREIGN KEY (id_person) REFERENCES person(id),
+	CONSTRAINT fk_college_degree FOREIGN KEY (id_college_degree) REFERENCES college_degree(id),
+	CONSTRAINT fk_college FOREIGN KEY (id_college) REFERENCES college(id)
 );
 
-CREATE TABLE instituto (
+CREATE TABLE organization (
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	nombre VARCHAR(100) NOT NULL
+	name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE experiencia_laboral (
+CREATE TABLE work_experience (
 	id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(200) NOT NULL,
-	descripcion TEXT NOT NULL,
-	id_persona INT(11) NOT NULL,
-	id_instituto INT(11) NOT NULL,
+	area VARCHAR(200) NOT NULL,
+	description TEXT NOT NULL,
+	id_person INT(11) NOT NULL,
+	id_organization INT(11) NOT NULL,
 
-	CONSTRAINT fk_persona_3 FOREIGN KEY (id_persona) REFERENCES persona(id),
-	CONSTRAINT fk_instituto FOREIGN KEY (id_instituto) REFERENCES instituto(id)
+	CONSTRAINT fk_person_3 FOREIGN KEY (id_person) REFERENCES person(id),
+	CONSTRAINT fk_organization FOREIGN KEY (id_organization) REFERENCES organization(id)
 );
