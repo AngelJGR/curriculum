@@ -1,5 +1,5 @@
 <template>
   <v-container>
-    <h1>Add</h1>
+    <h1>Formación</h1>
   </v-container>
 </template>
