@@ -1,11 +1,6 @@
 <template>
   <v-app>
     <v-container fluid>
-      <v-row>
-        <v-col cols="4">
-          <v-btn to="/login">Login</v-btn>
-        </v-col>
-      </v-row>
       <v-row justify="center">
         <v-col cols="12" md="6">
           <v-form lazy-validation ref="form" @submit.prevent="submit">
@@ -50,7 +45,7 @@
               ></v-text-field>
               <v-card-actions>
                 <v-btn type="submit">Aceptar</v-btn>
-                <v-btn to="/login">Cancelar</v-btn>
+                <v-btn to="/auth/login">Cancelar</v-btn>
               </v-card-actions>
             </v-card>
           </v-form>

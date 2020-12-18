@@ -30,7 +30,7 @@
               ></v-text-field>
               <v-card-actions>
                 <v-btn type="submit">Aceptar</v-btn>
-                <v-btn to="/register">Registrar</v-btn>
+                <v-btn to="/auth/register">Registrar</v-btn>
               </v-card-actions>
             </v-card>
           </v-form>

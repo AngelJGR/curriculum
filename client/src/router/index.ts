@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Login from '../views/options/login.vue'
-import Register from '../views/options/register.vue'
+import Login from '../views/auth/login.vue'
+import Register from '../views/auth/register.vue'
 import AppLayout from '../views/app-layout.vue'
 import Formacion from '../views/formacion.vue'
 import Experiencia from '../views/experiencia.vue'
@@ -26,7 +26,7 @@ const routes: Array<RouteConfig> = [
         component: Login
       },
       {
-        path: '/register',
+        path: 'register',
         name: 'Register',
         component: Register
       }
