@@ -14,16 +14,16 @@
 				v-model="group"
 				active-class="deep-purple--text text--accent-4"
 			>
-				<v-list-item>
-					<v-list-item-title>Foo</v-list-item-title>
+				<v-list-item to="/formacion">
+					<v-list-item-title>Formación</v-list-item-title>
 				</v-list-item>
 
-				<v-list-item>
-					<v-list-item-title>Bar</v-list-item-title>
+				<v-list-item to="/experiencia">
+					<v-list-item-title>Experiencia</v-list-item-title>
 				</v-list-item>
 
-				<v-list-item>
-					<v-list-item-title>Fizz</v-list-item-title>
+				<v-list-item to="/habilidades">
+					<v-list-item-title>Habilidades</v-list-item-title>
 				</v-list-item>
 
 				<v-list-item>

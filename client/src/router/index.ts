@@ -3,7 +3,9 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import Login from '../views/options/login.vue'
 import Register from '../views/options/register.vue'
 import AppLayout from '../views/app-layout.vue'
-import Add from '../views/add.vue'
+import Formacion from '../views/formacion.vue'
+import Experiencia from '../views/experiencia.vue'
+import Habilidades from '../views/habilidades.vue'
 import App from '../App.vue'
 
 Vue.use(VueRouter)
@@ -35,10 +37,20 @@ const routes: Array<RouteConfig> = [
     component: AppLayout,
     children: [
       {
-        path: '/add',
-        name: 'Add',
-        component: Add
-      }
+        path: '/formacion',
+        name: 'Formacion',
+        component: Formacion
+      },
+      {
+        path: '/experiencia',
+        name: 'Experiencia',
+        component: Experiencia
+      },
+      {
+        path: '/habilidades',
+        name: 'Habilidades',
+        component: Habilidades
+      },
     ]
   }
 ]
