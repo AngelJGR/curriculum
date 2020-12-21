@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import Login from '../views/auth/login.vue'
 import Register from '../views/auth/register.vue'
 import AppLayout from '../views/app-layout.vue'
+import Resume from '../views/resume.vue'
 import Formacion from '../views/formacion.vue'
 import Experiencia from '../views/experiencia.vue'
 import Habilidades from '../views/habilidades.vue'
@@ -31,6 +32,11 @@ const routes: Array<RouteConfig> = [
         component: Register
       }
     ]
+  },
+  {
+    path: '/:username',
+    name: 'Resume',
+    component: Resume
   },
   {
     path: '/',
