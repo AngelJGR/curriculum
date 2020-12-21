@@ -14,15 +14,15 @@
 				v-model="group"
 				active-class="deep-purple--text text--accent-4"
 			>
-				<v-list-item to="/formacion">
+				<v-list-item to="/profile/formacion">
 					<v-list-item-title>Formación</v-list-item-title>
 				</v-list-item>
 
-				<v-list-item to="/experiencia">
+				<v-list-item to="/profile/experiencia">
 					<v-list-item-title>Experiencia</v-list-item-title>
 				</v-list-item>
 
-				<v-list-item to="/habilidades">
+				<v-list-item to="/profile/habilidades">
 					<v-list-item-title>Habilidades</v-list-item-title>
 				</v-list-item>
 

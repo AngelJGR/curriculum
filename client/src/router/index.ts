@@ -39,21 +39,21 @@ const routes: Array<RouteConfig> = [
     component: Resume
   },
   {
-    path: '/',
+    path: '/profile',
     component: AppLayout,
     children: [
       {
-        path: '/formacion',
+        path: 'formacion',
         name: 'Formacion',
         component: Formacion
       },
       {
-        path: '/experiencia',
+        path: 'experiencia',
         name: 'Experiencia',
         component: Experiencia
       },
       {
-        path: '/habilidades',
+        path: 'habilidades',
         name: 'Habilidades',
         component: Habilidades
       },
