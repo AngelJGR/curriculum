@@ -4,7 +4,7 @@ module.exports = {
 		if (req.isAuthenticated()) {
 			return next();
 		} else {
-			return res.redirect("/login");
+			return next(new Error('Se requiere iniciar sesión'));
 		}
 	},
 
@@ -12,7 +12,7 @@ module.exports = {
 		if (!req.isAuthenticated()) {
 			return next();
 		} else {
-			return res.redirect("/");
+			return next(new Error('Existe una sesión activa'));
 		}
 	}
 
