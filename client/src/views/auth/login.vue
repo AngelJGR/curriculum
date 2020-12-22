@@ -1,5 +1,24 @@
 <template>
   <v-app>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      top
+      color="success"
+    >
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          icon
+          color="dark"
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-container fluid>
       <v-row>
         <v-col cols="4">
@@ -48,6 +67,9 @@ export default {
       user: '',
       password: '',
       show: false,
+      snackbar: false,
+      timeout: 4000,
+      text: '',
       rules: {
         required: value => !!value || 'Requerido.',
         min: v => v.length >= 8 || 'Minimo 8 caracteres.'
@@ -56,13 +78,18 @@ export default {
   },
   methods: {
     submit() {
-      console.log('CLick')
       login.login(this.user, this.password)
         .then((res) => {
           this.$router.push('/')
           // localStorage.setItem('token', res.data.token)
         })
-        .catch((e) => console.log(e))
+        .catch((e) => console.log('Error', e))
+    }
+  },
+  created() {
+    if (this.$route.params.success) {
+      this.snackbar = true
+      this.text = this.$route.params.message
     }
   }
 }

@@ -97,10 +97,9 @@ export default {
       if (this.$refs.form.validate()){
         login.registerUser(this.fullname, this.user, this.password)
           .then((res) => {
-            console.log('Exitoso', res)
-            this.$refs.form.reset();
+            this.$router.push({name: 'Login', params: {success: true, message: 'Registro exitoso!'}})
           })
-          .catch((err) => console.log('Ocurrio un error'))
+          .catch((err) => console.log(err))
       }
     }
   }
