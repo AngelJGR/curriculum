@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import login from '../services/login'
+import info from '../services/info'
 import NotFound from './not-found.vue';
 
 export default Vue.extend({
@@ -24,7 +24,7 @@ export default Vue.extend({
 
   }),
   async created() {
-    const result = await login.validateUser(this.$route.params.username)
+    const result = await info.getInformation(this.$route.params.username)
     this.isUserExist = result.data
   }
 });
