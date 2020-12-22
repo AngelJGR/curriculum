@@ -18,6 +18,9 @@ CREATE TABLE person (
 	twitter VARCHAR(11),
 	email VARCHAR(60) NOT NULL,
 	about TEXT NOT NULL
+	id_user INT(11) NOT NULL
+
+	CONSTRAINT fk_users FOREIGN KEY (id_user) REFERENCES users(id)
 );
 
 CREATE TABLE college(
