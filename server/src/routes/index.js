@@ -3,10 +3,15 @@ const router = express.Router();
 
 const pool = require("../database");
 
-router.get("/", async (req, res) => {
+router.get("/:username", async (req, res) => {
 	//Consulta de los datos personales
-	
-	const person = await pool.query("SELECT * FROM person WHERE username = ?", req);
+	const user = await pool.query("SELECT * FROM users WHERE username = ?", req.params.username);
+	if (user.length === 0) {
+		res.send(false)
+		return
+	}
+	const person = await pool.query("SELECT * FROM person WHERE id_user = ?", user[0].id);
+	console.log(person)
 	// const persona = personas[0];
 	const { id } = person;
 	//Consulta de los titulos A college_degree_person, B person, C college_degree, D college
@@ -30,5 +35,9 @@ router.get("/", async (req, res) => {
 
 	res.json({ person, college_degree_person, courses_person, skills, experience });
 });
+
+router.get("/", (req, res) => {
+	res.json({hola: "Hola mundo"})
+})
 
 module.exports = router;
