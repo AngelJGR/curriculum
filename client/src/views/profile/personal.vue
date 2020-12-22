@@ -1,5 +1,5 @@
 <template>
   <v-container>
-    <h1>Experiencia</h1>
+    <h1>Personal</h1>
   </v-container>
 </template>

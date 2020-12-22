@@ -26,8 +26,12 @@
 					<v-list-item-title>Habilidades</v-list-item-title>
 				</v-list-item>
 
+				<v-list-item to="/profile/personal">
+					<v-list-item-title>Información personal</v-list-item-title>
+				</v-list-item>
+
 				<v-list-item>
-					<v-list-item-title>Buzz</v-list-item-title>
+					<v-list-item-title>Logout</v-list-item-title>
 				</v-list-item>
 			</v-list-item-group>
 		</v-list>
