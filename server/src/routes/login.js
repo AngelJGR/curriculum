@@ -36,9 +36,9 @@ router.get("/logout", isLoggedIn, (req, res) => {
 	res.redirect("/login");
 });
 
-router.get("/validateUser", async (req, res) => {
-	const { user } = req.query;
-	const result = await pool.query("SELECT * FROM users WHERE username = ?", [user])
+router.get("/validateUser/:username", async (req, res) => {
+	const { username } = req.params;
+	const result = await pool.query("SELECT * FROM users WHERE username = ?", [username])
 	res.send(result.length > 0 ? true : false)
 })
 
