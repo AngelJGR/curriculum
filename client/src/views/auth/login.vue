@@ -28,7 +28,7 @@
       <v-row justify="center">
         <v-col cols="12" md="6">
           <v-form lazy-validation @submit.prevent="submit">
-            <v-card>
+            <v-card class="px-5 py-4">
               <v-card-title>
                 <h3>Login</h3>
               </v-card-title>
