@@ -21,7 +21,7 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
 			}
 			req.login(user, {session: false}, async (err) => {
 				if (err) return next(err)
-				const body = { _id: user.id, user: user.usuario, fullname: user.nombre_completo }
+				const body = { _id: user.id, user: user.username, fullname: user.fullname }
 				const token = jwt.sign({ user: body }, 'top_secret')
 				return res.json({ token, body, message: 'successs' })
 			})
