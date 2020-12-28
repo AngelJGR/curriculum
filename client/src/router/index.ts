@@ -8,16 +8,12 @@ import Formacion from '../views/profile/formacion.vue'
 import Experiencia from '../views/profile/experiencia.vue'
 import Habilidades from '../views/profile/habilidades.vue'
 import Personal from '../views/profile/personal.vue'
+import Dashboard from '../views/profile/dashboard.vue'
 import App from '../App.vue'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
-  /* {
-    path: '/',
-    name: 'Home',
-    component: Home
-  }, */
   {
     path: '/auth',
     component: App,
@@ -43,6 +39,11 @@ const routes: Array<RouteConfig> = [
     path: '/profile',
     component: AppLayout,
     children: [
+      {
+        path: '/',
+        name: 'Dashboard',
+        component: Dashboard
+      },
       {
         path: 'formacion',
         name: 'Formacion',
