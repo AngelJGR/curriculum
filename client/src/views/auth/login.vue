@@ -61,6 +61,7 @@
 
 <script>
 import login from '../../services/login'
+import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -77,11 +78,15 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setUser', 'setToken']),
     submit() {
       login.login(this.user, this.password)
         .then((res) => {
-          this.$router.push('/')
-          // localStorage.setItem('token', res.data.token)
+          localStorage.setItem('token', res.data.token)
+          this.setUser = res.data.user
+          this.setToken = res.data.token
+          this.setFullname = res.data.fullname
+          this.$router.push('/profile/personal')
         })
         .catch((e) => console.log('Error', e))
     }
