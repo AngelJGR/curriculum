@@ -1,15 +1,17 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Login from '../views/auth/login.vue'
-import Register from '../views/auth/register.vue'
-import AppLayout from '../views/app-layout.vue'
-import Resume from '../views/resume.vue'
-import Formacion from '../views/profile/formacion.vue'
-import Experiencia from '../views/profile/experiencia.vue'
-import Habilidades from '../views/profile/habilidades.vue'
-import Personal from '../views/profile/personal.vue'
-import Dashboard from '../views/profile/dashboard.vue'
+
 import App from '../App.vue'
+import AppLayout from '../views/app-layout.vue'
+import AuthVerify from './auth-verify'
+import Dashboard from '../views/profile/dashboard.vue'
+import Experience from '../views/profile/experience.vue'
+import Formation from '../views/profile/formation.vue'
+import Skills from '../views/profile/skills.vue'
+import Login from '../views/auth/login.vue'
+import Personal from '../views/profile/personal.vue'
+import Register from '../views/auth/register.vue'
+import Resume from '../views/resume.vue'
 
 Vue.use(VueRouter)
 
@@ -42,27 +44,32 @@ const routes: Array<RouteConfig> = [
       {
         path: '/',
         name: 'Dashboard',
-        component: Dashboard
+        component: Dashboard,
+        // beforeEnter: AuthVerify
       },
       {
-        path: 'formacion',
-        name: 'Formacion',
-        component: Formacion
+        path: 'formation',
+        name: 'Formation',
+        component: Formation,
+        // beforeEnter: AuthVerify
       },
       {
-        path: 'experiencia',
-        name: 'Experiencia',
-        component: Experiencia
+        path: 'experience',
+        name: 'Experience',
+        component: Skills,
+        // beforeEnter: AuthVerify
       },
       {
-        path: 'habilidades',
-        name: 'Habilidades',
-        component: Habilidades
+        path: 'skills',
+        name: 'Skills',
+        component: Skills,
+        // beforeEnter: AuthVerify
       },
       {
         path: 'personal',
         name: 'Personal',
-        component: Personal
+        component: Personal,
+        // beforeEnter: AuthVerify
       },
     ]
   }
