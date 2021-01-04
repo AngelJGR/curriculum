@@ -52,9 +52,9 @@ app.use((req, res, next) => {
 
 //Routes
 app.use(require("./routes/"));
-app.use("/update", require("./routes/update"));
-app.use("/add", require("./routes/add"));
-app.use("/delete", require("./routes/delete"));
+app.use("/formation", require("./routes/formation"));
+app.use("/experience", require("./routes/experience"));
+app.use("/skills", require("./routes/skills"));
 app.use(require("./routes/login"));
 
 //Public
