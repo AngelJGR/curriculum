@@ -4,6 +4,7 @@
   </v-container>
 </template>
 <script>
+import formacion from '../../services/formation'
 export default {
   data() {
     return {
@@ -12,6 +13,10 @@ export default {
   },
   methods: {
     
+  },
+  created() {
+    formacion.getFormation('1')
+      .then((res) => console.log(res))
   }
 }
 </script>
