@@ -55,6 +55,7 @@ app.use(require("./routes/"));
 app.use("/formation", require("./routes/formation"));
 app.use("/experience", require("./routes/experience"));
 app.use("/skills", require("./routes/skills"));
+app.use("/person", require("./routes/person"));
 app.use(require("./routes/login"));
 
 //Public
