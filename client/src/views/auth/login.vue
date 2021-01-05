@@ -4,9 +4,9 @@
       v-model="snackbar"
       :timeout="timeout"
       top
-      color="success"
+      :color="color"
     >
-      {{ text }}
+      <b>{{ text }}</b>
 
       <template v-slot:action="{ attrs }">
         <v-btn
@@ -69,6 +69,7 @@ export default {
       password: '',
       show: false,
       snackbar: false,
+      color: null,
       timeout: 4000,
       text: '',
       rules: {
@@ -78,7 +79,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setUser', 'setToken']),
+    ...mapMutations(['setUser', 'setToken', 'setFullname']),
     submit() {
       login.login(this.user, this.password)
         .then((res) => {
@@ -86,14 +87,18 @@ export default {
           this.setUser = res.data.user
           this.setToken = res.data.token
           this.setFullname = res.data.fullname
+          console.log(this.setUser)
+          console.log(this.setToken)
+          console.log(this.setFullname)
           this.$router.push('/profile/personal')
         })
         .catch((e) => console.log('Error', e))
     }
   },
   created() {
-    if (this.$route.params.success) {
+    if (this.$route.params.show) {
       this.snackbar = true
+      this.color = this.$route.params.color
       this.text = this.$route.params.message
     }
   }

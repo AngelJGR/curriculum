@@ -97,7 +97,7 @@ export default {
       if (this.$refs.form.validate()){
         login.registerUser(this.fullname, this.user, this.password)
           .then((res) => {
-            this.$router.push({name: 'Login', params: {success: true, message: 'Registro exitoso!'}})
+            this.$router.push({name: 'Login', params: { show: true, message: 'Registro exitoso!', color: 'success' }})
           })
           .catch((err) => console.log(err))
       }
