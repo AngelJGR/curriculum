@@ -6,12 +6,17 @@ const pool = require("../database");
 const { isLoggedIn } = require("../lib/auth");
 
 // Obtener
-router.get("/:id", async (req, res) => {
-	console.log('entrando aqui')
+router.get("/getFormation/:id", async (req, res) => {
 	const { id } = req.params;
 	const college_degree_type = await pool.query("SELECT id as id_type, description FROM college_degree_type");
 	const college = await pool.query("SELECT id as id_college, name FROM college");
-	res.json({ id, college_degree_type, college });
+	const college_degree_person = await pool.query("SELECT * FROM college_degree_person WHERE id_person = ?", [id]);
+	res.json({ id, college_degree_person, college_degree_type, college });
+});
+
+router.get("/getColleges", async (req, res) => {
+	const college = await pool.query("SELECT * FROM college");
+	res.json({ college });
 });
 
 // Guardar
