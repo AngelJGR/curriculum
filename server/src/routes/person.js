@@ -7,10 +7,11 @@ const { isLoggedIn } = require("../lib/auth");
 
 /** RUTAS PARA BÁSICO **/
 
-router.get("/basico/:id", isLoggedIn, async (req, res) => {
+router.get("/getPerson/:id", isLoggedIn, async (req, res) => {
 	const { id } = req.params;
-	const persona = await pool.query("SELECT * FROM persona WHERE id = ?", [id]);
-	res.render("update/basico", { persona: persona[0], id });
+	console.log('Llegue. Id:', id)
+	const person = await pool.query("SELECT * FROM person WHERE id = ?", [id]);
+	res.json({ person })
 });
 
 router.post("/basico/:id", isLoggedIn, async (req, res) => {
