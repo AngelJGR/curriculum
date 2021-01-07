@@ -1,24 +1,11 @@
 <template>
   <v-app>
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
+    <alert-message
+      :snackbar="snackbar"
       top
       :color="color"
-    >
-      <b>{{ text }}</b>
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          icon
-          color="dark"
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </template>
-    </v-snackbar>
+      :message="message"
+    />
     <v-container fluid>
       <v-row>
         <v-col cols="4">
@@ -70,8 +57,7 @@ export default {
       show: false,
       snackbar: false,
       color: null,
-      timeout: 4000,
-      text: '',
+      message: '',
       rules: {
         required: value => !!value || 'Requerido.',
         min: v => v.length >= 8 || 'Minimo 8 caracteres.'
@@ -99,7 +85,7 @@ export default {
     if (this.$route.params.show) {
       this.snackbar = true
       this.color = this.$route.params.color
-      this.text = this.$route.params.message
+      this.message = this.$route.params.message
     }
   }
 }
