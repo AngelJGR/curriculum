@@ -36,6 +36,11 @@ export default Vue.extend({
   },
   created() {
     this.show = this.snackbar
+  },
+  watch: {
+    snackbar() {
+      this.show = this.snackbar
+    }
   }
 })
 </script>
