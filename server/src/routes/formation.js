@@ -14,6 +14,11 @@ router.get("/getFormation/:id", async (req, res) => {
 	res.json({ id, college_degree_person, college_degree_type, college });
 });
 
+router.post("/getCollegeDregrees", async (req, res) => {
+	const college_degree = await pool.query(`SELECT * FROM college_degree WHERE description like '%${req.body.text}%'`);
+	res.json({ college_degree });
+});
+
 router.get("/getColleges", async (req, res) => {
 	const college = await pool.query("SELECT * FROM college");
 	res.json({ college });
