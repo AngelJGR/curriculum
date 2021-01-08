@@ -3,7 +3,7 @@ import AlertMessage from './alert-message.vue'
 
 const components = [
   {key: 'NonContent', component: NonContent},
-  {key: 'Message', component: AlertMessage}
+  {key: 'AlertMessage', component: AlertMessage}
 ]
 
 export default (vue: any) => {
