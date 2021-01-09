@@ -8,5 +8,8 @@ export default {
   },
   getColleges: () => {
     return Axios.get(`${prefix}/getColleges`)
+  },
+  getCollegeDregrees: (text: string) => {
+    return Axios.post(`${prefix}/getCollegeDregrees`, { text })
   }
 }
