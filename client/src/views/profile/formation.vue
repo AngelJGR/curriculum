@@ -2,6 +2,25 @@
   <v-container>
     <h1>Formación</h1>
     <non-content v-if="isEmpty"></non-content>
+    <v-card v-else>
+      <v-row v-for="item in formation" :key="item.id">
+        <v-col cols="12" md="6">
+          {{item.college_degree}}
+        </v-col>
+        <v-col cols="12" md="4">
+          {{item.college}}
+        </v-col>
+        <v-col cols="12" md="2">
+          <v-btn icon color="success">
+            <v-icon>mdi-refresh-circle</v-icon>
+          </v-btn>
+          <v-btn icon color="error">
+            <v-icon>mdi-delete-circle</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-divider></v-divider>
     <v-card>
       <v-row>
         <v-col cols="6">
@@ -44,19 +63,26 @@
             :items="colleges"
             item-text="name"
             item-value="id"
-            :search-input.sync="searchCollege"
+            return-object
+            clearable
           ></v-autocomplete>
         </v-col>
         <v-col cols="2"></v-col>
       </v-row>
       <v-card-actions>
-        <v-btn @click="addFormation" color="success">Agregar</v-btn>
+        <v-btn @click="setCollegeDegree" color="success">Agregar</v-btn>
       </v-card-actions>
     </v-card>
+    <alert-message
+      :snackbar="snackbar"
+      top
+      :color="color"
+      :message="message"
+    />
   </v-container>
 </template>
-<script>
 
+<script>
 import formation from '../../services/formation'
 export default {
   data() {
@@ -66,27 +92,42 @@ export default {
       college: null,
       collegeDegrees: [],
       collegeDegree: null,
-      searchCollege: null,
-      searchCollegeDegree: null
+      formation: null,
+      snackbar: false,
+      color: '',
+      message: '',
+      // searchCollege: null,
+      // searchCollegeDegree: null
     }
   },
   methods: {
-    addFormation() {
-      console.log('Añade formación')
+    setCollegeDegree() {
+      this.snackbar = false
+      formation.setCollegeDegree(1, this.collegeDegree.id, this.college.id_college)
+        .then((res) => {
+          this.snackbar = true
+          if (res.data.success) {
+            this.color = 'success'
+            this.message = 'Datos ingresados exitósamente'
+            this.formation.push(res.data.college_degree_person[0])
+            this.collegeDegree = null
+            this.college = null
+          } else {
+            this.color = 'error'
+            this.message = 'Ocurrió un error al ingresar datos'
+          }
+        })
     },
-    /* setCollege() {
-
-    } */
   },
   created() {
     formation.getFormation('1')
       .then((res) => {
-        console.log(res.data.college_degree)
         if (res.data.college_degree_person.length === 0) {
           this.isEmpty = true
         }
         this.colleges = res.data.college || null
         this.collegeDegrees = res.data.college_degree
+        this.formation = res.data.college_degree_person
       })
     /* formation.getColleges()
       .then((res) => {
@@ -94,7 +135,7 @@ export default {
         this.colleges = res.data.college || null
       }) */
   },
-  watch: {
+  /* watch: {
     searchCollegeDegree (val) {
       formation.getCollegeDregrees(val)
         .then((res) => {
@@ -102,6 +143,6 @@ export default {
           this.collegeDegrees.concat(res.data.college_degree)
         })
     }
-  }
+  } */
 }
 </script>
