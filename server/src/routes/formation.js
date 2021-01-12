@@ -10,8 +10,10 @@ router.get("/getFormation/:id", async (req, res) => {
 	const { id } = req.params;
 	const college_degree_type = await pool.query("SELECT id as id_type, description FROM college_degree_type");
 	const college = await pool.query("SELECT id as id_college, name FROM college");
-	const college_degree = await pool.query(`SELECT * FROM college_degree`);
-	const college_degree_person = await pool.query("SELECT a.id, b.description AS college_degree, c.name AS college \
+	const college_degree = await pool.query(`SELECT * from college_degree
+			WHERE id NOT IN(
+			SELECT id_college_degree FROM college_degree_person WHERE id_person = ?)`, [id]);
+	const college_degree_person = await pool.query("SELECT a.id, a.id_college_degree, b.description AS college_degree, c.name AS college \
 			FROM college_degree_person AS a, college_degree AS b, college AS c \
 			WHERE a.id_college_degree = b.id \
 			AND a.id_college = c.id \
@@ -32,7 +34,7 @@ router.post("/setCollegeDegree", async (req, res) => {
 	}
 	try {
 		const result = await pool.query("INSERT INTO college_degree_person SET ?", [data])
-		const college_degree_person = await pool.query("SELECT a.id, b.description AS college_degree, c.name AS college \
+		const college_degree_person = await pool.query("SELECT a.id, a.id_college_degree, b.description AS college_degree, c.name AS college \
 			FROM college_degree_person AS a, college_degree AS b, college AS c \
 			WHERE a.id_college_degree = b.id \
 			AND a.id_college = c.id \
