@@ -44,6 +44,23 @@ router.post("/setCollegeDegree", async (req, res) => {
 	}
 });
 
+router.delete("/unsetCollegeDegree/:id", async (req, res) => {
+	try {
+		const result = await pool.query('DELETE FROM college_degree_person WHERE id = ?', [req.params.id])
+		res.json({ success: true, result });
+	} catch (error) {
+		res.json({ success: false, error });
+	}
+});
+
+
+
+
+
+
+
+
+
 /* router.get("/getColleges", async (req, res) => {
 	const college = await pool.query("SELECT * FROM college");
 	res.json({ college });
