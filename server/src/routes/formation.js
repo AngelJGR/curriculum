@@ -10,8 +10,9 @@ router.get("/getFormation/:id", async (req, res) => {
 	const { id } = req.params;
 	const college_degree_type = await pool.query("SELECT id as id_type, description FROM college_degree_type");
 	const college = await pool.query("SELECT id as id_college, name FROM college");
+	const college_degree = await pool.query(`SELECT * FROM college_degree`);
 	const college_degree_person = await pool.query("SELECT * FROM college_degree_person WHERE id_person = ?", [id]);
-	res.json({ id, college_degree_person, college_degree_type, college });
+	res.json({ id, college_degree_person, college_degree_type, college_degree, college });
 });
 
 router.post("/getCollegeDregrees", async (req, res) => {
@@ -19,10 +20,25 @@ router.post("/getCollegeDregrees", async (req, res) => {
 	res.json({ college_degree });
 });
 
-router.get("/getColleges", async (req, res) => {
+router.post("/setCollegeDegree", async (req, res) => {
+	const data = {
+		id_person: req.body.idPerson,
+		id_college_degree: req.body.idCollegeDegree,
+		id_college: req.body.idCollege
+	}
+	try {
+		const result = await pool.query("INSERT INTO college_degree_person SET ?", [data])
+		res.json({ success: true });
+	}
+	catch (error) {
+		res.json({ success: false, error });
+	}
+});
+
+/* router.get("/getColleges", async (req, res) => {
 	const college = await pool.query("SELECT * FROM college");
 	res.json({ college });
-});
+}); */
 
 // Guardar
 router.post("add/:id", isLoggedIn, async (req, res) => {
