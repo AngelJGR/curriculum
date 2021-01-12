@@ -4,17 +4,17 @@
     <non-content v-if="isEmpty"></non-content>
     <v-card v-else>
       <v-row v-for="(item, index) in formation" :key="item.id">
-        <v-col cols="12" md="6">
-          {{index}} - {{item.college_degree}}
+        <v-col cols="12" sm="6">
+          {{index}} - {{item.id_college_degree}} - {{item.college_degree}}
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col cols="12" sm="4">
           {{item.college}}
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="12" sm="2">
           <v-btn icon color="success">
             <v-icon>mdi-refresh-circle</v-icon>
           </v-btn>
-          <v-btn icon color="error" @click="unsetCollegeDegree(item.id, index)">
+          <v-btn icon color="error" @click="unsetCollegeDegree(item, index)">
             <v-icon>mdi-delete-circle</v-icon>
           </v-btn>
         </v-col>
@@ -23,7 +23,7 @@
     <v-divider></v-divider>
     <v-form lazy-validation ref="form" @submit.prevent="setCollegeDegree">
       <v-card>
-        <v-row>
+        <v-row justify="center">
           <v-col cols="6">
             <v-autocomplete
               label="Seleccione una carrera"
@@ -48,10 +48,11 @@
               :rules="[rules.required]"
             ></v-autocomplete>
           </v-col>
-          <v-col cols="2"></v-col>
+          <v-col cols="2">
+            <v-btn small type="submit" color="success">Agregar</v-btn>
+          </v-col>
         </v-row>
         <v-card-actions>
-          <v-btn type="submit" color="success">Agregar</v-btn>
         </v-card-actions>
       </v-card>
     </v-form>
@@ -93,6 +94,10 @@ export default {
             if (res.data.success) {
               this.color = 'success'
               this.message = 'Datos ingresados exitósamente'
+              const index = this.collegeDegrees.findIndex(item => item.id === res.data.college_degree_person[0].id_college_degree)
+              if (index > -1) {
+                this.collegeDegrees.splice(index, 1)
+              }
               this.formation.push(res.data.college_degree_person[0])
               this.$refs.form.reset()
             } else {
@@ -102,15 +107,19 @@ export default {
           })
       }
     },
-    unsetCollegeDegree(id, index) {
+    unsetCollegeDegree(item, index) {
       this.snackbar = false
-      formation.unsetCollegeDegree(id)
+      formation.unsetCollegeDegree(item.id)
         .then((res) => {
           this.snackbar = true
           if (res.data.success) {
             this.color = 'success'
             this.message = 'Registro eliminado'
             this.formation.splice(index, 1)
+            this.collegeDegrees.push({
+              id: item.id_college_degree,
+              description: item.college_degree,
+            })
           } else {
             this.color = 'error'
             this.message = 'Ocurrió un error al eliminar el registro'
@@ -119,7 +128,7 @@ export default {
     }
   },
   created() {
-    formation.getFormation('1')
+    formation.getFormation('1') // EDITAR
       .then((res) => {
         if (res.data.college_degree_person.length === 0) {
           this.isEmpty = true
