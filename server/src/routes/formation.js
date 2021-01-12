@@ -11,7 +11,11 @@ router.get("/getFormation/:id", async (req, res) => {
 	const college_degree_type = await pool.query("SELECT id as id_type, description FROM college_degree_type");
 	const college = await pool.query("SELECT id as id_college, name FROM college");
 	const college_degree = await pool.query(`SELECT * FROM college_degree`);
-	const college_degree_person = await pool.query("SELECT * FROM college_degree_person WHERE id_person = ?", [id]);
+	const college_degree_person = await pool.query("SELECT a.id, b.description AS college_degree, c.name AS college \
+			FROM college_degree_person AS a, college_degree AS b, college AS c \
+			WHERE a.id_college_degree = b.id \
+			AND a.id_college = c.id \
+			AND a.id_person = ?;", [id]);
 	res.json({ id, college_degree_person, college_degree_type, college_degree, college });
 });
 
@@ -28,7 +32,12 @@ router.post("/setCollegeDegree", async (req, res) => {
 	}
 	try {
 		const result = await pool.query("INSERT INTO college_degree_person SET ?", [data])
-		res.json({ success: true });
+		const college_degree_person = await pool.query("SELECT a.id, b.description AS college_degree, c.name AS college \
+			FROM college_degree_person AS a, college_degree AS b, college AS c \
+			WHERE a.id_college_degree = b.id \
+			AND a.id_college = c.id \
+			AND a.id = ?;", [result.insertId]);
+		res.json({ success: true, college_degree_person });
 	}
 	catch (error) {
 		res.json({ success: false, error });
