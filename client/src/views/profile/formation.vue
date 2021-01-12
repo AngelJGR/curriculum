@@ -3,9 +3,9 @@
     <h1>Formación</h1>
     <non-content v-if="isEmpty"></non-content>
     <v-card v-else>
-      <v-row v-for="item in formation" :key="item.id">
+      <v-row v-for="(item, index) in formation" :key="item.id">
         <v-col cols="12" md="6">
-          {{item.college_degree}}
+          {{index}} - {{item.college_degree}}
         </v-col>
         <v-col cols="12" md="4">
           {{item.college}}
@@ -14,7 +14,7 @@
           <v-btn icon color="success">
             <v-icon>mdi-refresh-circle</v-icon>
           </v-btn>
-          <v-btn icon color="error">
+          <v-btn icon color="error" @click="unsetCollegeDegree(item.id, index)">
             <v-icon>mdi-delete-circle</v-icon>
           </v-btn>
         </v-col>
@@ -102,6 +102,21 @@ export default {
           })
       }
     },
+    unsetCollegeDegree(id, index) {
+      this.snackbar = false
+      formation.unsetCollegeDegree(id)
+        .then((res) => {
+          this.snackbar = true
+          if (res.data.success) {
+            this.color = 'success'
+            this.message = 'Registro eliminado'
+            this.formation.splice(index, 1)
+          } else {
+            this.color = 'error'
+            this.message = 'Ocurrió un error al eliminar el registro'
+          }
+        })
+    }
   },
   created() {
     formation.getFormation('1')

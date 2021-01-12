@@ -14,5 +14,8 @@ export default {
   },
   setCollegeDegree: (idPerson: number, idCollegeDegree: number, idCollege: number) => {
     return Axios.post(`${prefix}/setCollegeDegree`, { idPerson, idCollegeDegree, idCollege })
+  },
+  unsetCollegeDegree: (id: number) => {
+    return Axios.delete(`${prefix}/unsetCollegeDegree/${id}`)
   }
 }
