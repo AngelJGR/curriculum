@@ -5,15 +5,30 @@ const pool = require("../database");
 
 const { isLoggedIn } = require("../lib/auth");
 
-/* ADD */
-router.get("/getSkills/:idPerson", isLoggedIn, async (req, res) => {
+router.get("/getSkillsPerson/:idPerson", isLoggedIn, async (req, res) => {
 	const { idPerson } = req.params;
+	const skillsPerson = await pool.query("SELECT a.id, a.id_skill, b.description \
+			FROM person_skills AS a, skills AS b \
+			WHERE a.id_skill = b.id \
+			AND a.id_person = 1;", [idPerson]);
+	res.json({ success: true, skillsPerson });
+});
+
+router.post("/getSkills", async (req, res) => {
+	const skills = await pool.query(`SELECT * FROM skills WHERE description like '%${req.body.text}%'`);
+	res.json({ skills });
+});
+
+router.get("/setSkill", isLoggedIn, async (req, res) => {
+	console.log('Llegando')
 	const skills = await pool.query("SELECT a.id, a.id_skill, b.description \
 			FROM person_skills AS a, skills AS b \
 			WHERE a.id_skill = b.id \
 			AND a.id_person = 1;", [idPerson]);
-	res.json({ success: true, skills });
+	res.json({ success: true,});
 });
+
+
 
 router.post("/add", isLoggedIn, async (req, res) => {
 	const { id } = req.params;
