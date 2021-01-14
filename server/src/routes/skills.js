@@ -7,25 +7,36 @@ const { isLoggedIn } = require("../lib/auth");
 
 router.get("/getSkillsPerson/:idPerson", isLoggedIn, async (req, res) => {
 	const { idPerson } = req.params;
-	const skillsPerson = await pool.query("SELECT a.id, a.id_skill, b.description \
+	const skillsPerson = await pool.query("SELECT a.id, a.id_skill, b.description, a.score \
 			FROM person_skills AS a, skills AS b \
 			WHERE a.id_skill = b.id \
-			AND a.id_person = 1;", [idPerson]);
+			AND a.id_person = ?;", [idPerson]);
 	res.json({ success: true, skillsPerson });
 });
 
 router.post("/getSkills", async (req, res) => {
-	const skills = await pool.query(`SELECT * FROM skills WHERE description like '%${req.body.text}%'`);
+	const skills = await pool.query(`SELECT * FROM skills WHERE description like '%${req.body.text}%' AND id NOT IN (
+			SELECT id_skill FROM person_skills WHERE id_person = ${req.body.idPerson})`);
 	res.json({ skills });
 });
 
-router.get("/setSkill", isLoggedIn, async (req, res) => {
-	console.log('Llegando')
-	const skills = await pool.query("SELECT a.id, a.id_skill, b.description \
-			FROM person_skills AS a, skills AS b \
-			WHERE a.id_skill = b.id \
-			AND a.id_person = 1;", [idPerson]);
-	res.json({ success: true,});
+router.post("/setSkill", isLoggedIn, async (req, res) => {
+	const { idPerson, idSkill, score } = req.body
+	const data = {
+		id_person: idPerson,
+		id_skill: idSkill,
+		score
+	}
+	try {
+		const result = await pool.query ("INSERT INTO person_skills SET ?", [data])
+		const skill = await pool.query("SELECT a.id, a.id_skill, b.description, a.score \
+				FROM person_skills AS a, skills AS b \
+				WHERE a.id_skill = b.id \
+				AND a.id = ?;", [result.insertId]);
+		res.json({ success: true, skill});
+	} catch (error) {
+		res.json({ success: false, error});
+	}
 });
 
 
