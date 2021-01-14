@@ -5,10 +5,10 @@ export default {
   getSkillsPerson: (idPerson: number) => {
     return Axios.get(`${prefix}/getSkillsPerson/${idPerson}`)
   },
-  getSkills: (text: string) => {
-    return Axios.post(`${prefix}/getSkills`, { text })
+  getSkills: (idPerson: number, text: string) => {
+    return Axios.post(`${prefix}/getSkills`, { text, idPerson })
   },
-  setSkill: () => {
-    return Axios.post(`${prefix}/getSkills`)
+  setSkill: (idPerson: number, idSkill: number, score: number) => {
+    return Axios.post(`${prefix}/setSkill`, {idPerson, idSkill, score})
   }
 }
