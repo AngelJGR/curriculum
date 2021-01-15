@@ -8,7 +8,13 @@
           {{index}} - {{item.description}}
         </v-col>
         <v-col cols="12" sm="4">
-          {{item.score}}
+          <v-progress-circular
+            size="80"
+            width="10"
+            :value="item.score"
+            :color="getColor(item.score)"
+          > {{item.score}}
+          </v-progress-circular>
         </v-col>
         <v-col cols="12" sm="2">
           <v-btn icon color="success">
@@ -111,6 +117,9 @@ export default Vue.extend({
           this.skills = res.data.skills
           this.isSearching = false
         })
+    },
+    getColor(score) {
+      return score < 20 ? 'red' : score < 40 ? 'yellow' : score < 80 ? 'primary' : 'success'
     },
     setSkill() {
       if (this.$refs.form.validate() && this.skill.description === this.search) {
