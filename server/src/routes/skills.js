@@ -39,6 +39,16 @@ router.post("/setSkill", isLoggedIn, async (req, res) => {
 	}
 });
 
+router.delete("/unsetSkill/:id", async (req, res) => {
+	try {
+		const result = await pool.query('DELETE FROM person_skills WHERE id = ?', [req.params.id])
+		res.json({ success: true, result });
+	} catch (error) {
+		res.json({ success: false, error });
+	}
+});
+
+
 
 
 router.post("/add", isLoggedIn, async (req, res) => {
