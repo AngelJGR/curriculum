@@ -5,7 +5,7 @@
     <v-card v-else>
       <v-row v-for="(item, index) in skillsPerson" :key="item.id">
         <v-col cols="12" sm="6">
-          {{index}} - {{item.description}}
+          {{index}} - {{item.id}} - {{item.description}}
         </v-col>
         <v-col cols="12" sm="4">
           <v-progress-circular
@@ -13,14 +13,14 @@
             width="10"
             :value="item.score"
             :color="getColor(item.score)"
-          > {{item.score}}
+          ><span class="headline">{{item.score}}</span>
           </v-progress-circular>
         </v-col>
         <v-col cols="12" sm="2">
           <v-btn icon color="success">
             <v-icon>mdi-refresh-circle</v-icon>
           </v-btn>
-          <v-btn icon color="error">
+          <v-btn icon color="error" @click="unsetSkill(item, index)">
             <v-icon>mdi-delete-circle</v-icon>
           </v-btn>
         </v-col>
@@ -41,6 +41,7 @@
               :rules="[rules.required]"
               :searchInput.sync="search"
               clearable
+              @keypress.enter="addSkill"
             >
               <template v-slot:no-data>
                 <v-list-item v-if="!isSearching">
@@ -76,6 +77,12 @@
         </v-card-actions>
       </v-card>
     </v-form>
+    <alert-message
+      :snackbar="snackbar"
+      top
+      :color="color"
+      :message="message"
+    />
   </v-container>
 </template>
 
@@ -96,7 +103,10 @@ export default Vue.extend({
       isEmpty: false,
       rules: {
         required: value => !!value || 'Requerido.',
-      }
+      },
+      snackbar: false,
+      color: '',
+      message: '',
     }
   },
   methods: {
@@ -118,7 +128,7 @@ export default Vue.extend({
           this.isSearching = false
         })
     },
-    getColor(score) {
+    getColor(score: number) {
       return score < 20 ? 'red' : score < 40 ? 'yellow' : score < 80 ? 'primary' : 'success'
     },
     setSkill() {
@@ -129,6 +139,24 @@ export default Vue.extend({
             this.skillsPerson.push(res.data.skill)
           })
       }
+    },
+    unsetSkill(item: any, index: number) {
+      this.snackbar = false
+      skills.unsetSkill(item.id)
+        .then((res) => {
+          this.snackbar = true
+          if (res.data.success) {
+            this.color = 'success'
+            this.message = 'Registro eliminado'
+            this.skillsPerson.splice(index, 1)
+          } else {
+            this.color = 'error'
+            this.message = 'Ocurrió un error al eliminar el registro'
+          }
+        })
+    },
+    addSkill() { // PARA AGREGAR SKIILL NO EXISTENTE
+      console.log('Valor', this.search)
     }
   },
   watch: {
