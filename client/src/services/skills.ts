@@ -9,6 +9,9 @@ export default {
     return Axios.post(`${prefix}/getSkills`, { text, idPerson })
   },
   setSkill: (idPerson: number, idSkill: number, score: number) => {
-    return Axios.post(`${prefix}/setSkill`, {idPerson, idSkill, score})
+    return Axios.post(`${prefix}/setSkill`, { idPerson, idSkill, score })
+  },
+  unsetSkill: (id: number) => {
+    return Axios.delete(`${prefix}/unsetSkill/${id}`)
   }
 }
