@@ -1,4 +1,6 @@
 export interface Skill {
   id: number,
-  description: string
+  description: string,
+  id_skill?: number,
+  score?: number
 }
