@@ -36,6 +36,7 @@
               v-model="skill"
               :items="skills"
               label="Habilidad"
+              item-value="id"
               item-text="description"
               placeholder="Ingrese habilidad"
               :rules="[rules.required]"
@@ -89,21 +90,20 @@
 <script lang="ts">
 import Vue from 'vue'
 import skills from '../../services/skills'
+import { Skill } from '../../interfaces/skill'
 
 export default Vue.extend({
   data() {
     return {
       skills: [],
-      skillsPerson: [],
-      skillPerson: null,
-      skill: null,
-      score: null,
+      skillsPerson: [] as any,
+      skillPerson: {},
+      skill: '' || {} as Skill,
+      score: 0,
       search: null,
       isSearching: false,
       isEmpty: false,
-      rules: {
-        required: value => !!value || 'Requerido.',
-      },
+      rules: { required: (value: any) => !!value || 'Requerido.' },
       snackbar: false,
       color: '',
       message: '',
@@ -112,7 +112,7 @@ export default Vue.extend({
   methods: {
     getSkillsPerson() {
       skills.getSkillsPerson(1) // EDITAR
-        .then((res) => {
+        .then((res: any) => {
           if (res.data.skillsPerson.length === 0) {
             this.isEmpty = true
           }
@@ -120,22 +120,22 @@ export default Vue.extend({
           console.log(res)
         })
     },
-    getSkills(val) {
+    getSkills(val: string) {
       this.isSearching = true
       skills.getSkills(1, val) //EDITAR
-        .then((res) => {
+        .then((res: any) => {
           this.skills = res.data.skills
           this.isSearching = false
         })
     },
-    getColor(score: number) {
+    getColor(score: number): string {
       return score < 20 ? 'red' : score < 40 ? 'yellow' : score < 80 ? 'primary' : 'success'
     },
     setSkill() {
-      if (this.$refs.form.validate() && this.skill.description === this.search) {
+      if ((this.$refs.form as Vue & { validate: () => boolean }).validate() && this.skill.description === this.search) {
         skills.setSkill(1, this.skill.id, this.score) // EDITAR
           .then((res) => {
-            console.log(res)
+            console.log('res', res)
             this.skillsPerson.push(res.data.skill)
           })
       }
@@ -143,7 +143,7 @@ export default Vue.extend({
     unsetSkill(item: any, index: number) {
       this.snackbar = false
       skills.unsetSkill(item.id)
-        .then((res) => {
+        .then((res: any) => {
           this.snackbar = true
           if (res.data.success) {
             this.color = 'success'
@@ -156,7 +156,7 @@ export default Vue.extend({
         })
     },
     addSkill() { // PARA AGREGAR SKIILL NO EXISTENTE
-      console.log('Valor', this.search)
+      console.log('Valor...', this.search)
     }
   },
   watch: {
