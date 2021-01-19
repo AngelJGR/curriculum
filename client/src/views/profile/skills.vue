@@ -96,14 +96,14 @@ export default Vue.extend({
   data() {
     return {
       skills: [],
-      skillsPerson: [] as any,
+      skillsPerson: [] as Skill[],
       skillPerson: {},
       skill: '' || {} as Skill,
       score: 0,
       search: null,
       isSearching: false,
       isEmpty: false,
-      rules: { required: (value: any) => !!value || 'Requerido.' },
+      rules: { required: (value: string) => !!value || 'Requerido.' },
       snackbar: false,
       color: '',
       message: '',
@@ -112,18 +112,17 @@ export default Vue.extend({
   methods: {
     getSkillsPerson() {
       skills.getSkillsPerson(1) // EDITAR
-        .then((res: any) => {
+        .then((res) => {
           if (res.data.skillsPerson.length === 0) {
             this.isEmpty = true
           }
           this.skillsPerson = res.data.skillsPerson
-          console.log(res)
         })
     },
     getSkills(val: string) {
       this.isSearching = true
       skills.getSkills(1, val) //EDITAR
-        .then((res: any) => {
+        .then((res) => {
           this.skills = res.data.skills
           this.isSearching = false
         })
@@ -135,15 +134,14 @@ export default Vue.extend({
       if ((this.$refs.form as Vue & { validate: () => boolean }).validate() && this.skill.description === this.search) {
         skills.setSkill(1, this.skill.id, this.score) // EDITAR
           .then((res) => {
-            console.log('res', res)
             this.skillsPerson.push(res.data.skill)
           })
       }
     },
-    unsetSkill(item: any, index: number) {
+    unsetSkill(item: Skill, index: number) {
       this.snackbar = false
       skills.unsetSkill(item.id)
-        .then((res: any) => {
+        .then((res) => {
           this.snackbar = true
           if (res.data.success) {
             this.color = 'success'

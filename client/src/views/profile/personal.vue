@@ -127,7 +127,11 @@ export default Vue.extend({
         }
       })
       .catch((err) => {
-        this.$router.push({name: 'Login', params: { show: true, message: err.response.data.message, color: 'error' }})
+        const params = {
+          show: 'true', message: err.response.data.message, color: 'error'
+        }
+        console.log('Hola')
+        this.$router.push({name: 'Login', params })
       })
   }
 })
