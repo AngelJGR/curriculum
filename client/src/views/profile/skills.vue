@@ -35,9 +35,9 @@
             <v-combobox
               v-model="skill"
               :items="skills"
-              label="Habilidad"
-              item-value="id"
               item-text="description"
+              item-value="id"
+              label="Habilidad"
               placeholder="Ingrese habilidad"
               :rules="[rules.required]"
               :searchInput.sync="search"
@@ -98,7 +98,7 @@ export default Vue.extend({
       skills: [],
       skillsPerson: [] as Skill[],
       skillPerson: {},
-      skill: '' || {} as Skill,
+      skill: '',
       score: 0,
       search: null,
       isSearching: false,
@@ -120,21 +120,33 @@ export default Vue.extend({
         })
     },
     getSkills(val: string) {
-      this.isSearching = true
-      skills.getSkills(1, val) //EDITAR
-        .then((res) => {
-          this.skills = res.data.skills
-          this.isSearching = false
-        })
+      if (val.length > 0) {
+        this.isSearching = true
+        skills.getSkills(1, val) //EDITAR
+          .then((res) => {
+            this.skills = res.data.skills
+            this.isSearching = false
+          })
+      }
     },
     getColor(score: number): string {
       return score < 20 ? 'red' : score < 40 ? 'yellow' : score < 80 ? 'primary' : 'success'
     },
     setSkill() {
       if ((this.$refs.form as Vue & { validate: () => boolean }).validate() && this.skill.description === this.search) {
+        this.snackbar = false
         skills.setSkill(1, this.skill.id, this.score) // EDITAR
           .then((res) => {
-            this.skillsPerson.push(res.data.skill)
+            this.snackbar = true
+            if (res.data.success) {
+              this.color = 'success'
+              this.message = 'Habilidad agregada'
+              this.skillsPerson.push(res.data.skill[0])
+              this.$refs.form.reset()
+            } else {
+              this.color = 'error'
+              this.message = 'Ocurrió un error al agregar el registro'
+            }
           })
       }
     },
@@ -159,7 +171,9 @@ export default Vue.extend({
   },
   watch: {
     search (val) {
-      this.getSkills(val)
+      if (val) {
+        this.getSkills(val)
+      }
     }
   },
   created() {
