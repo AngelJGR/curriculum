@@ -5,6 +5,9 @@ export default {
   getExperience: (idPerson: number) => {
     return Axios.get(`${prefix}/getExperience/${idPerson}`)
   },
+  getOrganizations: (idPerson: number, text: string) => {
+    return Axios.post(`${prefix}/getOrganizations`, { text, idPerson })
+  },
   /* getSkills: (idPerson: number, text: string) => {
     return Axios.post(`${prefix}/getSkills`, { text, idPerson })
   },
