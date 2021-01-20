@@ -6,11 +6,24 @@ const pool = require("../database");
 const { isLoggedIn } = require("../lib/auth");
 
 /* ADD */
-router.get("/experiencia/:id", isLoggedIn, async (req, res) => {
-	const { id } = req.params;
-	const organization = await pool.query("SELECT * FROM organization");
-	res.json({ id, organization });
+router.get("/getExperience/:idPerson", isLoggedIn, async (req, res) => {
+	const { idPerson } = req.params;
+	try {
+		const experience = await pool.query('SELECT a.id, a.area, a.description, b.name \
+		FROM work_experience AS a, organization AS b \
+		WHERE a.id_organization = b.id AND a.id_person = ?', [idPerson])
+		res.json({ success: true, experience });
+	} catch (error) {
+		res.json({ success: false, error });
+	}
 });
+
+
+
+
+
+
+
 
 router.post("/experiencia/:id", isLoggedIn, async (req, res) => {
 	const { id } = req.params;
