@@ -56,7 +56,7 @@ const routes: Array<RouteConfig> = [
       {
         path: 'experience',
         name: 'Experience',
-        component: Skills,
+        component: Experience,
         // beforeEnter: AuthVerify
       },
       {
