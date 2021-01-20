@@ -83,19 +83,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import person from '../../services/person'
+import { Person } from '../../interfaces/person'
 export default Vue.extend({
   data() {
     return {
       idPerson: 1,
-      person: {
-        fullname: '',
-        ci: 0,
-        address: '',
-        phone: '',
-        twitter:'',
-        email: '',
-        about: ''
-      },
+      person: {} as Person,
       isRegister: false,
       snackbar: false,
       color: '',
@@ -103,9 +96,9 @@ export default Vue.extend({
     }
   },
   methods: {
-    updatePerson () {
+    updatePerson (): void {
       this.snackbar = false
-      person.updatePerson(this.idPerson, this.person)
+      person.updatePerson(this.idPerson, this.person) // EDITAR
         .then((res)=>{
           this.snackbar = true
           if (res.data.success) {
