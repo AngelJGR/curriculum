@@ -6,13 +6,13 @@ const pool = require("../database");
 const { isLoggedIn } = require("../lib/auth");
 
 /* ADD */
-router.get("/getExperience/:idPerson", isLoggedIn, async (req, res) => {
+router.get("/getExperiences/:idPerson", isLoggedIn, async (req, res) => {
 	const { idPerson } = req.params;
 	try {
-		const experience = await pool.query('SELECT a.id, a.area, a.description, b.name \
+		const experiences = await pool.query('SELECT a.id, a.area, a.description, b.name \
 		FROM work_experience AS a, organization AS b \
 		WHERE a.id_organization = b.id AND a.id_person = ?', [idPerson])
-		res.json({ success: true, experience });
+		res.json({ success: true, experiences });
 	} catch (error) {
 		res.json({ success: false, error });
 	}
