@@ -3,8 +3,8 @@ import Axios from 'axios'
 
 const prefix = 'experience'
 export default {
-  getExperience: (idPerson: number) => {
-    return Axios.get(`${prefix}/getExperience/${idPerson}`)
+  getExperiences: (idPerson: number) => {
+    return Axios.get(`${prefix}/getExperiences/${idPerson}`)
   },
   getOrganizations: (idPerson: number, text: string) => {
     return Axios.post(`${prefix}/getOrganizations`, { text, idPerson })

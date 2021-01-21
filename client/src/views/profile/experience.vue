@@ -3,6 +3,25 @@
     <h1>Experiencia</h1>
     <non-content v-if="isEmpty"></non-content>
 
+    <v-card v-else>
+      <v-row v-for="(item, index) in experiences" :key="item.id">
+        <v-col cols="12" sm="6">
+          {{index}} - {{item.id}} - {{item.description}}
+        </v-col>
+        <v-col cols="12" sm="4">
+          {{ item.area }}
+        </v-col>
+        <v-col cols="12" sm="2">
+          <v-btn icon color="success">
+            <v-icon>mdi-refresh-circle</v-icon>
+          </v-btn>
+          <v-btn icon color="error">
+            <v-icon>mdi-delete-circle</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card>
+
     <v-divider></v-divider>
     <v-form lazy-validation ref="form" @submit.prevent="setExperience">
       <v-card>
@@ -102,14 +121,14 @@ export default Vue.extend({
   methods: {
     getExperience (): void {
       this.snackbar = false
-      experience.getExperience(1) // EDITAR
+      experience.getExperiences(1) // EDITAR
         .then((res) => {
           console.log(res)
           if (res.data.success) {
-            if (res.data.experience.length === 0) {
+            if (res.data.experiences.length === 0) {
               this.isEmpty = true
             }
-            this.experience = res.data.experience
+            this.experiences = res.data.experiences
           } else {
             this.snackbar = true
             this.color = 'error'
