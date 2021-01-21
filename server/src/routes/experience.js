@@ -24,7 +24,25 @@ router.post("/getOrganizations", async (req, res) => {
 	res.json({ organizations });
 });
 
-
+router.post("/setExperience", isLoggedIn, async (req, res) => {
+	const { idPerson, area, description, idOrganization } = req.body
+	const data = {
+		id_person: idPerson,
+		area,
+		description,
+		id_organization: idOrganization
+	}
+	try {
+		const result = await pool.query ("INSERT INTO work_experience SET ?", [data])
+		const experience = await pool.query("SELECT a.id, a.area, a.description, b.name \
+				FROM work_experience AS a, organization AS b \
+				WHERE a.id_organization = b.id \
+				AND a.id = ?;", [result.insertId]);
+		res.json({ success: true, experience});
+	} catch (error) {
+		res.json({ success: false, error});
+	}
+});
 
 
 
