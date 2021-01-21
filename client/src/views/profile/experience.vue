@@ -16,8 +16,9 @@
               label="Organización"
               placeholder="Ingrese organización"
               :rules="[rules.required]"
-              :searchInput.sync="search"
+              :search-input.sync="search"
               clearable
+              return-object
             >
               <template v-slot:no-data>
                 <v-list-item v-if="!isSearching">
@@ -34,6 +35,20 @@
                 ></v-progress-circular>
               </template>
             </v-combobox>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="experience.area"
+              label="Area / Departamento"
+              :rules="[rules.required]"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-textarea
+              v-model="experience.description"
+              label="descripción"
+              :rules="[rules.required]"
+            ></v-textarea>
           </v-col>
           <v-col cols="4">
             <!-- <v-slider
@@ -65,12 +80,15 @@
 <script lang="ts">
 import Vue from 'vue'
 import experience from '../../services/experience'
+import { Experience } from '../../interfaces/experience'
+import { Organization } from '../../interfaces/organization'
 export default Vue.extend({
   data () {
     return {
-      experiences: [],
-      experience: null,
-      organizations: [],
+      experiences: [] as Experience[],
+      experience: {} as Experience,
+      organizations: [] as Organization[],
+      // organization: {} as Organization,
       organization: null,
       search: null,
       rules: { required: (value: string) => !!value || 'Requerido.' },
@@ -88,8 +106,6 @@ export default Vue.extend({
         .then((res) => {
           console.log(res)
           if (res.data.success) {
-            // this.color = 'success'
-            // this.message = 'Registros obtenidos'
             if (res.data.experience.length === 0) {
               this.isEmpty = true
             }
@@ -112,15 +128,40 @@ export default Vue.extend({
       }
     },
     setExperience(): void {
-      console.log('Click')
+      this.snackbar = false
+      this.experience.idOrganization = this.organization.id
+      this.experience.idPerson = 1 // EDITAR
+      experience.setExperience(this.experience)
+        .then((res) => {
+          console.log(res)
+          this.snackbar = true
+          if (res.data.success) {
+            this.color = 'success'
+            this.message = 'Experiencia agregada'
+            this.experiences.push(res.data.experience[0])
+            this.$refs.form.reset()
+          } else {
+            this.color = 'error'
+            this.message = 'Ocurrió un error al agregar el registro'
+          }
+        })
+
     }
   },
   watch: {
-    search (val) {
+    search: function(val: string) {
       if (val) {
         this.getOrganizations(val)
       }
     }
+    /* organization: {
+      deep: true,
+      handler: function (val: Organization) {
+        if (val.name) {
+          this.getOrganizations(val.name)
+        }
+      }
+    } */
   },
   created() {
     this.getExperience()
