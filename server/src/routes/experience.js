@@ -19,8 +19,7 @@ router.get("/getExperiences/:idPerson", isLoggedIn, async (req, res) => {
 });
 
 router.post("/getOrganizations", async (req, res) => {
-	const organizations = await pool.query(`SELECT * FROM organization WHERE name like '%${req.body.text}%' AND id NOT IN (
-			SELECT id_organization FROM work_experience WHERE id_person = ${req.body.idPerson})`);
+	const organizations = await pool.query(`SELECT * FROM organization WHERE name like '%${req.body.text}%'`);
 	res.json({ organizations });
 });
 
