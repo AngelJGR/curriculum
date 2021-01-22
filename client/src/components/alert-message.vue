@@ -3,6 +3,7 @@
     v-model="show"
     :timeout="5000"
     top
+    right
     :color="color"
     :message="message"
   >
