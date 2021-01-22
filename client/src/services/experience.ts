@@ -12,6 +12,9 @@ export default {
   setExperience: (data: Experience) => {
     return Axios.post(`${prefix}/setExperience`, { ...data })
   },
+  unsetExperience: (id: number) => {
+    return Axios.delete(`${prefix}/unsetExperience/${id}`)
+  }
   /* getSkills: (idPerson: number, text: string) => {
     return Axios.post(`${prefix}/getSkills`, { text, idPerson })
   },

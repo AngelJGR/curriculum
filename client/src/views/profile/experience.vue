@@ -5,17 +5,20 @@
 
     <v-card v-else>
       <v-row v-for="(item, index) in experiences" :key="item.id">
-        <v-col cols="12" sm="6">
+        <v-col cols="12" sm="4">
           {{index}} - {{item.id}} - {{item.description}}
         </v-col>
-        <v-col cols="12" sm="4">
+        <v-col cols="12" sm="3">
           {{ item.area }}
+        </v-col>
+        <v-col cols="12" sm="3">
+          {{ item.name }}
         </v-col>
         <v-col cols="12" sm="2">
           <v-btn icon color="success">
             <v-icon>mdi-refresh-circle</v-icon>
           </v-btn>
-          <v-btn icon color="error">
+          <v-btn icon color="error" @click="unsetExperience(item, index)">
             <v-icon>mdi-delete-circle</v-icon>
           </v-btn>
         </v-col>
@@ -152,19 +155,39 @@ export default Vue.extend({
       this.experience.idPerson = 1 // EDITAR
       experience.setExperience(this.experience)
         .then((res) => {
-          console.log(res)
           this.snackbar = true
           if (res.data.success) {
             this.color = 'success'
             this.message = 'Experiencia agregada'
             this.experiences.push(res.data.experience[0])
             this.$refs.form.reset()
+            if (this.experiences.length > 0) {
+              this.isEmpty = false
+            }
           } else {
             this.color = 'error'
             this.message = 'Ocurrió un error al agregar el registro'
           }
         })
 
+    },
+    unsetExperience(item: Experience, index: number) {
+      this.snackbar = false
+      experience.unsetExperience(item.id)
+        .then((res) => {
+          this.snackbar = true
+          if (res.data.success) {
+            this.color = 'success'
+            this.message = 'Registro eliminado'
+            this.experiences.splice(index, 1)
+            if (this.experiences.length === 0) {
+              this.isEmpty = true
+            }
+          } else {
+            this.color = 'error'
+            this.message = 'Ocurrió un error al eliminar el registro'
+          }
+        })
     }
   },
   watch: {
