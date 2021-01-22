@@ -43,6 +43,14 @@ router.post("/setExperience", isLoggedIn, async (req, res) => {
 	}
 });
 
+router.delete("/unsetExperience/:id", async (req, res) => {
+	try {
+		const result = await pool.query('DELETE FROM work_experience WHERE id = ?', [req.params.id])
+		res.json({ success: true, result });
+	} catch (error) {
+		res.json({ success: false, error });
+	}
+});
 
 
 
