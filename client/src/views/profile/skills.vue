@@ -143,6 +143,9 @@ export default Vue.extend({
               this.message = 'Habilidad agregada'
               this.skillsPerson.push(res.data.skill[0])
               this.$refs.form.reset()
+              if (this.skillsPerson.length > 0) {
+                this.isEmpty = false
+              }
             } else {
               this.color = 'error'
               this.message = 'Ocurrió un error al agregar el registro'
@@ -159,6 +162,9 @@ export default Vue.extend({
             this.color = 'success'
             this.message = 'Registro eliminado'
             this.skillsPerson.splice(index, 1)
+            if (this.skillsPerson.length === 0) {
+              this.isEmpty = true
+            }
           } else {
             this.color = 'error'
             this.message = 'Ocurrió un error al eliminar el registro'

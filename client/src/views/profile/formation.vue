@@ -100,6 +100,9 @@ export default {
               }
               this.formation.push(res.data.college_degree_person[0])
               this.$refs.form.reset()
+              if (this.formation.length > 0) {
+                this.isEmpty = false
+              }
             } else {
               this.color = 'error'
               this.message = 'Ocurrió un error al ingresar datos'
@@ -120,6 +123,9 @@ export default {
               id: item.id_college_degree,
               description: item.college_degree,
             })
+            if (this.formation.length === 0) {
+              this.isEmpty = true
+            }
           } else {
             this.color = 'error'
             this.message = 'Ocurrió un error al eliminar el registro'
