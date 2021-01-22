@@ -42,7 +42,7 @@ app.use(session({
 	secret: "Curriculum",
 	resave: false,
 	saveUninitialized: false,
-	store: new MySqlStore(database)
+	store: new (MySqlStore as any)(database)
 }));
 // app.use(flash());
 app.use(morgan("dev"));
