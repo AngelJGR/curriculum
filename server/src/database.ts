@@ -1,10 +1,14 @@
-const mysql = require("mysql");
-const { promisify } = require("util");
-const { database } = require("./keys");
+import mysql from 'mysql'
+// const mysql = require("mysql");
+// const { promisify } = require("util");
+import { promisify } from 'util'
+import { database } from './keys'
 
-const pool = mysql.createPool(database);
+const pool: any = mysql.createPool(database);
 
-pool.getConnection((err, connection) => {
+pool.getConnection((err: any, connection: any) => {
+	console.log(err)
+	console.log(connection)
 	if (err){
 		if (err.code === "PROTOCOL_CONNECTION_LOST") {console.error("LA CONEXION A LA BASE DE DATOS SE CERRO INESPERADAMENTE")}
 		if (err.code === "ER_CON_COUNT_ERROR") {console.error("LA BASE DE DATOS TIENE MUCHAS CONEXIONES")}
@@ -20,4 +24,7 @@ pool.getConnection((err, connection) => {
 
 pool.query = promisify(pool.query);
 
-module.exports = pool;
+export {
+	pool
+}
+// module.exports = pool;
