@@ -7,8 +7,6 @@ import { database } from './keys'
 const pool: any = mysql.createPool(database);
 
 pool.getConnection((err: any, connection: any) => {
-	console.log(err)
-	console.log(connection)
 	if (err){
 		if (err.code === "PROTOCOL_CONNECTION_LOST") {console.error("LA CONEXION A LA BASE DE DATOS SE CERRO INESPERADAMENTE")}
 		if (err.code === "ER_CON_COUNT_ERROR") {console.error("LA BASE DE DATOS TIENE MUCHAS CONEXIONES")}
