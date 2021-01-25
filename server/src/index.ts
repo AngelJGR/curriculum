@@ -18,6 +18,10 @@ import session from 'express-session'
 import MySqlStore from 'express-mysql-session'
 import passport from 'passport'
 
+// Routes
+import PersonRouter from './routes/person'
+
+// Libs
 import { database } from "./keys";
 
 const app = express();
@@ -61,18 +65,19 @@ app.use(passport.session());
 }); */
 
 //Routes
-app.use(require("./routes/"));
-app.use("/formation", require("./routes/formation"));
-app.use("/experience", require("./routes/experience"));
-app.use("/skills", require("./routes/skills"));
-app.use("/person", require("./routes/person"));
-app.use(require("./routes/login"));
+app.use("/person", PersonRouter())
+
+// app.use(require("./routes/"));
+// app.use("/formation", require("./routes/formation"));
+// app.use("/experience", require("./routes/experience"));
+// app.use("/skills", require("./routes/skills"));
+// app.use(require("./routes/login"));
 
 //Public
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")))
 
 //Starting the server
 
 app.listen(app.get("PORT"), () => {
-	console.log("Server on port... " + app.get("PORT"));
+	console.log("Server on port... " + app.get("PORT"))
 });
