@@ -20,6 +20,9 @@ import passport from 'passport'
 
 // Routes
 import PersonRouter from './routes/person'
+import FormationRouter from './routes/formation'
+import ExperienceRouter from './routes/experience'
+import SkillsRouter from './routes/skills'
 
 // Libs
 import { database } from "./keys";
@@ -66,6 +69,9 @@ app.use(passport.session());
 
 //Routes
 app.use("/person", PersonRouter())
+app.use("/formation", FormationRouter())
+app.use("/experience", ExperienceRouter())
+app.use("/skills", SkillsRouter())
 
 // app.use(require("./routes/"));
 // app.use("/formation", require("./routes/formation"));
