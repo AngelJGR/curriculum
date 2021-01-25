@@ -1,13 +1,3 @@
-// const express = require("express");
-// const cors = require("cors");
-// const morgan = require("morgan");
-// const exphbs = require("express-handlebars");
-// const path = require("path");
-// const flash = require("connect-flash");
-// const session = require("express-session");
-// const MySqlStore = require("express-mysql-session");
-// const passport = require("passport");
-
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
@@ -72,12 +62,6 @@ app.use("/person", PersonRouter())
 app.use("/formation", FormationRouter())
 app.use("/experience", ExperienceRouter())
 app.use("/skills", SkillsRouter())
-
-// app.use(require("./routes/"));
-// app.use("/formation", require("./routes/formation"));
-// app.use("/experience", require("./routes/experience"));
-// app.use("/skills", require("./routes/skills"));
-// app.use(require("./routes/login"));
 
 //Public
 app.use(express.static(path.join(__dirname, "public")))

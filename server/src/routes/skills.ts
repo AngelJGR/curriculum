@@ -12,20 +12,3 @@ export default () => {
 
 	return SkillsRouter
 }
-
-
-/* router.get("/getSkillsPerson/:idPerson", isLoggedIn, async (req, res) => {
-	
-}); */
-
-/* router.post("/getSkills", async (req, res) => {
-	
-}); */
-
-/* router.post("/setSkill", isLoggedIn, async (req, res) => {
-	
-}); */
-
-/* router.delete("/unsetSkill/:id", async (req, res) => {
-	
-}); */
