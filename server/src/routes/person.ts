@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import PersonController from '../controllers/person'
+import PersonController from '../controllers/personController'
 
 /** RUTAS PARA BÁSICO **/
 export default () => {
