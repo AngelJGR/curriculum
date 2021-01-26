@@ -13,6 +13,8 @@ import PersonRouter from './routes/person'
 import FormationRouter from './routes/formation'
 import ExperienceRouter from './routes/experience'
 import SkillsRouter from './routes/skills'
+import AuthRouter from './routes/auth'
+import ResumeRouter from './routes/resume'
 
 // Libs
 import { database } from "./keys";
@@ -62,6 +64,8 @@ app.use("/person", PersonRouter())
 app.use("/formation", FormationRouter())
 app.use("/experience", ExperienceRouter())
 app.use("/skills", SkillsRouter())
+app.use("/auth", AuthRouter())
+app.use("/resume", ResumeRouter())
 
 //Public
 app.use(express.static(path.join(__dirname, "public")))
