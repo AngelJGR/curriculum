@@ -1,7 +1,8 @@
-const passport = require("passport");
-const localStrategy = require("passport-local").Strategy;
+import passport from 'passport'
+import { Strategy as localStrategy } from 'passport-local'
 
-const pool = require("../database");
+import { pool } from '../database'
+
 const helpers = require("./helpers");
 
 
@@ -37,6 +38,7 @@ passport.use("local.register", new localStrategy({
 	passReqToCallback: true
 }, async (req, username, password, done) =>{
 	const newUser = {
+		id: null,
 		username,
 		password,
 		fullname: req.body.fullname
@@ -48,7 +50,7 @@ passport.use("local.register", new localStrategy({
 
 }));
 
-passport.serializeUser((user, done) =>{
+passport.serializeUser((user: any, done) =>{
 	done(null, user.id);
 });
 
