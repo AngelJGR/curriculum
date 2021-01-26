@@ -3,8 +3,7 @@ import { Strategy as localStrategy } from 'passport-local'
 
 import { pool } from '../database'
 
-const helpers = require("./helpers");
-
+import helpers from './helpers'
 
 passport.use("local.login", new localStrategy({
 	usernameField: "user",
@@ -18,14 +17,11 @@ passport.use("local.login", new localStrategy({
 			const validPassword = await helpers.matchPassword(password, user.password);
 			if (validPassword) {
 				done(null, user, { message: `Bienvenido ${user.nombre_completo}` });
-				// done(null, user, req.flash('message', `Bienvenido ${user.nombre_completo}`));
 			} else {
 				done(null, false, { message: "Password Incorrecto" });
-				// done(null, false, req.flash('message', "Password Incorrecto"));
 			}
 		} else {
 			return done(null, false, { message: "Usuario Incorrecto" });
-			// return done(null, false, req.flash("message", "Usuario Incorrecto") );
 		}
 	} catch (e) {
 		return done(e)
