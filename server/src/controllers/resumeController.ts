@@ -4,7 +4,7 @@ import { pool } from '../database'
 
 class ResumeController {
 
-  async getUser(req: Request, res: Response) {
+  async getUser(req: Request, res: Response): Promise<void> {
 		const user = await pool.query("SELECT * FROM users WHERE username = ?", req.params.username);
 		if (user.length === 0) {
 			res.send(false)
@@ -35,7 +35,7 @@ class ResumeController {
 		res.json({ person, college_degree_person, courses_person, skills, experience });
   }
   
-  async getMain(req: Request, res: Response) {
+  async getMain(req: Request, res: Response): Promise<void> {
 		res.json({hola: "Hola mundo"})
 	}
 }

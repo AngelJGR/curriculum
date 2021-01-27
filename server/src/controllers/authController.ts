@@ -7,8 +7,8 @@ import { pool } from '../database'
 
 class AuthController {
 
-  async login(req: Request, res: Response, next: NextFunction) {
-		passport.authenticate("local.login", async (error, user, info) => {
+  async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+		passport.authenticate("local.login", async (error, user, info): Promise<any> => {
 			try {
 				if (error || !user) {
 					return next(error)
@@ -26,18 +26,18 @@ class AuthController {
 		})(req, res, next);	
   }
   
-  async logout(req: Request, res: Response) {
+  async logout(req: Request, res: Response): Promise<void> {
 		req.logout();
 		res.send({success: true});
 	}
 
-	async validateUser(req: Request, res: Response) {
+	async validateUser(req: Request, res: Response): Promise<void> {
 		const { username } = req.params;
 		const result = await pool.query("SELECT * FROM users WHERE username = ?", [username])
 		res.send(result.length > 0 ? true : false)
 	}
 
-	async registerUser(req: Request, res: Response) {
+	async registerUser(req: Request, res: Response): Promise<void> {
 		res.json({
 			message: "Usuario registrado exitósamente",
 			user: req.user

@@ -4,7 +4,7 @@ import { pool } from '../database'
 
 class PersonController {
 
-  async getPerson(req: Request, res: Response) {
+  async getPerson(req: Request, res: Response): Promise<void> {
 		const { id } = req.params;
 		try {
 			const person = await pool.query("SELECT * FROM person WHERE id = ?", [id]);
@@ -14,7 +14,7 @@ class PersonController {
     }
   }
   
-  async updatePerson(req: Request, res: Response) {
+  async updatePerson(req: Request, res: Response): Promise<void> {
 		const { idUser } = req.params;
 		const data = req.body.data;
 		try {

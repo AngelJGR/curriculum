@@ -4,7 +4,7 @@ import { pool } from '../database'
 
 class ExperienceController {
 
-  async getExperiences(req: Request, res: Response) {
+  async getExperiences(req: Request, res: Response): Promise<void> {
 		const { idPerson } = req.params;
 		try {
 			const experiences = await pool.query('SELECT a.id, a.area, a.description, b.name \
@@ -16,12 +16,12 @@ class ExperienceController {
 		}
   }
   
-  async getOrganizations(req: Request, res: Response) {
+  async getOrganizations(req: Request, res: Response): Promise<void> {
 		const organizations = await pool.query(`SELECT * FROM organization WHERE name like '%${req.body.text}%'`);
 		res.json({ organizations });
 	}
 
-	async setExperience(req: Request, res: Response) {
+	async setExperience(req: Request, res: Response): Promise<void> {
 		const { idPerson, area, description, idOrganization } = req.body
 		const data = {
 			id_person: idPerson,
@@ -41,7 +41,7 @@ class ExperienceController {
 		}
 	}
 
-	async unsetExperience(req: Request, res: Response) {
+	async unsetExperience(req: Request, res: Response): Promise<void> {
 		try {
 			const result = await pool.query('DELETE FROM work_experience WHERE id = ?', [req.params.id])
 			res.json({ success: true, result });
