@@ -2,7 +2,6 @@
   <v-app>
     <alert-message
       :snackbar="snackbar"
-      top
       :color="color"
       :message="message"
     />
