@@ -2,8 +2,8 @@ import { Router } from 'express'
 
 import formationController from '../controllers/formationController';
 
-export default () => {
-	const FormationRouter = Router()
+export default (): Router => {
+	const FormationRouter: Router = Router()
 
 	FormationRouter.get('/getFormation/:id', formationController.getFormation)
 	FormationRouter.post('/setCollegeDegree', formationController.setCollegeDegree)

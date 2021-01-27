@@ -3,8 +3,8 @@ import passport from 'passport'
 
 import AuthController from '../controllers/authController';
 
-export default () => {
-	const AuthRouter = Router()
+export default (): Router => {
+	const AuthRouter: Router = Router()
 
 	AuthRouter.post('/login', AuthController.login)
 	AuthRouter.get('/logout', AuthController.logout)
