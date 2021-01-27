@@ -10,15 +10,16 @@ class AuthController {
   async login(req: Request, res: Response, next: NextFunction): Promise<void> {
 		passport.authenticate("local.login", async (error, user, info): Promise<any> => {
 			try {
-				if (error || !user) {
+				if (error) {
 					return next(error)
-					// return res.status(401).json({info})
+				} else if (!user) {
+					return res.json({...info})
 				}
 				req.login(user, {session: false}, async (err) => {
 					if (err) return next(err)
 					const body = { _id: user.id, user: user.username, fullname: user.fullname }
 					const token = jwt.sign({ user: body }, 'top_secret')
-					return res.json({ token, body, message: 'successs' })
+					return res.json({ token, body, ...info })
 				})
 			} catch(e) {
 				return next(e)
