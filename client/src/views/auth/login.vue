@@ -67,16 +67,20 @@ export default {
   methods: {
     ...mapMutations(['setUser', 'setToken', 'setFullname']),
     submit() {
+      this.snackbar = false
       login.login(this.user, this.password)
         .then((res) => {
-          localStorage.setItem('token', res.data.token)
-          this.setUser = res.data.user
-          this.setToken = res.data.token
-          this.setFullname = res.data.fullname
-          console.log(this.setUser)
-          console.log(this.setToken)
-          console.log(this.setFullname)
-          this.$router.push('/profile/personal')
+          if (res.data.success) {
+            localStorage.setItem('token', res.data.token)
+            this.setUser = res.data.user
+            this.setToken = res.data.token
+            this.setFullname = res.data.fullname
+            this.$router.push({name: 'Personal', params: { show: true, message: res.data.message, color: 'success' }})
+          } else {
+            this.snackbar = true
+            this.color = 'error'
+            this.message = res.data.message
+          }
         })
         .catch((e) => console.log('Error', e))
     }
