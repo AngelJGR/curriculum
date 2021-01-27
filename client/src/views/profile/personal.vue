@@ -112,6 +112,11 @@ export default Vue.extend({
     }
   },
   created () {
+    if (this.$route.params.show) {
+      this.snackbar = true
+      this.color = this.$route.params.color
+      this.message = this.$route.params.message
+    }
     person.getPerson(1)
       .then((res) => {
         if (res.data.person.length > 0) {
@@ -120,11 +125,10 @@ export default Vue.extend({
         }
       })
       .catch((err) => {
-        const params = {
+        /* const params = {
           show: 'true', message: err.response.data.message, color: 'error'
         }
-        console.log('Hola')
-        this.$router.push({name: 'Login', params })
+        this.$router.push({name: 'Login', params }) */
       })
   }
 })
