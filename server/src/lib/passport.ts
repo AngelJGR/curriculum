@@ -16,12 +16,12 @@ passport.use("local.login", new localStrategy({
 			const user = rows[0];
 			const validPassword = await helpers.matchPassword(password, user.password);
 			if (validPassword) {
-				done(null, user, { message: `Bienvenido ${user.nombre_completo}` });
+				done(null, user, <any>{ success: true, message: `Bienvenido ${user.fullname}` });
 			} else {
-				done(null, false, { message: "Password Incorrecto" });
+				done(null, false, <any>{ success: false, message: "Password Incorrecto" });
 			}
 		} else {
-			return done(null, false, { message: "Usuario Incorrecto" });
+			return done(null, false, <any>{ success: false, message: "Usuario Incorrecto" });
 		}
 	} catch (e) {
 		return done(e)
@@ -46,11 +46,11 @@ passport.use("local.register", new localStrategy({
 
 }));
 
-passport.serializeUser((user: any, done) =>{
+passport.serializeUser((user: any, done): void =>{
 	done(null, user.id);
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (id, done): Promise<void> => {
 	const filas = await pool.query("SELECT * FROM users WHERE id = ?", [id]);
 	done(null, filas[0]);
 })
