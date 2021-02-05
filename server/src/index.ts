@@ -17,10 +17,11 @@ import AuthRouter from './routes/auth'
 import ResumeRouter from './routes/resume'
 
 // Libs
+import auth from "./lib/auth";
 import { database } from "./keys";
+require("./lib/passport");
 
 const app = express();
-require("./lib/passport");
 
 //Settings
 app.set("PORT", process.env.PORT || 4000);
@@ -60,10 +61,10 @@ app.use(passport.session());
 }); */
 
 //Routes
-app.use("/person", PersonRouter())
-app.use("/formation", FormationRouter())
-app.use("/experience", ExperienceRouter())
-app.use("/skills", SkillsRouter())
+app.use("/person", PersonRouter(auth))
+app.use("/formation", FormationRouter(auth))
+app.use("/experience", ExperienceRouter(auth))
+app.use("/skills", SkillsRouter(auth))
 app.use("/auth", AuthRouter())
 app.use("/resume", ResumeRouter())
 
@@ -71,7 +72,6 @@ app.use("/resume", ResumeRouter())
 app.use(express.static(path.join(__dirname, "public")))
 
 //Starting the server
-
 app.listen(app.get("PORT"), () => {
 	console.log("Server on port... " + app.get("PORT"))
 });
