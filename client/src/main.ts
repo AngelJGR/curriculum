@@ -4,9 +4,11 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import registerComponents from './components'
+import registerInterceptors from './interceptors'
 import axios from 'axios'
 
 registerComponents(Vue)
+registerInterceptors()
 
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'http://localhost:4000/'
