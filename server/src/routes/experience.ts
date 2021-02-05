@@ -2,13 +2,13 @@ import { Router } from 'express'
 
 import ExperienceController from '../controllers/experienceController';
 
-export default (): Router => {
+export default (auth: any): Router => {
 	const ExperienceRouter: Router = Router()
 
-	ExperienceRouter.get('/getExperiences/:idPerson', ExperienceController.getExperiences)
-	ExperienceRouter.post('/getOrganizations', ExperienceController.getOrganizations)
-	ExperienceRouter.post('/setExperience', ExperienceController.setExperience)
-	ExperienceRouter.delete('/unsetExperience/:id', ExperienceController.unsetExperience)
+	ExperienceRouter.get('/getExperiences/:idPerson', auth.isLoggedIn(), ExperienceController.getExperiences)
+	ExperienceRouter.post('/getOrganizations', auth.isLoggedIn(), ExperienceController.getOrganizations)
+	ExperienceRouter.post('/setExperience', auth.isLoggedIn(), ExperienceController.setExperience)
+	ExperienceRouter.delete('/unsetExperience/:id', auth.isLoggedIn(), ExperienceController.unsetExperience)
 
 	return ExperienceRouter
 }
