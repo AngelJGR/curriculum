@@ -18,7 +18,7 @@ class AuthController {
 				req.login(user, {session: false}, async (err) => {
 					if (err) return next(err)
 					const body = { _id: user.id, user: user.username, fullname: user.fullname }
-					const token = jwt.sign({ user: body }, 'top_secret')
+					const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 86400 })
 					return res.json({ token, body, ...info })
 				})
 			} catch(e) {
