@@ -7,8 +7,8 @@
           <v-card-title v-if="!isRegister">
             <h3>Ingrese sus datos personales para completar el perfil</h3>
           </v-card-title>
-          <v-row justify="space-between">
-            <v-col cols="12" sm="6">
+          <v-row justify="center">
+            <v-col cols="12" md="5">
               <v-text-field
                 v-model="person.fullname"
                 label="Nombre"
@@ -16,7 +16,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12" md="5">
               <v-text-field
                 v-model="person.ci"
                 type="number"
@@ -25,7 +25,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12" md="5">
               <v-text-field
                 v-model="person.address"
                 label="Dirección"
@@ -33,7 +33,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12" md="5">
               <v-text-field
                 v-model="person.phone"
                 label="Teléfono"
@@ -41,7 +41,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12" md="5">
               <v-text-field
                 v-model="person.twitter"
                 label="Twitter"
@@ -49,7 +49,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12" md="5">
               <v-text-field
                 v-model="person.email"
                 label="Email"
@@ -57,7 +57,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12" md="5">
               <v-textarea
                 v-model="person.about"
                 label="Resumen"
