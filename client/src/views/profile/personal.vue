@@ -3,12 +3,12 @@
     <h1>Perfil</h1>
     <v-row>
       <v-col cols="12">
-        <v-card>
+        <v-card class="px-4">
           <v-card-title v-if="!isRegister">
             <h3>Ingrese sus datos personales para completar el perfil</h3>
           </v-card-title>
-          <v-row justify="center">
-            <v-col cols="8">
+          <v-row justify="space-between">
+            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="person.fullname"
                 label="Nombre"
@@ -16,7 +16,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="8">
+            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="person.ci"
                 type="number"
@@ -25,7 +25,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="8">
+            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="person.address"
                 label="Dirección"
@@ -33,7 +33,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="8">
+            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="person.phone"
                 label="Teléfono"
@@ -41,7 +41,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="8">
+            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="person.twitter"
                 label="Twitter"
@@ -49,7 +49,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="8">
+            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="person.email"
                 label="Email"
@@ -57,7 +57,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="8">
+            <v-col cols="12" sm="6">
               <v-textarea
                 v-model="person.about"
                 label="Resumen"
@@ -124,6 +124,12 @@ export default Vue.extend({
         }
       })
       .catch((err) => {
+        console.log('error response', err.response)
+        console.log('error config', err.config)
+        console.log('error request', err.request)
+        console.log('error axios', err.isAxiosError)
+        console.log('error toJson', err.toJSON)
+        // console.log(Object.keys(err))
         /* const params = {
           show: 'true', message: err.response.data.message, color: 'error'
         }
