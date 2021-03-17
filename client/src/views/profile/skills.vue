@@ -40,7 +40,7 @@
               label="Habilidad"
               placeholder="Ingrese habilidad"
               :rules="[rules.required]"
-              :searchInput.sync="search"
+              :search-input.sync="search"
               clearable
               @keypress.enter="addSkill"
             >
@@ -72,6 +72,7 @@
           </v-col>
           <v-col cols="2">
             <v-btn small type="submit" color="success">Agregar</v-btn>
+            <v-btn @click="clearData" color="warning">Limpiar</v-btn>
           </v-col>
         </v-row>
         <v-card-actions>
@@ -97,9 +98,9 @@ export default Vue.extend({
       skills: [],
       skillsPerson: [] as Skill[],
       skillPerson: {},
-      skill: '',
+      skill: null,
       score: 0,
-      search: null,
+      search: '',
       isSearching: false,
       isEmpty: false,
       rules: { required: (value: string) => !!value || 'Requerido.' },
@@ -109,6 +110,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    clearData() {
+      this.skill = null
+    },
     getSkillsPerson() {
       skills.getSkillsPerson(1) // EDITAR
         .then((res) => {
@@ -125,6 +129,11 @@ export default Vue.extend({
           .then((res) => {
             this.skills = res.data.skills
             this.isSearching = false
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              this.$router.push({name: 'Login', params: { show: true, message: `Error ${error.response.status}: ${error.response.statusText}`, color: 'error' }})
+            }
           })
       }
     },
