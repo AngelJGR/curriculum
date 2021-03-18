@@ -3,8 +3,13 @@
     <h1>Habilidades</h1>
     <non-content v-if="isEmpty"></non-content>
     <v-card v-else>
-      <v-row v-for="(item, index) in skillsPerson" :key="item.id">
-        <v-col cols="12" sm="6">
+      <v-row v-for="(skill) in skillsPerson" :key="skill.id">
+        <skill-component 
+          :skill="skill"
+          @unsetSkill="unsetSkill"
+        >
+        </skill-component>
+        <!-- <v-col cols="12" sm="6">
           {{index}} - {{item.id}} - {{item.description}}
         </v-col>
         <v-col cols="12" sm="4">
@@ -23,7 +28,7 @@
           <v-btn icon color="error" @click="unsetSkill(item, index)">
             <v-icon>mdi-delete-circle</v-icon>
           </v-btn>
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-card>
 
@@ -72,7 +77,6 @@
           </v-col>
           <v-col cols="2">
             <v-btn small type="submit" color="success">Agregar</v-btn>
-            <v-btn @click="clearData" color="warning">Limpiar</v-btn>
           </v-col>
         </v-row>
         <v-card-actions>
@@ -91,14 +95,17 @@
 import Vue from 'vue'
 import skills from '../../services/skills'
 import { Skill } from '../../interfaces/skill'
+import SkillComponent from './components/Skill.vue'
 
 export default Vue.extend({
+  components: { SkillComponent },
   data() {
     return {
       skills: [],
       skillsPerson: [] as Skill[],
       skillPerson: {},
-      skill: null,
+      skill: null as unknown as Skill,
+      // skill: {} as Skill,
       score: 0,
       search: '',
       isSearching: false,
@@ -110,9 +117,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    clearData() {
-      this.skill = null
-    },
     getSkillsPerson() {
       skills.getSkillsPerson(1) // EDITAR
         .then((res) => {
@@ -132,13 +136,10 @@ export default Vue.extend({
           })
           .catch((error) => {
             if (error.response.status === 401) {
-              this.$router.push({name: 'Login', params: { show: true, message: `Error ${error.response.status}: ${error.response.statusText}`, color: 'error' }})
+              this.$router.push({name: 'Login', params: { show: true, message: `Error ${error.response.status}: ${error.response.statusText}`, color: 'error' } as any})
             }
           })
       }
-    },
-    getColor(score: number): string {
-      return score < 20 ? 'red' : score < 40 ? 'yellow' : score < 80 ? 'primary' : 'success'
     },
     setSkill() {
       if ((this.$refs.form as Vue & { validate: () => boolean }).validate() && this.skill.description === this.search) {
@@ -150,7 +151,8 @@ export default Vue.extend({
               this.color = 'success'
               this.message = 'Habilidad agregada'
               this.skillsPerson.push(res.data.skill[0])
-              this.$refs.form.reset()
+              // eslint-disable-next-line
+              (this.$refs.form as Vue).reset()
               if (this.skillsPerson.length > 0) {
                 this.isEmpty = false
               }
@@ -161,14 +163,15 @@ export default Vue.extend({
           })
       }
     },
-    unsetSkill(item: Skill, index: number) {
+    unsetSkill(skillId: number) {
       this.snackbar = false
-      skills.unsetSkill(item.id)
+      skills.unsetSkill(skillId)
         .then((res) => {
           this.snackbar = true
           if (res.data.success) {
             this.color = 'success'
             this.message = 'Registro eliminado'
+            const index = this.skillsPerson.indexOf(skillId)
             this.skillsPerson.splice(index, 1)
             if (this.skillsPerson.length === 0) {
               this.isEmpty = true
