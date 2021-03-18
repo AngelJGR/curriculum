@@ -1,0 +1,45 @@
+<template>
+  <v-card>
+    <v-row justify="space-around" align="center">
+      <v-col cols="12" sm="6">
+        {{skill.id}} - {{skill.description}}
+      </v-col>
+      <v-col cols="12" sm="4">
+        <v-progress-circular
+          size="80"
+          width="10"
+          :value="skill.score"
+          :color="getColor"
+        ><span class="headline">{{skill.score}}</span>
+        </v-progress-circular>
+      </v-col>
+      <v-col cols="12" sm="2">
+        <v-btn icon color="success">
+          <v-icon>mdi-refresh-circle</v-icon>
+        </v-btn>
+        <v-btn icon color="error" @click="unsetSkill">
+          <v-icon>mdi-delete-circle</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-card>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
+  props: {
+    skill: Object
+  },
+  computed: {
+    getColor () {
+      return this.skill.score < 20 ? 'red' : this.skill.score < 40 ? 'yellow' :this.skill.score < 80 ? 'primary' : 'success'
+    }
+  },
+  methods: {
+    unsetSkill() {
+      this.$emit('unsetSkill', this.skill.id)
+    }
+  }
+})
+</script>
