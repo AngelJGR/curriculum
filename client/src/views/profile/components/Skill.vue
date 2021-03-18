@@ -32,7 +32,7 @@ export default Vue.extend({
     skill: Object
   },
   computed: {
-    getColor () {
+    getColor (): string {
       return this.skill.score < 20 ? 'red' : this.skill.score < 40 ? 'yellow' :this.skill.score < 80 ? 'primary' : 'success'
     }
   },

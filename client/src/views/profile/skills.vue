@@ -117,7 +117,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    getSkillsPerson() {
+    getSkillsPerson(): void {
       skills.getSkillsPerson(1) // EDITAR
         .then((res) => {
           if (res.data.skillsPerson.length === 0) {
@@ -126,7 +126,7 @@ export default Vue.extend({
           this.skillsPerson = res.data.skillsPerson
         })
     },
-    getSkills(val: string) {
+    getSkills(val: string): void {
       if (val.length > 0) {
         this.isSearching = true
         skills.getSkills(1, val) //EDITAR
@@ -141,7 +141,7 @@ export default Vue.extend({
           })
       }
     },
-    setSkill() {
+    setSkill(): void {
       if ((this.$refs.form as Vue & { validate: () => boolean }).validate() && this.skill.description === this.search) {
         this.snackbar = false
         skills.setSkill(1, this.skill.id, this.score) // EDITAR
@@ -163,7 +163,7 @@ export default Vue.extend({
           })
       }
     },
-    unsetSkill(skillId: number) {
+    unsetSkill(skillId: number): void {
       this.snackbar = false
       skills.unsetSkill(skillId)
         .then((res) => {
