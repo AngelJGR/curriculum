@@ -1,36 +1,26 @@
 <template>
   <v-container>
     <h1>Habilidades</h1>
-    <non-content v-if="isEmpty"></non-content>
-    <v-card v-else>
-      <v-row v-for="(skill) in skillsPerson" :key="skill.id">
-        <skill-component 
-          :skill="skill"
-          @unsetSkill="unsetSkill"
-        >
-        </skill-component>
-        <!-- <v-col cols="12" sm="6">
-          {{index}} - {{item.id}} - {{item.description}}
-        </v-col>
-        <v-col cols="12" sm="4">
-          <v-progress-circular
-            size="80"
-            width="10"
-            :value="item.score"
-            :color="getColor(item.score)"
-          ><span class="headline">{{item.score}}</span>
-          </v-progress-circular>
-        </v-col>
-        <v-col cols="12" sm="2">
-          <v-btn icon color="success">
-            <v-icon>mdi-refresh-circle</v-icon>
-          </v-btn>
-          <v-btn icon color="error" @click="unsetSkill(item, index)">
-            <v-icon>mdi-delete-circle</v-icon>
-          </v-btn>
-        </v-col> -->
-      </v-row>
-    </v-card>
+    <v-row v-if="isEmpty">
+      <v-col cols="12">
+        <non-content></non-content>
+      </v-col>
+    </v-row>
+    <v-row v-else>
+      <v-col cols="12">
+        <v-card flat>
+          <v-row v-for="(skill) in skillsPerson" :key="skill.id">
+            <v-col cols="12" md="6">
+              <skill-component 
+                :skill="skill"
+                @unsetSkill="unsetSkill"
+              >
+              </skill-component>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
 
     <v-divider></v-divider>
     <v-form lazy-validation ref="form" @submit.prevent="setSkill">
@@ -104,7 +94,6 @@ export default Vue.extend({
       skills: [],
       // skillsPerson: new Array<Skill>(),
       skillsPerson: [] as unknown as Skill[],
-      skillPerson: {},
       skill: null as unknown as Skill,
       // skill: {} as Skill,
       score: 0,
@@ -152,6 +141,8 @@ export default Vue.extend({
             if (res.data.success) {
               this.color = 'success'
               this.message = 'Habilidad agregada'
+              console.log(this.skillsPerson)
+              console.log('Lo que pushea', res.data.skill[0])
               this.skillsPerson.push(res.data.skill[0])
               // eslint-disable-next-line
               (this.$refs.form as Vue).reset()

@@ -1,17 +1,21 @@
 <template>
-  <v-card>
-    <v-row justify="space-around" align="center">
+  <v-card flat class="px-3">
+    <v-row justify="center" align="center">
       <v-col cols="12" sm="6">
-        {{skill.id}} - {{skill.description}}
+        <v-icon>mdi-check-circle-outline</v-icon>
+        {{skill.description}}
       </v-col>
       <v-col cols="12" sm="4">
-        <v-progress-circular
-          size="80"
-          width="10"
-          :value="skill.score"
-          :color="getColor"
-        ><span class="headline">{{skill.score}}</span>
-        </v-progress-circular>
+        <v-fab-transition style="bottom: 10px;">
+          <v-progress-circular
+            :rotate="-90"
+            size="80"
+            width="10"
+            :value="skill.score"
+            :color="getColor"
+          ><span class="headline">{{skill.score}}</span>
+          </v-progress-circular>
+        </v-fab-transition>
       </v-col>
       <v-col cols="12" sm="2">
         <v-btn icon color="success">
