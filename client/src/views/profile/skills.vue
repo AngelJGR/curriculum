@@ -102,7 +102,8 @@ export default Vue.extend({
   data() {
     return {
       skills: [],
-      skillsPerson: [] as Skill[],
+      // skillsPerson: new Array<Skill>(),
+      skillsPerson: [] as unknown as Skill[],
       skillPerson: {},
       skill: null as unknown as Skill,
       // skill: {} as Skill,
@@ -122,8 +123,9 @@ export default Vue.extend({
         .then((res) => {
           if (res.data.skillsPerson.length === 0) {
             this.isEmpty = true
+          } else {
+            this.skillsPerson = res.data.skillsPerson
           }
-          this.skillsPerson = res.data.skillsPerson
         })
     },
     getSkills(val: string): void {
@@ -171,7 +173,7 @@ export default Vue.extend({
           if (res.data.success) {
             this.color = 'success'
             this.message = 'Registro eliminado'
-            const index = this.skillsPerson.indexOf(skillId)
+            const index = this.skillsPerson.map(skill => skill.id).indexOf(skillId)
             this.skillsPerson.splice(index, 1)
             if (this.skillsPerson.length === 0) {
               this.isEmpty = true
