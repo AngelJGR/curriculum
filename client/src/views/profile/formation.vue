@@ -67,26 +67,31 @@
 <script lang="ts">
 import Vue from 'vue'
 import formation from '../../services/formation'
+
+import Formation from '../../interfaces/formation'
+import College from '../../interfaces/college'
+import CollegeDegree from '../../interfaces/collegeDegree'
+
 export default Vue.extend({
   data() {
     return {
       isEmpty: false,
-      colleges: [],
-      college: null,
-      collegeDegrees: [],
-      collegeDegree: null,
-      formation: null,
+      colleges: new Array<College>(),
+      college: {} as College,
+      collegeDegrees: new Array<CollegeDegree>(),
+      collegeDegree: {} as CollegeDegree,
+      formation: new Array<Formation>(),
       snackbar: false,
       color: '',
       message: '',
       rules: {
-        required: value => !!value || 'Requerido.',
+        required: (value: string) => !!value || 'Requerido.',
       }
     }
   },
   methods: {
     setCollegeDegree() {
-      if (this.$refs.form.validate()) {
+      if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
         this.snackbar = false
         formation.setCollegeDegree(1, this.collegeDegree.id, this.college.id_college) // EDITAR
           .then((res) => {
@@ -142,6 +147,9 @@ export default Vue.extend({
         this.colleges = res.data.college || null
         this.collegeDegrees = res.data.college_degree
         this.formation = res.data.college_degree_person
+        console.log('college', this.colleges)
+        console.log('collegeDegrees', this.collegeDegrees)
+        console.log('formation', this.formation)
       })
   },
 })
