@@ -64,9 +64,10 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import formation from '../../services/formation'
-export default {
+export default Vue.extend({
   data() {
     return {
       isEmpty: false,
@@ -143,5 +144,5 @@ export default {
         this.formation = res.data.college_degree_person
       })
   },
-}
+})
 </script>
