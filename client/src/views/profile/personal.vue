@@ -83,6 +83,9 @@
 import Vue from 'vue'
 import person from '../../services/person'
 import { Person } from '../../interfaces/person'
+
+type Dictionary<T> = { [key: string]: T }
+
 export default Vue.extend({
   data() {
     return {
@@ -123,12 +126,15 @@ export default Vue.extend({
           this.isRegister = true
         }
       })
-      .catch((err) => {
-        console.log('error response', err.response)
-        console.log('error config', err.config)
-        console.log('error request', err.request)
-        console.log('error axios', err.isAxiosError)
-        console.log('error toJson', err.toJSON)
+      .catch((error) => {
+        if (error.response.status === 401) {
+          const params: Dictionary<string> = {
+            show: 'true',
+            message: `Error ${error.response.status}: ${error.response.statusText}`,
+            color: 'error'
+          }
+          this.$router.push({name: 'Login', params})
+        }
         // console.log(Object.keys(err))
         /* const params = {
           show: 'true', message: err.response.data.message, color: 'error'
