@@ -95,7 +95,7 @@ export default Vue.extend({
     return {
       skills: [],
       // skillsPerson: new Array<Skill>(),
-      skillsPerson: [] as unknown as Skill[],
+      skillsPerson: [] as Skill[],
       skill: null as unknown as Skill,
       // skill: {} as Skill,
       score: 0,
@@ -160,7 +160,7 @@ export default Vue.extend({
               this.message = 'Habilidad agregada'
               this.skillsPerson.push(res.data.skill[0])
               // eslint-disable-next-line
-              (this.$refs.form as Vue).reset()
+              (this.$refs.form as Vue & {reset: () => any}).reset()
               if (this.skillsPerson.length > 0) {
                 this.isEmpty = false
               }
@@ -170,7 +170,7 @@ export default Vue.extend({
             }
           })
           .catch((error) => {
-            if (error.response.status === 401) {
+            if (error.response && error.response.status === 401) {
               const params: Dictionary<string> = {
                 show: 'true',
                 message: `Error ${error.response.status}: ${error.response.statusText}`,
