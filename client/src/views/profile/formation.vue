@@ -66,7 +66,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import formation from '../../services/formation'
+import FormationService from '../../services/formation'
 
 import Formation from '../../interfaces/formation'
 import College from '../../interfaces/college'
@@ -93,7 +93,7 @@ export default Vue.extend({
     setCollegeDegree() {
       if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
         this.snackbar = false
-        formation.setCollegeDegree(1, this.collegeDegree.id, this.college.id_college) // EDITAR
+        FormationService.setCollegeDegree(1, this.collegeDegree.id, this.college.id_college) // EDITAR
           .then((res) => {
             this.snackbar = true
             if (res.data.success) {
@@ -104,7 +104,8 @@ export default Vue.extend({
                 this.collegeDegrees.splice(index, 1)
               }
               this.formation.push(res.data.college_degree_person[0])
-              this.$refs.form.reset()
+              // eslint-disable-next-line
+              (this.$refs.form as Vue).reset()
               if (this.formation.length > 0) {
                 this.isEmpty = false
               }
@@ -115,9 +116,9 @@ export default Vue.extend({
           })
       }
     },
-    unsetCollegeDegree(item, index) {
+    unsetCollegeDegree(formation: Formation, index: number) {
       this.snackbar = false
-      formation.unsetCollegeDegree(item.id)
+      FormationService.unsetCollegeDegree(formation.id)
         .then((res) => {
           this.snackbar = true
           if (res.data.success) {
@@ -125,8 +126,8 @@ export default Vue.extend({
             this.message = 'Registro eliminado'
             this.formation.splice(index, 1)
             this.collegeDegrees.push({
-              id: item.id_college_degree,
-              description: item.college_degree,
+              id: formation.id_college_degree,
+              description: formation.college_degree,
             })
             if (this.formation.length === 0) {
               this.isEmpty = true
@@ -139,7 +140,7 @@ export default Vue.extend({
     }
   },
   created() {
-    formation.getFormation('1') // EDITAR
+    FormationService.getFormation(1) // EDITAR
       .then((res) => {
         if (res.data.college_degree_person.length === 0) {
           this.isEmpty = true
