@@ -6,8 +6,8 @@ export default (auth: any): Router => {
 	const FormationRouter: Router = Router()
 
 	FormationRouter.get('/getFormation/:id', auth.isLoggedIn(), formationController.getFormation)
-	FormationRouter.post('/setCollegeDegree', auth.isLoggedIn(), formationController.setCollegeDegree)
-	FormationRouter.delete('/unsetCollegeDegree/:id', auth.isLoggedIn(), formationController.unsetCollegeDegree)
+	FormationRouter.post('/setFormation', auth.isLoggedIn(), formationController.setFormation)
+	FormationRouter.delete('/unsetFormation/:id', auth.isLoggedIn(), formationController.unsetFormation)
 
 	return FormationRouter
 }

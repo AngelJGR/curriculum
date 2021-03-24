@@ -14,14 +14,14 @@
           <v-btn icon color="success">
             <v-icon>mdi-refresh-circle</v-icon>
           </v-btn>
-          <v-btn icon color="error" @click="unsetCollegeDegree(item, index)">
+          <v-btn icon color="error" @click="unsetFormation(item, index)">
             <v-icon>mdi-delete-circle</v-icon>
           </v-btn>
         </v-col>
       </v-row>
     </v-card>
     <v-divider></v-divider>
-    <v-form lazy-validation ref="form" @submit.prevent="setCollegeDegree">
+    <v-form lazy-validation ref="form" @submit.prevent="setFormation">
       <v-card>
         <v-row justify="center">
           <v-col cols="6">
@@ -90,10 +90,10 @@ export default Vue.extend({
     }
   },
   methods: {
-    setCollegeDegree() {
+    setFormation() {
       if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
         this.snackbar = false
-        FormationService.setCollegeDegree(1, this.collegeDegree.id, this.college.id_college) // EDITAR
+        FormationService.setFormation(1, this.collegeDegree.id, this.college.id_college) // EDITAR
           .then((res) => {
             this.snackbar = true
             if (res.data.success) {
@@ -116,9 +116,9 @@ export default Vue.extend({
           })
       }
     },
-    unsetCollegeDegree(formation: Formation, index: number) {
+    unsetFormation(formation: Formation, index: number) {
       this.snackbar = false
-      FormationService.unsetCollegeDegree(formation.id)
+      FormationService.unsetFormation(formation.id)
         .then((res) => {
           this.snackbar = true
           if (res.data.success) {

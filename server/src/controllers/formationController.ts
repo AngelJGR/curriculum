@@ -18,7 +18,7 @@ class FormationController {
 		res.json({ id, college_degree_person, college_degree_type, college_degree, college });
 	}
 
-	async setCollegeDegree (req: Request, res: Response): Promise<void> {
+	async setFormation (req: Request, res: Response): Promise<void> {
 		const data = {
 			id_person: req.body.idPerson,
 			id_college_degree: req.body.idCollegeDegree,
@@ -38,7 +38,7 @@ class FormationController {
 		}
 	}
 
-	async unsetCollegeDegree (req: Request, res: Response): Promise<void> {
+	async unsetFormation (req: Request, res: Response): Promise<void> {
 		try {
 			const result = await pool.query('DELETE FROM college_degree_person WHERE id = ?', [req.params.id])
 			res.json({ success: true, result });

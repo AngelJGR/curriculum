@@ -12,10 +12,10 @@ export default {
   getCollegeDregrees: (text: string) => {
     return Axios.post(`${prefix}/getCollegeDregrees`, { text })
   },
-  setCollegeDegree: (idPerson: number, idCollegeDegree: number, idCollege: number) => {
-    return Axios.post(`${prefix}/setCollegeDegree`, { idPerson, idCollegeDegree, idCollege })
+  setFormation: (idPerson: number, idCollegeDegree: number, idCollege: number) => {
+    return Axios.post(`${prefix}/setFormation`, { idPerson, idCollegeDegree, idCollege })
   },
-  unsetCollegeDegree: (id: number) => {
-    return Axios.delete(`${prefix}/unsetCollegeDegree/${id}`)
+  unsetFormation: (id: number) => {
+    return Axios.delete(`${prefix}/unsetFormation/${id}`)
   }
 }
