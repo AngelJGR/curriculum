@@ -10,7 +10,7 @@ class FormationController {
 		const college_degree = await pool.query(`SELECT * from college_degree
 				WHERE id NOT IN(
 				SELECT id_college_degree FROM college_degree_person WHERE id_person = ?)`, [id]);
-		const college_degree_person = await pool.query("SELECT a.id, a.id_college_degree, b.description AS college_degree, c.name AS college \
+		const college_degree_person = await pool.query("SELECT a.id, a.id_college_degree, b.description AS college_degree, c.name AS college, b.id_college_degree_type AS id_college_degree_type \
 				FROM college_degree_person AS a, college_degree AS b, college AS c \
 				WHERE a.id_college_degree = b.id \
 				AND a.id_college = c.id \

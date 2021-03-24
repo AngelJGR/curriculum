@@ -99,13 +99,14 @@ export default Vue.extend({
             if (res.data.success) {
               this.color = 'success'
               this.message = 'Datos ingresados exitósamente'
+              this.formation.push(res.data.college_degree_person[0])
               const index = this.collegeDegrees.findIndex(item => item.id === res.data.college_degree_person[0].id_college_degree)
               if (index > -1) {
                 this.collegeDegrees.splice(index, 1)
               }
-              this.formation.push(res.data.college_degree_person[0])
               // eslint-disable-next-line
-              (this.$refs.form as Vue).reset()
+              // (this.$refs.form as Vue).reset()
+              this.$refs.form.reset()
               if (this.formation.length > 0) {
                 this.isEmpty = false
               }
@@ -124,11 +125,13 @@ export default Vue.extend({
           if (res.data.success) {
             this.color = 'success'
             this.message = 'Registro eliminado'
-            this.formation.splice(index, 1)
             this.collegeDegrees.push({
               id: formation.id_college_degree,
               description: formation.college_degree,
+              // eslint-disable-next-line
+              id_college_degree_type: formation.id_college_degree_type
             })
+            this.formation.splice(index, 1)
             if (this.formation.length === 0) {
               this.isEmpty = true
             }
