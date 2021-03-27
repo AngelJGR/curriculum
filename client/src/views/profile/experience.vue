@@ -149,25 +149,30 @@ export default Vue.extend({
     },
     setExperience(): void {
       this.snackbar = false
-      this.experience.idOrganization = this.organization.id
-      this.experience.idPerson = 1 // EDITAR
-      experience.setExperience(this.experience)
-        .then((res) => {
-          this.snackbar = true
-          if (res.data.success) {
-            this.color = 'success'
-            this.message = 'Experiencia agregada'
-            this.experiences.push(res.data.experience[0])
-            this.$refs.form.reset()
-            if (this.experiences.length > 0) {
-              this.isEmpty = false
+      if ((this.$refs.form as Vue & {validate: () => boolean}).validate()) {
+        this.experience.idOrganization = this.organization.id
+        this.experience.idPerson = 1 // EDITAR
+        experience.setExperience(this.experience)
+          .then((res) => {
+            this.snackbar = true
+            if (res.data.success) {
+              this.color = 'success'
+              this.message = 'Experiencia agregada'
+              this.experiences.push(res.data.experience[0])
+              this.$refs.form.reset()
+              if (this.experiences.length > 0) {
+                this.isEmpty = false
+              }
+            } else {
+              this.color = 'error'
+              this.message = 'Ocurrió un error al agregar el registro'
             }
-          } else {
-            this.color = 'error'
-            this.message = 'Ocurrió un error al agregar el registro'
-          }
-        })
-
+          })
+      } else {
+        this.snackbar = true
+        this.color = 'error'
+        this.message = 'Complete los campos'
+      }
     },
     unsetExperience(item: Experience, index: number) {
       this.snackbar = false
