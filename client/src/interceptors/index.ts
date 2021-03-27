@@ -1,14 +1,8 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios'
+import axios from 'axios'
+import addToken from './addToken'
+import unauthorized from './unauthorized'
 
 export default () => {
-  const addToken: any = {
-    success: (config: AxiosRequestConfig): AxiosRequestConfig => {
-      const token: string | null = localStorage.getItem('token')
-      if (token != null) {
-        config.headers.Authorization = `Bearer ${token}`
-      }
-      return config
-    }
-  }
-  axios.interceptors.request.use(addToken.success)
+  axios.interceptors.request.use(addToken.success, addToken.error)
+  axios.interceptors.response.use(unauthorized.success, unauthorized.error)
 }
