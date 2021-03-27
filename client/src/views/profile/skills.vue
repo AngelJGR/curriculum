@@ -118,7 +118,7 @@ export default Vue.extend({
             this.skillsPerson = res.data.skillsPerson
           }
         })
-        .catch((error) => {
+        /* .catch((error) => {
           if (error.response.status === 401) {
             const params: Dictionary<string> = { 
               show: 'true',
@@ -127,7 +127,7 @@ export default Vue.extend({
             }
             this.$router.push({name: 'Login', params })
           }
-        })
+        }) */
     },
     getSkills(val: string): void {
       if (val.length > 0) {
@@ -137,7 +137,7 @@ export default Vue.extend({
             this.skills = res.data.skills
             this.isSearching = false
           })
-          .catch((error) => {
+          /* .catch((error) => {
             if (error.response.status === 401) {
               const params: Dictionary<string> = {
                 show: 'true',
@@ -146,7 +146,7 @@ export default Vue.extend({
               }
               this.$router.push({name: 'Login', params})
             }
-          })
+          }) */
       }
     },
     setSkill(): void {
@@ -199,7 +199,7 @@ export default Vue.extend({
             this.message = 'Ocurrió un error al eliminar el registro'
           }
         })
-        .catch((error) => {
+        /* .catch((error) => {
           if (error.response.status === 401) {
             const params: Dictionary<string> = {
               show: 'true',
@@ -208,7 +208,7 @@ export default Vue.extend({
             }
             this.$router.push({name: 'Login', params})
           }
-        })
+        }) */
     },
     addSkill() { // PARA AGREGAR SKIILL NO EXISTENTE
       console.log('Valor...', this.search)

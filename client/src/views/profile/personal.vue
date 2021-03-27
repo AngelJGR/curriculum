@@ -126,7 +126,7 @@ export default Vue.extend({
           this.isRegister = true
         }
       })
-      .catch((error) => {
+      /* .catch((error) => {
         if (error.response.status === 401) {
           const params: Dictionary<string> = {
             show: 'true',
@@ -135,12 +135,7 @@ export default Vue.extend({
           }
           this.$router.push({name: 'Login', params})
         }
-        // console.log(Object.keys(err))
-        /* const params = {
-          show: 'true', message: err.response.data.message, color: 'error'
-        }
-        this.$router.push({name: 'Login', params }) */
-      })
+      }) */
   }
 })
 </script>
