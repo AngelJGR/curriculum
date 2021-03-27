@@ -84,8 +84,6 @@ import Vue from 'vue'
 import person from '../../services/person'
 import { Person } from '../../interfaces/person'
 
-type Dictionary<T> = { [key: string]: T }
-
 export default Vue.extend({
   data() {
     return {
@@ -126,16 +124,6 @@ export default Vue.extend({
           this.isRegister = true
         }
       })
-      /* .catch((error) => {
-        if (error.response.status === 401) {
-          const params: Dictionary<string> = {
-            show: 'true',
-            message: `Error ${error.response.status}: ${error.response.statusText}`,
-            color: 'error'
-          }
-          this.$router.push({name: 'Login', params})
-        }
-      }) */
   }
 })
 </script>

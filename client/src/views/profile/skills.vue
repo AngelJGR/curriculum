@@ -87,8 +87,6 @@ import skills from '../../services/skills'
 import { Skill } from '../../interfaces/skill'
 import SkillComponent from './components/Skill.vue'
 
-type Dictionary<T> = { [key: string]: T }
-
 export default Vue.extend({
   components: { SkillComponent },
   data() {
@@ -118,16 +116,6 @@ export default Vue.extend({
             this.skillsPerson = res.data.skillsPerson
           }
         })
-        /* .catch((error) => {
-          if (error.response.status === 401) {
-            const params: Dictionary<string> = { 
-              show: 'true',
-              message: `Error ${error.response.status}: ${error.response.statusText}`,
-              color: 'error'
-            }
-            this.$router.push({name: 'Login', params })
-          }
-        }) */
     },
     getSkills(val: string): void {
       if (val.length > 0) {
@@ -137,16 +125,6 @@ export default Vue.extend({
             this.skills = res.data.skills
             this.isSearching = false
           })
-          /* .catch((error) => {
-            if (error.response.status === 401) {
-              const params: Dictionary<string> = {
-                show: 'true',
-                message: `Error ${error.response.status}: ${error.response.statusText}`,
-                color: 'error'
-              }
-              this.$router.push({name: 'Login', params})
-            }
-          }) */
       }
     },
     setSkill(): void {
@@ -169,16 +147,6 @@ export default Vue.extend({
               this.message = 'Ocurrió un error al agregar el registro'
             }
           })
-          .catch((error) => {
-            if (error.response && error.response.status === 401) {
-              const params: Dictionary<string> = {
-                show: 'true',
-                message: `Error ${error.response.status}: ${error.response.statusText}`,
-                color: 'error'
-              }
-              this.$router.push({name: 'Login', params})
-            }
-          })
       }
     },
     unsetSkill(skillId: number): void {
@@ -199,16 +167,6 @@ export default Vue.extend({
             this.message = 'Ocurrió un error al eliminar el registro'
           }
         })
-        /* .catch((error) => {
-          if (error.response.status === 401) {
-            const params: Dictionary<string> = {
-              show: 'true',
-              message: `Error ${error.response.status}: ${error.response.statusText}`,
-              color: 'error'
-            }
-            this.$router.push({name: 'Login', params})
-          }
-        }) */
     },
     addSkill() { // PARA AGREGAR SKIILL NO EXISTENTE
       console.log('Valor...', this.search)
