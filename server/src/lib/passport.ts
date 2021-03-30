@@ -15,7 +15,7 @@ passport.use("local.login", new localStrategy({
 	passReqToCallback: true
 }, async (req: Request, username: string, password: string, done): Promise<void> => {
 	try {
-		const rows = await pool.query("SELECT * FROM users WHERE username = ?", username)
+		const rows = await pool.query("SELECT a.*, b.id AS id_person FROM users AS a, person AS b WHERE a.username = ? AND a.id = b.id_user", username)
 		if (rows.length > 0) {
 			const user: User = rows[0]
 			const validPassword = await helpers.matchPassword(password, user.password)
