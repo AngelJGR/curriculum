@@ -3,4 +3,5 @@ export default interface User {
   username: string,
   password: string,
   fullname: string,
+  id_person: number,
 }
