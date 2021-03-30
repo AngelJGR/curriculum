@@ -4,11 +4,12 @@ import passport from 'passport'
 import jwt from 'jsonwebtoken'
 
 import { pool } from '../database'
+import User from '../models/user';
 
 class AuthController {
 
   async login(req: Request, res: Response, next: NextFunction): Promise<void> {
-		passport.authenticate("local.login", async (error, user, info): Promise<any> => {
+		passport.authenticate("local.login", async (error, user: User | undefined, info): Promise<any> => {
 			try {
 				if (error) {
 					return next(error)
@@ -17,7 +18,7 @@ class AuthController {
 				}
 				req.login(user, {session: false}, async (err) => {
 					if (err) return next(err)
-					const body = { _id: user.id, user: user.username, fullname: user.fullname }
+					const body = { id: user.id, username: user.username, fullname: user.fullname }
 					const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 86400 })
 					return res.json({ token, body, ...info })
 				})
