@@ -34,7 +34,7 @@
                 @click:append="show = !show"
               ></v-text-field>
               <v-card-actions>
-                <v-btn type="submit">Aceptar</v-btn>
+                <v-btn type="submit" :loading="isLoading">Aceptar</v-btn>
                 <v-btn to="/auth/register">Registrar</v-btn>
               </v-card-actions>
             </v-card>
@@ -57,6 +57,7 @@ export default {
       snackbar: false,
       color: null,
       message: '',
+      isLoading: false,
       rules: {
         required: value => !!value || 'Requerido.',
         min: v => v.length >= 8 || 'Minimo 8 caracteres.'
@@ -66,9 +67,11 @@ export default {
   methods: {
     ...mapMutations(['setUser', 'setToken', 'setFullname']),
     submit() {
+      this.isLoading = true
       this.snackbar = false
       login.login(this.user, this.password)
         .then((res) => {
+          this.isLoading = false
           if (res.data.success) {
             localStorage.setItem('token', res.data.token)
             this.setUser = res.data.user
@@ -81,7 +84,10 @@ export default {
             this.message = res.data.message
           }
         })
-        .catch((e) => console.log('Error', e))
+        .catch((e) => {
+          this.isLoading = false
+          console.log('Error', e)
+        })
     }
   },
   created() {
