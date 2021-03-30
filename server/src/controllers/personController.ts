@@ -7,7 +7,7 @@ class PersonController {
   async getPerson(req: Request, res: Response): Promise<void> {
 		const user: any = req.user;
 		try {
-			const person = await pool.query("SELECT * FROM person WHERE id = ?", [user.id]);
+			const person = await pool.query("SELECT * FROM person WHERE id_user = ?", [user.id]);
 			res.send({ success: true, person })
 		} catch (error) {
 			await res.send({ success: false, error })
