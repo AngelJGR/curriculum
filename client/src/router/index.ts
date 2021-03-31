@@ -3,7 +3,6 @@ import VueRouter, { RouteConfig } from 'vue-router'
 
 import App from '../App.vue'
 import AppLayout from '../views/app-layout.vue'
-import AuthVerify from './auth-verify'
 import Dashboard from '../views/profile/dashboard.vue'
 import Experience from '../views/profile/experience.vue'
 import Formation from '../views/profile/formation.vue'
