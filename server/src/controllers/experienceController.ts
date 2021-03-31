@@ -5,11 +5,11 @@ import { pool } from '../database'
 class ExperienceController {
 
   async getExperiences(req: Request, res: Response): Promise<void> {
-		const { idPerson } = req.params;
+		const user: any = req.user;
 		try {
 			const experiences = await pool.query('SELECT a.id, a.area, a.description, b.name \
 			FROM work_experience AS a, organization AS b \
-			WHERE a.id_organization = b.id AND a.id_person = ?', [idPerson])
+			WHERE a.id_organization = b.id AND a.id_person = ?', [user.id_person])
 			res.json({ success: true, experiences });
 		} catch (error) {
 			res.json({ success: false, error });
@@ -22,9 +22,10 @@ class ExperienceController {
 	}
 
 	async setExperience(req: Request, res: Response): Promise<void> {
-		const { idPerson, area, description, idOrganization } = req.body
+		const user: any = req.user;
+		const { area, description, idOrganization } = req.body
 		const data = {
-			id_person: idPerson,
+			id_person: user.id_person,
 			area,
 			description,
 			id_organization: idOrganization
