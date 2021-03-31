@@ -6,7 +6,7 @@ export default (auth: any): Router => {
 
 	const PersonRouter: Router = Router()
 
-	PersonRouter.get("/getPerson/:id", auth.isLoggedIn(), PersonController.getPerson)
+	PersonRouter.get("/getPerson", auth.isLoggedIn(), PersonController.getPerson)
 	PersonRouter.post("/updatePerson/:idUser", auth.isLoggedIn(), PersonController.updatePerson)
 
 	return PersonRouter
