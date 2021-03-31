@@ -106,7 +106,7 @@ export default Vue.extend({
               }
               // eslint-disable-next-line
               // (this.$refs.form as Vue).reset()
-              (this.$refs.form as Vue & {reset: () => any}).reset()
+              (this.$refs.form as Vue & {reset: () => unknown}).reset()
               if (this.formation.length > 0) {
                 this.isEmpty = false
               }

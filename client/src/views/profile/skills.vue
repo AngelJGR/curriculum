@@ -138,7 +138,7 @@ export default Vue.extend({
               this.message = 'Habilidad agregada'
               this.skillsPerson.push(res.data.skill[0])
               // eslint-disable-next-line
-              (this.$refs.form as Vue & {reset: () => any}).reset()
+              (this.$refs.form as Vue & {reset: () => unknown}).reset()
               if (this.skillsPerson.length > 0) {
                 this.isEmpty = false
               }
