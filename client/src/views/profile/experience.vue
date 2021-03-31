@@ -122,7 +122,7 @@ export default Vue.extend({
   methods: {
     getExperience (): void {
       this.snackbar = false
-      experience.getExperiences(1) // EDITAR
+      experience.getExperiences() // EDITAR
         .then((res) => {
           console.log(res)
           if (res.data.success) {
@@ -140,7 +140,7 @@ export default Vue.extend({
     getOrganizations(val: string): void {
       if (val.length > 0) {
         this.isSearching = true
-        experience.getOrganizations(1, val) // EDITAR
+        experience.getOrganizations(val) // EDITAR
           .then((res) => {
             this.organizations = res.data.organizations
             this.isSearching = false

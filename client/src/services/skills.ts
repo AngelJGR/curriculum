@@ -2,14 +2,14 @@ import Axios from 'axios'
 
 const prefix = 'skills'
 export default {
-  getSkillsPerson: (idPerson: number) => {
-    return Axios.get(`${prefix}/getSkillsPerson/${idPerson}`)
+  getSkillsPerson: () => {
+    return Axios.get(`${prefix}/getSkillsPerson`)
   },
-  getSkills: (idPerson: number, text: string) => {
-    return Axios.post(`${prefix}/getSkills`, { text, idPerson })
+  getSkills: (text: string) => {
+    return Axios.post(`${prefix}/getSkills`, { text })
   },
-  setSkill: (idPerson: number, idSkill: number, score: number) => {
-    return Axios.post(`${prefix}/setSkill`, { idPerson, idSkill, score })
+  setSkill: (idSkill: number, score: number) => {
+    return Axios.post(`${prefix}/setSkill`, { idSkill, score })
   },
   unsetSkill: (id: number) => {
     return Axios.delete(`${prefix}/unsetSkill/${id}`)

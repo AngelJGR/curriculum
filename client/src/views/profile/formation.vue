@@ -93,7 +93,7 @@ export default Vue.extend({
     setFormation() {
       if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
         this.snackbar = false
-        FormationService.setFormation(1, this.collegeDegree.id, this.college.id_college) // EDITAR
+        FormationService.setFormation(this.collegeDegree.id, this.college.id_college) // EDITAR
           .then((res) => {
             this.snackbar = true
             if (res.data.success) {
@@ -143,7 +143,7 @@ export default Vue.extend({
     }
   },
   created() {
-    FormationService.getFormation(1) // EDITAR
+    FormationService.getFormation() // EDITAR
       .then((res) => {
         if (res.data.college_degree_person.length === 0) {
           this.isEmpty = true
