@@ -5,7 +5,7 @@ import App from '../App.vue'
 import AppLayout from '../views/app-layout.vue'
 import Dashboard from '../views/profile/dashboard.vue'
 import Experience from '../views/profile/experience.vue'
-import Formation from '../views/profile/formation.vue'
+import Formations from '../views/profile/formations.vue'
 import Skills from '../views/profile/skills.vue'
 import Login from '../views/auth/login.vue'
 import Personal from '../views/profile/personal.vue'
@@ -47,9 +47,9 @@ const routes: Array<RouteConfig> = [
         // beforeEnter: AuthVerify
       },
       {
-        path: 'formation',
-        name: 'Formation',
-        component: Formation,
+        path: 'formations',
+        name: 'Formations',
+        component: Formations,
         // beforeEnter: AuthVerify
       },
       {
