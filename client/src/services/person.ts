@@ -2,10 +2,10 @@ import Axios from 'axios'
 const prefix = 'person'
 
 export default {
-  getPerson: (userId: number) => {
-    return Axios.get(`${prefix}/getPerson/${userId}`)
+  getPerson: () => {
+    return Axios.get(`${prefix}/getPerson`)
   },
-  updatePerson: (id: number, data: Record<string, any>) => {
-    return Axios.post(`${prefix}/updatePerson/${id}`, { data })
+  updatePerson: (data: Record<string, any>) => {
+    return Axios.post(`${prefix}/updatePerson`, { data })
   }
 }

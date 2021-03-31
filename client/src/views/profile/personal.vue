@@ -87,7 +87,6 @@ import { Person } from '../../interfaces/person'
 export default Vue.extend({
   data() {
     return {
-      idPerson: 1,
       person: {} as Person,
       isRegister: false,
       snackbar: false,
@@ -98,7 +97,7 @@ export default Vue.extend({
   methods: {
     updatePerson (): void {
       this.snackbar = false
-      person.updatePerson(this.idPerson, this.person) // EDITAR
+      person.updatePerson(this.person)
         .then((res)=>{
           this.snackbar = true
           if (res.data.success) {
@@ -117,7 +116,7 @@ export default Vue.extend({
       this.color = this.$route.params.color
       this.message = this.$route.params.message
     }
-    person.getPerson(1)
+    person.getPerson()
       .then((res) => {
         if (res.data.person.length > 0) {
           this.person = res.data.person[0]
