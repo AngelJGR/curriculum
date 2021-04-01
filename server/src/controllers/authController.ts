@@ -34,8 +34,12 @@ class AuthController {
   }
   
   async logout(req: Request, res: Response): Promise<void> {
-		req.logout();
-		res.send({success: true});
+		try {
+			req.logout();
+			res.send({success: true});
+		} catch (error) {
+			res.send({success: false, error});
+		}
 	}
 
 	async validateUser(req: Request, res: Response): Promise<void> {
