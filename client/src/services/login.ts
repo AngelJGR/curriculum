@@ -10,5 +10,8 @@ export default {
   },
   login: (user: string, password: string) => {
     return Axios.post(`${prefix}/login`, {user, password})
+  },
+  logout: () => {
+    return Axios.get(`${prefix}/logout`)
   }
 }
