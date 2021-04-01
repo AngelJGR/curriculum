@@ -85,10 +85,10 @@ export default Vue.extend({
     }
   },
   methods: {
-    setFormation() {
+    setFormation(): void {
       if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
         this.snackbar = false
-        FormationService.setFormation(this.collegeDegree.id, this.college.id_college) // EDITAR
+        FormationService.setFormation(this.collegeDegree.id, this.college.id_college)
           .then((res) => {
             this.snackbar = true
             if (res.data.success) {
@@ -112,7 +112,7 @@ export default Vue.extend({
           })
       }
     },
-    unsetFormation(formation: Formation, index: number) {
+    unsetFormation(formation: Formation, index: number): void {
       this.snackbar = false
       FormationService.unsetFormation(formation.id)
         .then((res) => {
@@ -137,8 +137,8 @@ export default Vue.extend({
         })
     }
   },
-  created() {
-    FormationService.getFormation() // EDITAR
+  created(): void {
+    FormationService.getFormation()
       .then((res) => {
         if (res.data.college_degree_person.length === 0) {
           this.isEmpty = true
