@@ -32,11 +32,18 @@
 					<v-list-item-title>Información personal</v-list-item-title>
 				</v-list-item>
 
-				<v-list-item>
+				<!-- <v-list-item>
 					<v-list-item-title>Logout</v-list-item-title>
-				</v-list-item>
+				</v-list-item> -->
 			</v-list-item-group>
 		</v-list>
+		<template v-slot:append>
+			<div class="pa-2">
+				<v-btn block @click="logout">
+					Logout
+				</v-btn>
+			</div>
+		</template>
 	</v-navigation-drawer>
 	<v-app-bar
       color="indigo darken-2"
@@ -53,16 +60,47 @@
 		<v-container fluid fill-height :class="{'pa-0': $vuetify.breakpoint.xs}">
 			<v-layout :class="{'pa-0': $vuetify.breakpoint.xs}" justify-center>
 					<router-view />
+					<alert-message
+						:snackbar="snackbar"
+						:color="color"
+						:message="message"
+					/>
 			</v-layout>
 		</v-container>
 	</v-main>
 </v-app>
 </template>
 <script>
+import LoginService from '../services/login'
+
 export default {
 	data: () => {
 		return {
-			drawer: true
+			drawer: true,
+			snackbar: false,
+			color: '',
+			message: ''
+		}
+	},
+	methods: {
+		logout() {
+			this.snackbar = false
+			LoginService.logout()
+				.then((res) => {
+					if (res.data.success) {
+						localStorage.removeItem('token')
+						this.$router.push({name: 'Login'})
+					} else {
+						this.snackbar = true
+						this.color = 'error'
+						this.message = 'Ocurrió un error al cerrar la sesión'
+					}
+				})
+				.catch(() => {
+					this.snackbar = true
+					this.color = 'error'
+					this.message = 'Ocurrió un error al cerrar la sesión'
+				})
 		}
 	}
 }
