@@ -14,7 +14,7 @@
 				v-model="group"
 				active-class="deep-purple--text text--accent-4"
 			>
-				<v-list-item to="/profile/formation">
+				<v-list-item to="/profile/formations">
 					<v-list-item-title>Formación</v-list-item-title>
 				</v-list-item>
 
