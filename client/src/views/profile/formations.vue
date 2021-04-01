@@ -3,22 +3,12 @@
     <h1>Formación</h1>
     <non-content v-if="isEmpty"></non-content>
     <v-card v-else>
-      <v-row v-for="(item, index) in formation" :key="item.id">
-        <v-col cols="12" sm="6">
-          {{index}} - {{item.id_college_degree}} - {{item.college_degree}}
-        </v-col>
-        <v-col cols="12" sm="4">
-          {{item.college}}
-        </v-col>
-        <v-col cols="12" sm="2">
-          <v-btn icon color="success">
-            <v-icon>mdi-refresh-circle</v-icon>
-          </v-btn>
-          <v-btn icon color="error" @click="unsetFormation(item, index)">
-            <v-icon>mdi-delete-circle</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
+      <formation-component
+        v-for="(item, index) in formation" :key="item.id"
+        :formation="item"
+        :index="index"
+        @unsetFormation="unsetFormation"
+      />
     </v-card>
     <v-divider></v-divider>
     <v-form lazy-validation ref="form" @submit.prevent="setFormation">
@@ -66,6 +56,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import FormationComponent from './components/formation.vue'
+
 import FormationService from '../../services/formation'
 
 import Formation from '../../interfaces/formation'
@@ -73,6 +65,9 @@ import College from '../../interfaces/college'
 import CollegeDegree from '../../interfaces/collegeDegree'
 
 export default Vue.extend({
+  components: {
+    FormationComponent
+  },
   data() {
     return {
       isEmpty: false,
