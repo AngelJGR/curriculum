@@ -2,17 +2,19 @@
 <v-app>
 	<v-navigation-drawer
 		v-model="drawer"
-		absolute
-		left
-		temporary
+    clipped
+    fixed
+    app
+    color="indigo accent-3"
+		dark
+    :width="$vuetify.breakpoint.xs ? 250 : 280"
 	>
 		<v-list
 			nav
 			dense
 		>
 			<v-list-item-group
-				v-model="group"
-				active-class="deep-purple--text text--accent-4"
+				active-class="blue-grey--text text--lighten-5"
 			>
 				<v-list-item to="/profile/formations">
 					<v-list-item-title>Formación</v-list-item-title>
@@ -60,13 +62,7 @@
 export default {
 	data: () => {
 		return {
-			drawer: false,
-			group: null
-		}
-	},
-	watch: {
-		group () {
-			this.drawer = false
+			drawer: true
 		}
 	}
 }
