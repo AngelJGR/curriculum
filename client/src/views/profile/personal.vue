@@ -3,7 +3,7 @@
     <h1>Perfil</h1>
     <v-row>
       <v-col cols="12">
-        <v-card class="px-4">
+        <v-card class="px-4 py-2">
           <v-card-title v-if="!isRegister">
             <h3>Ingrese sus datos personales para completar el perfil</h3>
           </v-card-title>
