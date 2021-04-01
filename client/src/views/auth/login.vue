@@ -73,7 +73,7 @@ export default {
         .then((res) => {
           this.isLoading = false
           if (res.data.success) {
-            localStorage.setItem('token', res.data.token)
+            localStorage.setItem('resume-token', res.data.token)
             this.setUser = res.data.user
             this.setToken = res.data.token
             this.setFullname = res.data.fullname

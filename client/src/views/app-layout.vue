@@ -88,7 +88,7 @@ export default {
 			LoginService.logout()
 				.then((res) => {
 					if (res.data.success) {
-						localStorage.removeItem('token')
+						localStorage.removeItem('resume-token')
 						this.$router.push({name: 'Login'})
 					} else {
 						this.snackbar = true
