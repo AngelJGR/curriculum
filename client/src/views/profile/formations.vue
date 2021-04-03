@@ -2,7 +2,7 @@
   <v-container>
     <h1>Formación</h1>
     <non-content v-if="isEmpty"></non-content>
-    <v-card v-else fluid>
+    <v-card v-else class="px-2">
       <v-row justify="center">
         <v-col 
           cols="12" sm="6" md="4"

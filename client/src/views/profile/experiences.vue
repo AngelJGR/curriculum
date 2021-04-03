@@ -2,8 +2,8 @@
   <v-container>
     <h1>Experiencia</h1>
     <non-content v-if="isEmpty"></non-content>
-    <v-card v-else>
-      <v-row>
+    <v-card v-else class="px-2">
+      <v-row justify="center">
         <v-col
           cols="12" sm="6" md="4"
           v-for="(item, index) in experiences" :key="item.id"
