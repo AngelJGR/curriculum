@@ -16,6 +16,10 @@
 			<v-list-item-group
 				active-class="blue-grey--text text--lighten-5"
 			>
+				<v-list-item to="/profile/personal">
+					<v-list-item-title>Información personal</v-list-item-title>
+				</v-list-item>
+
 				<v-list-item to="/profile/formations">
 					<v-list-item-title>Formación</v-list-item-title>
 				</v-list-item>
@@ -27,14 +31,6 @@
 				<v-list-item to="/profile/skills">
 					<v-list-item-title>Habilidades</v-list-item-title>
 				</v-list-item>
-
-				<v-list-item to="/profile/personal">
-					<v-list-item-title>Información personal</v-list-item-title>
-				</v-list-item>
-
-				<!-- <v-list-item>
-					<v-list-item-title>Logout</v-list-item-title>
-				</v-list-item> -->
 			</v-list-item-group>
 		</v-list>
 		<template v-slot:append>
