@@ -1,21 +1,15 @@
 <template>
   <v-card>
-    <v-row>
-      <v-col cols="12" sm="6">
-        {{formation.id_college_degree}} - {{formation.college_degree}}
-      </v-col>
-      <v-col cols="12" sm="4">
-        {{formation.college}}
-      </v-col>
-      <v-col cols="12" sm="2">
-        <v-btn icon color="success">
-          <v-icon>mdi-refresh-circle</v-icon>
-        </v-btn>
-        <v-btn icon color="error" @click="unsetFormation">
-          <v-icon>mdi-delete-circle</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
+    <v-card-title>{{formation.college_degree}}</v-card-title>
+    <v-card-text>{{formation.college}}</v-card-text>
+    <v-card-actions>
+      <v-btn x-small color="success">
+        <v-icon small>mdi-refresh-circle</v-icon> Actualizar
+      </v-btn>
+      <v-btn x-small color="error" @click="unsetFormation">
+        <v-icon small>mdi-delete-circle</v-icon> Eliminar
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 

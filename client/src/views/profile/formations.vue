@@ -2,13 +2,19 @@
   <v-container>
     <h1>Formación</h1>
     <non-content v-if="isEmpty"></non-content>
-    <v-card v-else>
-      <formation-component
-        v-for="(item, index) in formation" :key="item.id"
-        :formation="item"
-        :index="index"
-        @unsetFormation="unsetFormation"
-      />
+    <v-card v-else fluid>
+      <v-row justify="center">
+        <v-col 
+          cols="12" sm="6" md="4"
+          v-for="(item, index) in formation" :key="item.id"
+        >
+          <formation-component
+            :formation="item"
+            :index="index"
+            @unsetFormation="unsetFormation"
+          />
+        </v-col>
+      </v-row>
     </v-card>
     <v-divider></v-divider>
     <v-form lazy-validation ref="form" @submit.prevent="setFormation">
