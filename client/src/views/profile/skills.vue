@@ -24,9 +24,9 @@
 
     <v-divider></v-divider>
     <v-form lazy-validation ref="form" @submit.prevent="setSkill">
-      <v-card>
+      <v-card :class="{'px-1': $vuetify.breakpoint.xs}" class="px-5 py-3">
         <v-row justify="center">
-          <v-col cols="6">
+          <v-col cols="12" sm="6">
             <v-combobox
               v-model="skill"
               :items="skills"
@@ -55,7 +55,7 @@
               </template>
             </v-combobox>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="12" sm="6">
             <v-slider
               v-model="score"
               color="red darken-4"
@@ -65,11 +65,12 @@
               :rules="[rules.required]"
             ></v-slider>
           </v-col>
-          <v-col cols="2">
+          <!-- <v-col cols="2">
             <v-btn small type="submit" color="success">Agregar</v-btn>
-          </v-col>
+          </v-col> -->
         </v-row>
         <v-card-actions>
+          <v-btn small type="submit" color="success">Agregar</v-btn>
         </v-card-actions>
       </v-card>
     </v-form>
