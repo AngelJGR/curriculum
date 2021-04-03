@@ -9,8 +9,11 @@
     <v-row v-else>
       <v-col cols="12">
         <v-card flat>
-          <v-row v-for="(skill) in skillsPerson" :key="skill.id">
-            <v-col cols="12" md="6">
+          <v-row justify="center">
+            <v-col
+              cols="12" md="6"
+              v-for="(skill) in skillsPerson" :key="skill.id"
+            >
               <skill-component 
                 :skill="skill"
                 @unsetSkill="unsetSkill"

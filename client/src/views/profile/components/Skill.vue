@@ -1,11 +1,11 @@
 <template>
   <v-card flat class="px-3">
     <v-row justify="center" align="center">
-      <v-col cols="12" sm="6">
+      <v-col cols="5">
         <v-icon>mdi-check-circle-outline</v-icon>
         {{skill.description}}
       </v-col>
-      <v-col cols="12" sm="4">
+      <v-col cols="5" class="d-flex justify-end">
         <v-fab-transition style="bottom: 10px;">
           <v-progress-circular
             :rotate="-90"
@@ -17,7 +17,7 @@
           </v-progress-circular>
         </v-fab-transition>
       </v-col>
-      <v-col cols="12" sm="2">
+      <v-col cols="2">
         <v-btn icon color="success">
           <v-icon>mdi-refresh-circle</v-icon>
         </v-btn>
