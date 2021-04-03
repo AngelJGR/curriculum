@@ -4,7 +4,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import App from '../App.vue'
 import AppLayout from '../views/app-layout.vue'
 import Dashboard from '../views/profile/dashboard.vue'
-import Experience from '../views/profile/experience.vue'
+import Experiences from '../views/profile/experiences.vue'
 import Formations from '../views/profile/formations.vue'
 import Skills from '../views/profile/skills.vue'
 import Login from '../views/auth/login.vue'
@@ -55,7 +55,7 @@ const routes: Array<RouteConfig> = [
       {
         path: 'experience',
         name: 'Experience',
-        component: Experience,
+        component: Experiences,
         // beforeEnter: AuthVerify
       },
       {
