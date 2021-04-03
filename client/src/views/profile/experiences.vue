@@ -2,25 +2,17 @@
   <v-container>
     <h1>Experiencia</h1>
     <non-content v-if="isEmpty"></non-content>
-
     <v-card v-else>
-      <v-row v-for="(item, index) in experiences" :key="item.id">
-        <v-col cols="12" sm="4">
-          {{index}} - {{item.id}} - {{item.description}}
-        </v-col>
-        <v-col cols="12" sm="3">
-          {{ item.area }}
-        </v-col>
-        <v-col cols="12" sm="3">
-          {{ item.name }}
-        </v-col>
-        <v-col cols="12" sm="2">
-          <v-btn icon color="success">
-            <v-icon>mdi-refresh-circle</v-icon>
-          </v-btn>
-          <v-btn icon color="error" @click="unsetExperience(item, index)">
-            <v-icon>mdi-delete-circle</v-icon>
-          </v-btn>
+      <v-row>
+        <v-col
+          cols="12" sm="6" md="4"
+          v-for="(item, index) in experiences" :key="item.id"
+        >
+          <experience-component
+            :experience="item"
+            :index="index"
+            @unsetExperience="unsetExperience"
+          />
         </v-col>
       </v-row>
     </v-card>
@@ -100,10 +92,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import ExperienceComponent from './components/Experience.vue'
+
 import experience from '../../services/experience'
 import { Experience } from '../../interfaces/experience'
 import { Organization } from '../../interfaces/organization'
 export default Vue.extend({
+  components:{
+    ExperienceComponent
+  },
   data () {
     return {
       experiences: [] as Experience[],
