@@ -30,7 +30,7 @@
               label="Organización"
               placeholder="Ingrese organización"
               :rules="[rules.required]"
-              :search-input.sync="search"
+              :searchInput.sync="search"
               clearable
               return-object
             >
@@ -106,7 +106,7 @@ export default Vue.extend({
       experiences: [] as Experience[],
       experience: {} as Experience,
       organizations: [] as Organization[],
-      organization: {} as Organization,
+      organization: null as unknown as Organization,
       search: null,
       rules: { required: (value: string) => !!value || 'Requerido.' },
       isEmpty: false,
