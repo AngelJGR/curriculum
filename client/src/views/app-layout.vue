@@ -16,26 +16,23 @@
 			<v-list-item-group
 				active-class="blue-grey--text text--lighten-5"
 			>
-				<v-list-item to="/profile/personal">
-					<v-list-item-title>Información personal</v-list-item-title>
-				</v-list-item>
-
-				<v-list-item to="/profile/formations">
-					<v-list-item-title>Formación</v-list-item-title>
-				</v-list-item>
-
-				<v-list-item to="/profile/experience">
-					<v-list-item-title>Experiencia</v-list-item-title>
-				</v-list-item>
-
-				<v-list-item to="/profile/skills">
-					<v-list-item-title>Habilidades</v-list-item-title>
+				<v-list-item
+					v-for="(option, index) in options" :key="index"
+					:to="`/profile/${option.link}`"
+				>
+					<v-list-item-icon>
+						<v-icon>{{ option.icon }}</v-icon>
+					</v-list-item-icon>
+					<v-list-item-content>
+						<v-list-item-title>{{ option.text }}</v-list-item-title>
+					</v-list-item-content>
 				</v-list-item>
 			</v-list-item-group>
 		</v-list>
 		<template v-slot:append>
 			<div class="pa-2">
 				<v-btn block @click="logout">
+					<v-icon left>mdi-logout</v-icon>
 					Logout
 				</v-btn>
 			</div>
@@ -72,6 +69,12 @@ import LoginService from '../services/login'
 export default {
 	data: () => {
 		return {
+			options: [
+				{ link: 'personal', text: 'Información personal', icon: 'mdi-account-tie' },
+				{ link: 'formations', text: 'Formación', icon: 'mdi-book-open-page-variant' },
+				{ link: 'experience', text: 'Experiencia', icon: 'mdi-briefcase-variant' },
+				{ link: 'skills', text: 'Habilidades', icon: 'mdi-clipboard-text-multiple' },
+			],
 			drawer: true,
 			snackbar: false,
 			color: '',
