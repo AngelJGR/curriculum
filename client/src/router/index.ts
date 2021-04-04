@@ -11,6 +11,7 @@ import Login from '../views/auth/login.vue'
 import Personal from '../views/profile/personal.vue'
 import Register from '../views/auth/register.vue'
 import Resume from '../views/resume.vue'
+import NotFound from '../views/not-found.vue'
 
 Vue.use(VueRouter)
 
@@ -68,6 +69,11 @@ const routes: Array<RouteConfig> = [
         path: 'personal',
         name: 'Personal',
         component: Personal,
+        // beforeEnter: AuthVerify
+      },
+      {
+        path: '*',
+        component: NotFound,
         // beforeEnter: AuthVerify
       },
     ]
