@@ -48,6 +48,10 @@
       text
     >
 		<v-app-bar-nav-icon @click.stop="drawer = !drawer" text></v-app-bar-nav-icon>
+		<v-spacer></v-spacer>
+		<v-btn :to="{ name: 'Resume', params: { username: 'AngelJGR' } }">
+			Ver perfil
+		</v-btn>
 	</v-app-bar>
 	<v-main class="grey lighten-3">
 		<v-container fluid fill-height :class="{'pa-0': $vuetify.breakpoint.xs}">
