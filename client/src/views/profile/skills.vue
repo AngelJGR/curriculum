@@ -67,9 +67,6 @@
               :rules="[rules.required]"
             ></v-slider>
           </v-col>
-          <!-- <v-col cols="2">
-            <v-btn small type="submit" color="success">Agregar</v-btn>
-          </v-col> -->
         </v-row>
         <v-card-actions>
           <v-btn small type="submit" color="success">Agregar</v-btn>
@@ -92,13 +89,16 @@ import SkillComponent from './components/Skill.vue'
 
 export default Vue.extend({
   components: { SkillComponent },
+  computed: {
+    form(): Vue & { validate: () => boolean; reset: () => unknown } {
+      return this.$refs.form as Vue & { validate: () => boolean; reset: () => unknown }
+    }
+  },
   data() {
     return {
       skills: [],
-      // skillsPerson: new Array<Skill>(),
-      skillsPerson: [] as Skill[],
+      skillsPerson: new Array<Skill>(),
       skill: null as unknown as Skill,
-      // skill: {} as Skill,
       score: 0,
       search: '',
       isSearching: false,
@@ -111,7 +111,7 @@ export default Vue.extend({
   },
   methods: {
     getSkillsPerson(): void {
-      skills.getSkillsPerson() // EDITAR
+      skills.getSkillsPerson()
         .then((res) => {
           if (res.data.skillsPerson.length === 0) {
             this.isEmpty = true
@@ -123,7 +123,7 @@ export default Vue.extend({
     getSkills(val: string): void {
       if (val.length > 0) {
         this.isSearching = true
-        skills.getSkills(val) //EDITAR
+        skills.getSkills(val)
           .then((res) => {
             this.skills = res.data.skills
             this.isSearching = false
@@ -131,17 +131,16 @@ export default Vue.extend({
       }
     },
     setSkill(): void {
-      if ((this.$refs.form as Vue & { validate: () => boolean }).validate() && this.skill.description === this.search) {
+      if (this.form.validate() && this.skill.description === this.search) {
         this.snackbar = false
-        skills.setSkill(this.skill.id, this.score) // EDITAR
+        skills.setSkill(this.skill.id, this.score)
           .then((res) => {
             this.snackbar = true
             if (res.data.success) {
               this.color = 'success'
               this.message = 'Habilidad agregada'
               this.skillsPerson.push(res.data.skill[0])
-              // eslint-disable-next-line
-              (this.$refs.form as Vue & {reset: () => unknown}).reset()
+              this.form.reset()
               if (this.skillsPerson.length > 0) {
                 this.isEmpty = false
               }
