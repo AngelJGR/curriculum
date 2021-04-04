@@ -35,7 +35,7 @@
               ></v-text-field>
               <v-card-actions>
                 <v-btn type="submit" :loading="isLoading">Aceptar</v-btn>
-                <v-btn to="/auth/register">Registrar</v-btn>
+                <v-btn to="/auth/register" :disabled="isLoading">Registrar</v-btn>
               </v-card-actions>
             </v-card>
           </v-form>
