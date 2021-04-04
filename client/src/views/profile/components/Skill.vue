@@ -1,9 +1,11 @@
 <template>
-  <v-card flat class="px-3">
+  <v-card class="px-3">
     <v-row justify="center" align="center">
       <v-col cols="5">
-        <v-icon>mdi-check-circle-outline</v-icon>
-        {{skill.description}}
+        <v-card-title>
+          <v-icon>mdi-check-circle-outline</v-icon>
+          {{skill.description}}
+        </v-card-title>
       </v-col>
       <v-col cols="5" class="d-flex justify-end">
         <v-fab-transition style="bottom: 10px;">
