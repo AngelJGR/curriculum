@@ -1,7 +1,22 @@
 <template>
   <v-app>
     <v-main>
-      <!-- <HelloWorld/> -->
+      
+      <v-app-bar
+        color="indigo darken-2"
+        dark
+        style="border-bottom:1px solid rgba(0,0,0,.12) !important;"
+        app
+        fixed
+        clipped-left
+        text
+      >
+        <v-spacer></v-spacer>
+        <v-btn to="profile/personal">
+          Editar
+        </v-btn>
+      </v-app-bar>
+
       <not-found v-if="!isUserExist"></not-found>
     </v-main>
   </v-app>
@@ -26,6 +41,7 @@ export default Vue.extend({
   async created() {
     const result = await info.getInformation(this.$route.params.username)
     this.isUserExist = result.data
+    console.log(result)
   }
 });
 </script>
