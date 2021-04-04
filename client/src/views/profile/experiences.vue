@@ -1,22 +1,29 @@
 <template>
   <v-container>
     <h1>Experiencia</h1>
-    <non-content v-if="isEmpty"></non-content>
-    <v-card v-else class="px-2">
-      <v-row justify="center">
-        <v-col
-          cols="12" sm="6" md="4"
-          v-for="(item, index) in experiences" :key="item.id"
-        >
-          <experience-component
-            :experience="item"
-            :index="index"
-            @unsetExperience="unsetExperience"
-          />
-        </v-col>
-      </v-row>
-    </v-card>
-
+    <v-row v-if="isEmpty">
+      <v-col cols="12">
+        <non-content></non-content>
+      </v-col>
+    </v-row>
+    <v-row v-else>
+      <v-col cols="12">
+        <v-card class="px-2">
+          <v-row justify="space-around">
+            <v-col
+              cols="12" sm="6" md="4"
+              v-for="(item, index) in experiences" :key="item.id"
+            >
+              <experience-component
+                :experience="item"
+                :index="index"
+                @unsetExperience="unsetExperience"
+              />
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
     <v-divider></v-divider>
     <v-form lazy-validation ref="form" @submit.prevent="setExperience">
       <v-card :class="{'px-1': $vuetify.breakpoint.xs}" class="px-5 py-3">
@@ -64,25 +71,12 @@
               :rules="[rules.required]"
             ></v-textarea>
           </v-col>
-          <!-- <v-col cols="4">
-            <v-slider
-              color="red darken-4"
-              min="1"
-              max="100"
-              label="porcentaje"
-              :rules="[rules.required]"
-            ></v-slider>
-          </v-col> -->
-          <!-- <v-col cols="12">
-            <v-btn small type="submit" color="success">Agregar</v-btn>
-          </v-col> -->
         </v-row>
         <v-card-actions>
           <v-btn small type="submit" color="success">Agregar</v-btn>
         </v-card-actions>
       </v-card>
     </v-form>
-
     <alert-message
       :snackbar="snackbar"
       :color="color"

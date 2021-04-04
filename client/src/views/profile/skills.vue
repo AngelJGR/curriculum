@@ -8,10 +8,10 @@
     </v-row>
     <v-row v-else>
       <v-col cols="12">
-        <v-card flat>
+        <v-card>
           <v-row justify="center">
             <v-col
-              cols="12" md="6"
+              cols="12" sm="6" md="4"
               v-for="(skill) in skillsPerson" :key="skill.id"
             >
               <skill-component 
@@ -24,7 +24,6 @@
         </v-card>
       </v-col>
     </v-row>
-
     <v-divider></v-divider>
     <v-form lazy-validation ref="form" @submit.prevent="setSkill">
       <v-card :class="{'px-1': $vuetify.breakpoint.xs}" class="px-5 py-3">
