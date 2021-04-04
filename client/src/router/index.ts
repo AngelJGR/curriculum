@@ -29,7 +29,12 @@ const routes: Array<RouteConfig> = [
         path: 'register',
         name: 'Register',
         component: Register
-      }
+      },
+      {
+        path: '*',
+        component: NotFound,
+        // beforeEnter: AuthVerify
+      },
     ]
   },
   {
@@ -77,7 +82,12 @@ const routes: Array<RouteConfig> = [
         // beforeEnter: AuthVerify
       },
     ]
-  }
+  },
+  {
+    path: '*',
+    component: NotFound,
+    // beforeEnter: AuthVerify
+  },
 ]
 
 const router = new VueRouter({
