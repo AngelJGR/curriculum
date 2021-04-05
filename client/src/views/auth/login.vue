@@ -70,16 +70,10 @@ export default {
       if (this.$refs.form.validate()) {
         this.isLoading = true
         this.snackbar = false
-        login.login(this.user, this.password)
-        // this.$store.dispatch('session/login', this.user, this.password)
+        this.$store.dispatch('session/login', {username: this.user, password: this.password})
           .then((res) => {
-            console.log('Desde el componente', res)
             this.isLoading = false
             if (res.data.success) {
-              localStorage.setItem('resume-token', res.data.token)
-              /* this.setUser = res.data.user
-              this.setToken = res.data.token
-              this.setFullname = res.data.fullname */
               this.$router.push({name: 'Personal', params: { show: true, message: res.data.message, color: 'success' }})
             } else {
               this.snackbar = true
