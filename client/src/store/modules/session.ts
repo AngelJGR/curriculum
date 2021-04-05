@@ -1,4 +1,4 @@
-import login from '../../services/login'
+import LoginService from '../../services/login'
 import ICommit from '../../interfaces/commit'
 import SessionState from '@/interfaces/session'
 
@@ -12,7 +12,7 @@ const baseState: SessionState = {
 
 const actions = {
   login ({commit}: ICommit, { username, password }: any) {
-    return login.login(username, password)
+    return LoginService.login(username, password)
       .then((session) => {
         localStorage.setItem(TOKEN_KEY, session.data.token)
         localStorage.setItem(USER_KEY, JSON.stringify(session.data.body))
@@ -20,6 +20,17 @@ const actions = {
           commit('setSession', session)
         }
         return session
+      })
+  },
+  logout ({commit}: ICommit) {
+    return LoginService.logout()
+      .then((res) => {
+        if (res.data.success) {
+          localStorage.removeItem(TOKEN_KEY)
+          localStorage.removeItem(USER_KEY)
+          commit('clearSession')
+        }
+        return res
       })
   }
 }
