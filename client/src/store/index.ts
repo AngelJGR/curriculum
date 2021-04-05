@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import session from './modules/session'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -9,19 +11,7 @@ export default new Vuex.Store({
     fullname: null,
     token: null
   },
-  mutations: {
-    setUser: (state, user) => {
-      state.user= user
-    },
-    setFullname: (state, fullname) => {
-      state.fullname= fullname
-    },
-    setToken: (state, token) => {
-      state.token= token
-    }
-  },
-  actions: {
-  },
   modules: {
+    session
   }
 })
