@@ -68,8 +68,6 @@
 </v-app>
 </template>
 <script>
-import LoginService from '../services/login'
-
 export default {
 	data: () => {
 		return {

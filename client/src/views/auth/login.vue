@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import login from '../../services/login'
 import { mapMutations } from 'vuex'
 export default {
   data () {
