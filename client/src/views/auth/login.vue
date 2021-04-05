@@ -13,7 +13,7 @@
       </v-row>
       <v-row justify="center">
         <v-col cols="12" md="6">
-          <v-form lazy-validation @submit.prevent="submit">
+          <v-form lazy-validation @submit.prevent="submit" ref="form">
             <v-card class="px-5 py-4">
               <v-card-title>
                 <h3>Login</h3>
@@ -67,27 +67,31 @@ export default {
   methods: {
     ...mapMutations(['setUser', 'setToken', 'setFullname']),
     submit() {
-      this.isLoading = true
-      this.snackbar = false
-      login.login(this.user, this.password)
-        .then((res) => {
-          this.isLoading = false
-          if (res.data.success) {
-            localStorage.setItem('resume-token', res.data.token)
-            this.setUser = res.data.user
-            this.setToken = res.data.token
-            this.setFullname = res.data.fullname
-            this.$router.push({name: 'Personal', params: { show: true, message: res.data.message, color: 'success' }})
-          } else {
-            this.snackbar = true
-            this.color = 'error'
-            this.message = res.data.message
-          }
-        })
-        .catch((e) => {
-          this.isLoading = false
-          console.log('Error', e)
-        })
+      if (this.$refs.form.validate()) {
+        this.isLoading = true
+        this.snackbar = false
+        login.login(this.user, this.password)
+        // this.$store.dispatch('session/login', this.user, this.password)
+          .then((res) => {
+            console.log('Desde el componente', res)
+            this.isLoading = false
+            if (res.data.success) {
+              localStorage.setItem('resume-token', res.data.token)
+              /* this.setUser = res.data.user
+              this.setToken = res.data.token
+              this.setFullname = res.data.fullname */
+              this.$router.push({name: 'Personal', params: { show: true, message: res.data.message, color: 'success' }})
+            } else {
+              this.snackbar = true
+              this.color = 'error'
+              this.message = res.data.message
+            }
+          })
+          .catch((e) => {
+            this.isLoading = false
+            console.log('Error', e)
+          })
+      }
     }
   },
   created() {
