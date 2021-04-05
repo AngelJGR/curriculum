@@ -46,7 +46,7 @@
       fixed
       clipped-left
       text
-    >
+  >
 		<v-app-bar-nav-icon @click.stop="drawer = !drawer" text></v-app-bar-nav-icon>
 		<v-spacer></v-spacer>
 		<v-btn :to="{ name: 'Resume', params: { username: 'AngelJGR' } }">
