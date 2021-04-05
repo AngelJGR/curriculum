@@ -14,9 +14,9 @@ const actions = {
   login ({commit}: ICommit, { username, password }: any) {
     return LoginService.login(username, password)
       .then((session) => {
-        localStorage.setItem(TOKEN_KEY, session.data.token)
-        localStorage.setItem(USER_KEY, JSON.stringify(session.data.body))
         if (session.data.success) {
+          localStorage.setItem(TOKEN_KEY, session.data.token)
+          localStorage.setItem(USER_KEY, JSON.stringify(session.data.body))
           commit('setSession', session)
         }
         return session
