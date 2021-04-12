@@ -23,19 +23,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapState } from 'vuex'
-import State from '../interfaces/state/state'
 
 export default Vue.extend({
   computed: {
     ...mapState({
-      alert: (state: State) => state.alert || {}
+      alert: (state: any) => state.alert || {}
     })
-  },
-  created() {
-    console.log('created', this.alert)
-  },
-  updated() {
-    console.log('updated', this.alert)
   }
 })
 </script>
