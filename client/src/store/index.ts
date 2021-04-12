@@ -1,10 +1,11 @@
-import SessionState from '@/interfaces/session'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import SessionState from '@/interfaces/state/session'
+import AlertInterface from '@/interfaces/state/alert'
+
 import session from './modules/session'
 import alert from './modules/alert'
-import AlertInterface from '@/interfaces/alert'
 
 Vue.use(Vuex)
 

@@ -1,5 +1,5 @@
 
-import Alert from '@/interfaces/alert'
+import Alert from '@/interfaces/state/alert'
 import ICommit from '../../interfaces/commit'
 
 interface MMutations {

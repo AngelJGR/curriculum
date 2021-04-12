@@ -1,6 +1,6 @@
 import LoginService from '../../services/login'
 import ICommit from '../../interfaces/commit'
-import SessionState from '@/interfaces/session'
+import SessionState from '@/interfaces/state/session'
 
 const TOKEN_KEY = 'resume-token'
 const USER_KEY = 'resume-user'
