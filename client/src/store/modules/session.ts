@@ -5,13 +5,18 @@ import SessionState from '@/interfaces/state/session'
 const TOKEN_KEY = 'resume-token'
 const USER_KEY = 'resume-user'
 
+interface UserLogin {
+  username: string;
+  password: string;
+}
+
 const baseState: SessionState = {
   user: JSON.parse(localStorage.getItem(USER_KEY) || '{}'),
   token: (localStorage.getItem(TOKEN_KEY) || '')
 }
 
 const actions = {
-  login ({commit}: ICommit, { username, password }: any) {
+  login ({commit}: ICommit, { username, password }: UserLogin) {
     return LoginService.login(username, password)
       .then((session) => {
         if (session.data.success) {
@@ -40,9 +45,9 @@ const mutations = {
     state.user = session.data.body
     state.token = session.data.token
   },
-  clearSession (state: any) {
+  clearSession (state: SessionState) {
     state.user = {}
-    state.token = null
+    state.token = ''
   }
 }
 
