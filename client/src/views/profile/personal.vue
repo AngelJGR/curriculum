@@ -72,15 +72,12 @@
         </v-card>
       </v-col>
     </v-row>
-    <alert-message
-      :snackbar="snackbar"
-      :color="color"
-      :message="message"
-    />
+    <alert-message/>
   </v-container>
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import { mapState } from 'vuex'
 import person from '../../services/person'
 import { Person } from '../../interfaces/person'
 
@@ -89,32 +86,28 @@ export default Vue.extend({
     return {
       person: {} as Person,
       isRegister: false,
-      snackbar: false,
-      color: '',
-      message: '',
     }
+  },
+  computed: {
+    ...mapState({
+      alert: (state: any) => state.alert || {}
+    })
   },
   methods: {
     updatePerson (): void {
-      this.snackbar = false
       person.updatePerson(this.person)
         .then((res)=>{
-          this.snackbar = true
           if (res.data.success) {
-            this.color = 'success'
-            this.message = 'Datos actualizados!'
+            this.$store.dispatch('alert/success', 'Datos actualizados!')
           } else {
-            this.color = 'error'
-            this.message = 'Ocurrió un error!'
+            this.$store.dispatch('alert/error', 'Ocurrió un error!')
           }
         })
     }
   },
   created () {
     if (this.$route.params.show) {
-      this.snackbar = true
-      this.color = this.$route.params.color
-      this.message = this.$route.params.message
+      this.$store.dispatch('alert/success', this.$route.params.message)
     }
     person.getPerson()
       .then((res) => {

@@ -1,10 +1,5 @@
 <template>
   <v-app>
-    <alert-message
-      :snackbar="snackbar"
-      :color="color"
-      :message="message"
-    />
     <v-container fluid>
       <v-row>
         <v-col cols="4">
@@ -42,20 +37,18 @@
         </v-col>
       </v-row>
     </v-container>
+    <alert-message/>
   </v-app>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
       user: '',
       password: '',
       show: false,
-      snackbar: false,
-      color: null,
-      message: '',
       isLoading: false,
       rules: {
         required: value => !!value || 'Requerido.',
@@ -63,21 +56,23 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      alert: (state) => state.alert || {}
+    })
+  },
   methods: {
-    ...mapMutations(['setUser', 'setToken', 'setFullname']),
     submit() {
       if (this.$refs.form.validate()) {
         this.isLoading = true
-        this.snackbar = false
         this.$store.dispatch('session/login', {username: this.user, password: this.password})
           .then((res) => {
             this.isLoading = false
             if (res.data.success) {
               this.$router.push({name: 'Personal', params: { show: true, message: res.data.message, color: 'success' }})
             } else {
-              this.snackbar = true
-              this.color = 'error'
-              this.message = res.data.message
+              console.log('desde login', this.alert)
+              this.$store.dispatch('alert/error', res.data.message)
             }
           })
           .catch((e) => {
@@ -89,9 +84,7 @@ export default {
   },
   created() {
     if (this.$route.params.show) {
-      this.snackbar = true
-      this.color = this.$route.params.color
-      this.message = this.$route.params.message
+      this.$store.dispatch(`alert/${this.$route.params.color}`, this.$route.params.message)
     }
   }
 }
