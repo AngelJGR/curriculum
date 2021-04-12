@@ -1,20 +1,19 @@
 <template>
   <v-snackbar
-    v-model="show"
+    v-model="alert.show"
     :timeout="5000"
     top
     right
-    :color="color"
-    :message="message"
+    :color="alert.color"
   >
-    <b>{{ message }}</b>
+    <b>{{ alert.message }}</b>
 
     <template v-slot:action="{ attrs }">
       <v-btn
         icon
         color="dark"
         v-bind="attrs"
-        @click="show = false"
+        @click="alert.show = false"
       >
         <v-icon>mdi-close</v-icon>
       </v-btn>
@@ -23,25 +22,20 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import { mapState } from 'vuex'
+import State from '../interfaces/state/state'
 
 export default Vue.extend({
-  props: {
-    message: String,
-    snackbar: Boolean,
-    color: String,
-  },
-  data() {
-    return {
-      show: false
-    }
+  computed: {
+    ...mapState({
+      alert: (state: State) => state.alert || {}
+    })
   },
   created() {
-    this.show = this.snackbar
+    console.log('created', this.alert)
   },
-  watch: {
-    snackbar() {
-      this.show = this.snackbar
-    }
+  updated() {
+    console.log('updated', this.alert)
   }
 })
 </script>
