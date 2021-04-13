@@ -58,11 +58,7 @@
         </v-card-actions>
       </v-card>
     </v-form>
-    <alert-message
-      :snackbar="snackbar"
-      :color="color"
-      :message="message"
-    />
+    <alert-message/>
   </v-container>
 </template>
 
@@ -88,9 +84,6 @@ export default Vue.extend({
       collegeDegrees: new Array<CollegeDegree>(),
       collegeDegree: {} as CollegeDegree,
       formation: new Array<Formation>(),
-      snackbar: false,
-      color: '',
-      message: '',
       rules: {
         required: (value: string) => !!value || 'Requerido.',
       }
@@ -99,39 +92,31 @@ export default Vue.extend({
   methods: {
     setFormation(): void {
       if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
-        this.snackbar = false
         FormationService.setFormation(this.collegeDegree.id, this.college.id_college)
           .then((res) => {
-            this.snackbar = true
             if (res.data.success) {
-              this.color = 'success'
-              this.message = 'Datos ingresados exitósamente'
+              this.$store.dispatch('alert/success', 'Datos ingresados exitósamente')
               this.formation.push(res.data.college_degree_person[0])
               const index = this.collegeDegrees.findIndex(item => item.id === res.data.college_degree_person[0].id_college_degree)
               if (index > -1) {
                 this.collegeDegrees.splice(index, 1)
               }
               // eslint-disable-next-line
-              // (this.$refs.form as Vue).reset()
               (this.$refs.form as Vue & {reset: () => unknown}).reset()
               if (this.formation.length > 0) {
                 this.isEmpty = false
               }
             } else {
-              this.color = 'error'
-              this.message = 'Ocurrió un error al ingresar datos'
+              this.$store.dispatch('alert/error', 'Ocurrió un error al ingresar datos')
             }
           })
       }
     },
     unsetFormation(formation: Formation, index: number): void {
-      this.snackbar = false
       FormationService.unsetFormation(formation.id)
         .then((res) => {
-          this.snackbar = true
           if (res.data.success) {
-            this.color = 'success'
-            this.message = 'Registro eliminado'
+            this.$store.dispatch('alert/success', 'Registro eliminado')
             this.collegeDegrees.push({
               id: formation.id_college_degree,
               description: formation.college_degree,
@@ -143,8 +128,7 @@ export default Vue.extend({
               this.isEmpty = true
             }
           } else {
-            this.color = 'error'
-            this.message = 'Ocurrió un error al eliminar el registro'
+            this.$store.dispatch('alert/error', 'Ocurrió un error al eliminar el registro')
           }
         })
     }
@@ -158,9 +142,6 @@ export default Vue.extend({
         this.colleges = res.data.college || null
         this.collegeDegrees = res.data.college_degree
         this.formation = res.data.college_degree_person
-        console.log('college', this.colleges)
-        console.log('collegeDegrees', this.collegeDegrees)
-        console.log('formation', this.formation)
       })
   },
 })

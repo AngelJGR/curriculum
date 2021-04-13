@@ -77,11 +77,7 @@
         </v-card-actions>
       </v-card>
     </v-form>
-    <alert-message
-      :snackbar="snackbar"
-      :color="color"
-      :message="message"
-    />
+    <alert-message/>
   </v-container>
 </template>
 
@@ -106,33 +102,26 @@ export default Vue.extend({
       rules: { required: (value: string) => !!value || 'Requerido.' },
       isEmpty: false,
       isSearching: false,
-      snackbar: false,
-      color: '',
-      message: '',
     }
   },
   methods: {
     getExperience (): void {
-      this.snackbar = false
-      experience.getExperiences() // EDITAR
+      experience.getExperiences()
         .then((res) => {
-          console.log(res)
           if (res.data.success) {
             if (res.data.experiences.length === 0) {
               this.isEmpty = true
             }
             this.experiences = res.data.experiences
           } else {
-            this.snackbar = true
-            this.color = 'error'
-            this.message = 'Error al obtener los registros'
+            this.$store.dispatch('alert/error', 'Error al obtener los registros')
           }
         })
     },
     getOrganizations(val: string): void {
       if (val.length > 0) {
         this.isSearching = true
-        experience.getOrganizations(val) // EDITAR
+        experience.getOrganizations(val)
           .then((res) => {
             this.organizations = res.data.organizations
             this.isSearching = false
@@ -140,47 +129,36 @@ export default Vue.extend({
       }
     },
     setExperience(): void {
-      this.snackbar = false
       if ((this.$refs.form as Vue & {validate: () => boolean}).validate()) {
         this.experience.idOrganization = this.organization.id
-        this.experience.idPerson = 1 // EDITAR
         experience.setExperience(this.experience)
           .then((res) => {
-            this.snackbar = true
             if (res.data.success) {
-              this.color = 'success'
-              this.message = 'Experiencia agregada'
+              this.$store.dispatch('alert/success', 'Experiencia agregada')
               this.experiences.push(res.data.experience[0])
               this.$refs.form.reset()
               if (this.experiences.length > 0) {
                 this.isEmpty = false
               }
             } else {
-              this.color = 'error'
-              this.message = 'Ocurrió un error al agregar el registro'
+              this.$store.dispatch('alert/error', 'Ocurrió un error al agregar el registro')
             }
           })
       } else {
-        this.snackbar = true
-        this.color = 'error'
-        this.message = 'Complete los campos'
+        this.$store.dispatch('alert/error', 'Complete los campos')
       }
     },
     unsetExperience(item: Experience, index: number) {
-      this.snackbar = false
       experience.unsetExperience(item.id)
         .then((res) => {
-          this.snackbar = true
           if (res.data.success) {
-            this.color = 'success'
-            this.message = 'Registro eliminado'
+            this.$store.dispatch('alert/success', 'Registro eliminado')
             this.experiences.splice(index, 1)
             if (this.experiences.length === 0) {
               this.isEmpty = true
             }
           } else {
-            this.color = 'error'
-            this.message = 'Ocurrió un error al eliminar el registro'
+            this.$store.dispatch('alert/success', 'Ocurrió un error al eliminar el registro')
           }
         })
     }

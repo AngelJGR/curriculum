@@ -73,11 +73,7 @@
         </v-card-actions>
       </v-card>
     </v-form>
-    <alert-message
-      :snackbar="snackbar"
-      :color="color"
-      :message="message"
-    />
+    <alert-message/>
   </v-container>
 </template>
 
@@ -104,9 +100,6 @@ export default Vue.extend({
       isSearching: false,
       isEmpty: false,
       rules: { required: (value: string) => !!value || 'Requerido.' },
-      snackbar: false,
-      color: '',
-      message: '',
     }
   },
   methods: {
@@ -132,41 +125,33 @@ export default Vue.extend({
     },
     setSkill(): void {
       if (this.form.validate() && this.skill.description === this.search) {
-        this.snackbar = false
         skills.setSkill(this.skill.id, this.score)
           .then((res) => {
-            this.snackbar = true
             if (res.data.success) {
-              this.color = 'success'
-              this.message = 'Habilidad agregada'
+              this.$store.dispatch('alert/success', 'Habilidad agregada')
               this.skillsPerson.push(res.data.skill[0])
               this.form.reset()
               if (this.skillsPerson.length > 0) {
                 this.isEmpty = false
               }
             } else {
-              this.color = 'error'
-              this.message = 'Ocurrió un error al agregar el registro'
+              this.$store.dispatch('alert/error', 'Ocurrió un error al agregar el registro')
             }
           })
       }
     },
     unsetSkill(skillId: number): void {
-      this.snackbar = false
       skills.unsetSkill(skillId)
         .then((res) => {
-          this.snackbar = true
           if (res.data.success) {
-            this.color = 'success'
-            this.message = 'Registro eliminado'
+            this.$store.dispatch('alert/success', 'Registro eliminado')
             const index = this.skillsPerson.map(skill => skill.id).indexOf(skillId)
             this.skillsPerson.splice(index, 1)
             if (this.skillsPerson.length === 0) {
               this.isEmpty = true
             }
           } else {
-            this.color = 'error'
-            this.message = 'Ocurrió un error al eliminar el registro'
+            this.$store.dispatch('alert/error', 'Ocurrió un error al eliminar el registro')
           }
         })
     },
