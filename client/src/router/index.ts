@@ -32,8 +32,7 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: '*',
-        component: NotFound,
-        // beforeEnter: AuthVerify
+        component: NotFound
       },
     ]
   },
@@ -49,44 +48,37 @@ const routes: Array<RouteConfig> = [
       {
         path: '/',
         name: 'Dashboard',
-        component: Dashboard,
-        // beforeEnter: AuthVerify
+        component: Dashboard
       },
       {
         path: 'formations',
         name: 'Formations',
-        component: Formations,
-        // beforeEnter: AuthVerify
+        component: Formations
       },
       {
         path: 'experience',
         name: 'Experience',
-        component: Experiences,
-        // beforeEnter: AuthVerify
+        component: Experiences
       },
       {
         path: 'skills',
         name: 'Skills',
-        component: Skills,
-        // beforeEnter: AuthVerify
+        component: Skills
       },
       {
         path: 'personal',
         name: 'Personal',
-        component: Personal,
-        // beforeEnter: AuthVerify
+        component: Personal
       },
       {
         path: '*',
-        component: NotFound,
-        // beforeEnter: AuthVerify
+        component: NotFound
       },
     ]
   },
   {
     path: '*',
-    component: NotFound,
-    // beforeEnter: AuthVerify
+    component: NotFound
   },
 ]
 
