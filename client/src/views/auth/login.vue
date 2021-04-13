@@ -41,9 +41,13 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapState } from 'vuex'
-export default {
+
+type Dictionary<T> = { [key: string]: T }
+
+export default Vue.extend({
   data () {
     return {
       user: '',
@@ -51,27 +55,26 @@ export default {
       show: false,
       isLoading: false,
       rules: {
-        required: value => !!value || 'Requerido.',
-        min: v => v.length >= 8 || 'Minimo 8 caracteres.'
+        required: (value: string) => !!value || 'Requerido.',
+        min: (v: string) => v.length >= 8 || 'Minimo 8 caracteres.'
       }
     }
   },
   computed: {
     ...mapState({
-      alert: (state) => state.alert || {}
+      alert: (state: any) => state.alert || {}
     })
   },
   methods: {
-    submit() {
-      if (this.$refs.form.validate()) {
+    submit(): void {
+      if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
         this.isLoading = true
         this.$store.dispatch('session/login', {username: this.user, password: this.password})
           .then((res) => {
             this.isLoading = false
             if (res.data.success) {
-              this.$router.push({name: 'Personal', params: { show: true, message: res.data.message, color: 'success' }})
+              this.$router.push({name: 'Personal', params: { show: 'true', message: res.data.message, color: 'success' } as Dictionary<string> })
             } else {
-              console.log('desde login', this.alert)
               this.$store.dispatch('alert/error', res.data.message)
             }
           })
@@ -87,5 +90,5 @@ export default {
       this.$store.dispatch(`alert/${this.$route.params.color}`, this.$route.params.message)
     }
   }
-}
+})
 </script>

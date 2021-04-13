@@ -16,12 +16,12 @@
               ></v-text-field>
               <v-text-field 
                 v-model="user"
-                :rules="[rules.required, rules.isUserExist, rules.max]"
+                :rules="[rules.required, rules.isUserExist(isFinded), rules.max]"
                 label="Usuario"
                 outlined
                 @keyup="validateUser($event.target.value)"
                 :loading="loading"
-                ref="user"
+                ref="username"
                 counter
               >
                 <template v-slot:append v-if="user !== ''">
@@ -55,9 +55,13 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import login from '../../services/login'
-export default {
+
+type Dictionary<T> = { [key: string]: T }
+
+export default Vue.extend({
   data () {
     return {
       user: '',
@@ -65,43 +69,49 @@ export default {
       fullname: '',
       showPassword: false,
       loading: false,
-      // saveLoading: false,
       isFinded: false,
       rules: {
-        isUserExist: () => !this.isFinded || 'Este usuario ya existe.',
-        required: value => !!value || 'Requerido.',
-        min: v => v.length >= 8 || 'Minimo 8 caracteres.',
-        max: v => v.length <= 11 || 'Máximo 11 caracteres.'
+        isUserExist: function (isFinded: boolean): boolean | string {
+          return !isFinded || 'Este usuario ya existe.'
+        },
+        required: (value: string) => !!value || 'Requerido.',
+        min: (v: string) => v.length >= 8 || 'Minimo 8 caracteres.',
+        max: (v: string) => v.length <= 11 || 'Máximo 11 caracteres.'
       }
     }
   },
-  watch: {
-    isFinded () {
-      this.$refs.user.validate();
+  computed: {
+    form(): Vue & { validate: () => boolean } {
+      return this.$refs.form as Vue & { validate: () => boolean }
+    },
+    username(): Vue & { validate: () => boolean } {
+      return this.$refs.username as Vue & { validate: () => boolean }
     }
   },
   methods: {
-    validateUser(user){
-      if (user !== "") {
-        this.loading = true
+    validateUser(user: string){
+      this.loading = true
         setTimeout(() => {
-          login.validateUser(user)
-            .then((res) => {
-              this.isFinded = res.data
-              this.loading = false
-            })
+          if (user !== "") {
+            login.validateUser(user)
+              .then((res) => {
+                if (this.isFinded !== res.data) {
+                  this.isFinded = res.data
+                }
+                this.loading = false
+              })
+          }
         }, 500)
-      }
     },
     submit(){
-      if (this.$refs.form.validate()){
+      if (this.form.validate()){
         login.registerUser(this.fullname, this.user, this.password)
-          .then((res) => {
-            this.$router.push({name: 'Login', params: { show: true, message: 'Registro exitoso!', color: 'success' }})
+          .then(() => {
+            this.$router.push({name: 'Login', params: { show: 'true', message: 'Registro exitoso!', color: 'success' } as Dictionary<string> })
           })
           .catch((err) => console.log(err))
       }
     }
   }
-}
+})
 </script>
