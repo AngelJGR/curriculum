@@ -57,11 +57,7 @@
 		<v-container fluid fill-height :class="{'pa-0': $vuetify.breakpoint.xs}">
 			<v-layout :class="{'pa-0': $vuetify.breakpoint.xs}" justify-center>
 					<router-view />
-					<alert-message
-						:snackbar="snackbar"
-						:color="color"
-						:message="message"
-					/>
+					<alert-message/>
 			</v-layout>
 		</v-container>
 	</v-main>
@@ -78,28 +74,20 @@ export default {
 				{ link: 'skills', text: 'Habilidades', icon: 'mdi-clipboard-text-multiple' },
 			],
 			drawer: true,
-			snackbar: false,
-			color: '',
-			message: ''
 		}
 	},
 	methods: {
 		logout() {
-			this.snackbar = false
 			this.$store.dispatch('session/logout')
 				.then((res) => {
 					if (res.data.success) {
 						this.$router.push({name: 'Login'})
 					} else {
-						this.snackbar = true
-						this.color = 'error'
-						this.message = 'Ocurrió un error al cerrar la sesión'
+						this.$store.dispatch('alert/error', 'Ocurrió un error al cerrar la sesión')
 					}
 				})
 				.catch(() => {
-					this.snackbar = true
-					this.color = 'error'
-					this.message = 'Ocurrió un error al cerrar la sesión'
+					this.$store.dispatch('alert/error', 'Ocurrió un error al cerrar la sesión')
 				})
 		}
 	}
