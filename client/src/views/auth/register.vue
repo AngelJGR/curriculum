@@ -71,9 +71,7 @@ export default Vue.extend({
       loading: false,
       isFinded: false,
       rules: {
-        isUserExist: function (isFinded: boolean): boolean | string {
-          return !isFinded || 'Este usuario ya existe.'
-        },
+        isUserExist: (isFinded: boolean) => !isFinded || 'Este usuario ya existe.',
         required: (value: string) => !!value || 'Requerido.',
         min: (v: string) => v.length >= 8 || 'Minimo 8 caracteres.',
         max: (v: string) => v.length <= 11 || 'Máximo 11 caracteres.'
