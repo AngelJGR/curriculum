@@ -76,13 +76,18 @@ export default Vue.extend({
   components: {
     FormationComponent
   },
+  computed: {
+    form(): Vue & { validate: () => boolean; reset: () => unknown } {
+      return this.$refs.form as Vue & { validate: () => boolean; reset: () => unknown }
+    }
+  },
   data() {
     return {
       isEmpty: false,
       colleges: new Array<College>(),
-      college: {} as College,
+      college: undefined as unknown as College,
       collegeDegrees: new Array<CollegeDegree>(),
-      collegeDegree: {} as CollegeDegree,
+      collegeDegree: undefined as unknown as CollegeDegree,
       formation: new Array<Formation>(),
       rules: {
         required: (value: string) => !!value || 'Requerido.',
@@ -91,7 +96,7 @@ export default Vue.extend({
   },
   methods: {
     setFormation(): void {
-      if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
+      if (this.form.validate()) {
         FormationService.setFormation(this.collegeDegree.id, this.college.id_college)
           .then((res) => {
             if (res.data.success) {
@@ -101,8 +106,7 @@ export default Vue.extend({
               if (index > -1) {
                 this.collegeDegrees.splice(index, 1)
               }
-              // eslint-disable-next-line
-              (this.$refs.form as Vue & {reset: () => unknown}).reset()
+              this.form.reset()
               if (this.formation.length > 0) {
                 this.isEmpty = false
               }
