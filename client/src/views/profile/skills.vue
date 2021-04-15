@@ -138,6 +138,8 @@ export default Vue.extend({
               this.$store.dispatch('alert/error', 'Ocurrió un error al agregar el registro')
             }
           })
+      } else {
+        this.$store.dispatch('alert/error', 'Complete los campos')
       }
     },
     unsetSkill(skillId: number): void {

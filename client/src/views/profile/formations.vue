@@ -114,6 +114,8 @@ export default Vue.extend({
               this.$store.dispatch('alert/error', 'Ocurrió un error al ingresar datos')
             }
           })
+      } else {
+        this.$store.dispatch('alert/error', 'Complete los campos')
       }
     },
     unsetFormation(formation: Formation, index: number): void {
